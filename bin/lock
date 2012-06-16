@@ -1,0 +1,3 @@
+#!/bin/bash
+cgsession=/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession
+"$cgsession" -suspend

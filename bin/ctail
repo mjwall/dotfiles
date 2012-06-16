@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# ctail is a color tail script for log4j files.  It will colorize ERROR and WARN for
+you.
+
+# setup colors
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+BLUE=$(tput setaf 4)
+LIGHT_BLUE=$(tput setaf 6)
+RESET=$(tput sgr0)
+
+# check parameter and run
+if [ $# -eq 1 ] && [ -e "$1" ]; then
+  tail -f "$1" | sed -e
+  "s/^\(.*ERROR.*\)$/${RED}\\1${RESET}/g;s/^\(.*WARN.*\)$/${YELLOW}\\1${RESET}/g"
+else
+  echo "ctail requires 1 arg, a file that exists"
+fi

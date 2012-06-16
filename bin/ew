@@ -1,0 +1,4 @@
+#!/bin/bash
+echo $WINDOW >~/.emacsclient-caller
+screen -r -X select 1
+exec /usr/bin/env emacsclient -a "" $@

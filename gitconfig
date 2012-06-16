@@ -1,0 +1,24 @@
+[user]
+  name = Michael Wall
+  email = mjwall@gmail.com
+[alias]
+  st = status
+  ci = commit
+  br = branch
+  co = checkout
+  di = diff
+  lg = log -p
+  lo = log --graph --decorate
+  lol = log --graph --decorate --pretty=oneline --abbrev-commit
+  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  ls = ls-files
+[pager]
+  color = true
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+[pull]
+  default = tracking
+[push]
+  default = tracking

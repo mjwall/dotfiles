@@ -1,0 +1,16 @@
+I am tired of the heavy weight vimClojure plugin.  Slimv is heavy weight and
+buggy.  Both are really cool, just too much for what I need.  I just want syntax 
+highlighting and paredit.  Leiningen makes handling the rest very easy.
+
+So here is just that, syntax and paredit.  The syntax file comes from vimClojure
+with dependencies removed.  Initially, it is directly from
+https://bitbucket.org/taylor_venable/metasyntax/src/tip/Config/vim/syntax/clojure.vim.
+Paredit comes from slimv.  Initially it is from
+https://github.com/njackson/paredit-vim
+
+So why don't I use just emacs.  I invested months in learning emacs.  I really
+like it, but started suffering from "Golfer's Elbow".  It is tennis elbow, but
+the tendon on the other side.  After being diagnosed, I went spent a week in a
+server farm with only vi and guess what, my elbow pain went away.
+
+Anyway, here goes.

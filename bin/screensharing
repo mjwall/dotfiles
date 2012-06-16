@@ -1,0 +1,3 @@
+#!/bin/bash
+#open /System/Library/CoreServices/Screen\ Sharing.app
+open -b com.apple.ScreenSharing

@@ -1,0 +1,3 @@
+#!/bin/bash
+# just call ew, but add -n so the terminal doesn't wait
+ew -n "$*"

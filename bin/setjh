@@ -1,0 +1,53 @@
+#! /bin/bash
+#function list_java_versions {
+#    ls -l /System/Library/Frameworks/JavaVM.framework/Versions | egrep "^l" | grep -v Current
+#}
+#
+#VERSION=$1
+#if [[ -z "$@" ]]; then
+#    echo >&2 "You must supply an argument:  Try one of these:"
+#    list_java_versions
+#    exit 1
+#fi
+#
+#JAVA_ROOT=/System/Library/Frameworks/JavaVM.framework/Versions
+#
+#JAVA_VERSION=$JAVA_ROOT/$1
+#if [ -d $GRAILS_VERSION ]; then
+#    echo "Setting Java version to $1 (you may have enter your password for sudo)"
+#    sudo rm $JAVA_ROOT/CurrentJDK
+#    sudo ln -s $JAVA_VERSION $JAVA_ROOT/CurrentJDK
+#    echo "java -version"
+#    java -version
+#    echo "javac -version"
+#    javac -version
+#else
+#    echo "Error: '$JAVA_VERSION' does not exist!!"
+#    echo "Use one of the following:"
+#    list_java_versions
+#    exit 1
+#fi
+
+cd /System/Library/Frameworks/JavaVM.framework/Versions
+
+CURJDK="`readlink CurrentJDK`"
+echo Current JDK version: $CURJDK
+
+if [ "$1" == "" ]; then
+echo Installed versions:
+ls
+exit
+fi
+
+VERFOUND=`ls | grep $1 | head -n 1`
+
+if [ "$VERFOUND" != "$1" ]; then
+BASE="`basename $0`"
+echo Error: Could not change JDK-- version $1 not installed!
+echo Run $BASE without arguments to see a list of installed versions.
+exit 127
+fi
+
+echo You must now enter your Mac OS X password to change the JDK.
+sudo ln -fhsv $1 CurrentJDK
+

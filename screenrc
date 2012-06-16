@@ -1,0 +1,33 @@
+escape o
+
+startup_message off
+
+shelltitle "$|bash" #set title to process, requires PS1 end in $
+
+defscrollback 30000
+
+# hack to get copy to clipboard
+bind b eval "writebuf" "exec sh -c 'pbcopy < /tmp/screen-exchange'"
+
+#backtick 0 0 0 whoami #set "%0`" equal to current user for use in hardstatus
+hardstatus alwayslastline
+hardstatus string "%{= kK}%{R}%S%{-} %-w%{= kY}%n %t%{-}%+w %=%{= kK}%{B}%d-%M %c%{-}"
+
+# EscapeKey+r puts Screen into resize mode. Resize regions using hjkl keys,
+# toggle focus with Tab and arrow keys.
+bind r eval "command -c classresize" # enter resize mode
+# use hjkl keys to resize regions
+bind -c classresize h eval "resize -h -5" "command -c classresize"
+bind -c classresize j eval "resize -v -5" "command -c classresize"
+bind -c classresize k eval "resize -v +5" "command -c classresize"
+bind -c classresize l eval "resize -h +5" "command -c classresize"
+# quickly switch between regions using tab and arrows
+bind -c classresize \t    eval "focus"       "command -c classresize" # Tab Key
+bind -c classresize -k kl eval "focus left"  "command -c classresize" # Arrow Left
+bind -c classresize -k kr eval "focus right" "command -c classresize" # Arrow Right
+bind -c classresize -k ku eval "focus up"    "command -c classresize" # Arrow Up
+bind -c classresize -k kd eval "focus down"  "command -c classresize" # Arrow Down
+
+screen -t Shell 0 bash
+screen -t Emacs 1 em
+select 0
