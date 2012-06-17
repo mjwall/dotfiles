@@ -62,7 +62,6 @@
         nil (server-start)
         (message "Server already started"))))
 
-(message "About to call start-my-server")
 (start-my-server)
 
 ;; Start server for emacs client if not already started
