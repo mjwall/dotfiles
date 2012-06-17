@@ -1,8 +1,5 @@
 # Here is my bashrc.  Lots of stuff here, can't guarantee it is the cleanest
 
-export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\] $(__git_ps1 "(%s)")\n\$'
-export PS1="\[\033[G\]$PS1" # from http://jonisalonen.com/2012/your-bash-prompt-needs-this/
-
 export TERM=xterm-256color
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagacad
@@ -48,7 +45,19 @@ if [[ -s /Users/mwall/.rvm/scripts/rvm ]] ; then source /Users/mwall/.rvm/script
 export EDITOR=ec
 export ALTERNATE_EDITOR=em
 alias emacs="~/bin/ec"
+
+# git
+source ~/.bash_completion.d/git-completion.bash
+export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_EDITOR=ew #like ec but waits
+export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$'
+
+# from http://jonisalonen.com/2012/your-bash-prompt-needs-this/
+export PS1="\[\033[G\]$PS1"
+
+# other completion scripts
+source ~/.bash_completion.d/mvn-completion.bash
+source ~/.bash_completion.d/svn-completion.bash
 
 export PATH="${HOME}/bin:/usr/local/bin:$LEIN_HOME/bin:$ANT_HOME/bin:$GRAILS_HOME/bin:$M2:$NODE_PATH/bin:$MONGO_HOME/bin:$PATH:/usr/local/sbin"
 
@@ -58,12 +67,6 @@ alias sshaddme='ssh-add ~/.ssh/id_*sa.1'
 alias ..="cd .."
 alias work="screen -c ~/.work-screen"
 alias tar="COPYFILE_DISABLE=true tar" # we don't need ._ files everywhere on a mac, see http://www.commandlinefu.com/commands/view/5965/create-.tar-file-on-mac-os-x-leopard-snow-leopard-without-._-files
-
-# completion scripts
-source ~/.bash_completion.d/git-completion.bash
-source ~/.bash_completion.d/mvn-completion.bash
-source ~/.bash_completion.d/svn-completion.bash
-#source ~/.bash_completion.d/rake-completion.bash
 
 #history stuff
 shopt -s histappend
