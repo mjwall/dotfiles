@@ -1,4 +1,4 @@
-= Mike's Dotfiles
+== Mike's Dotfiles
 
 Even though this repo looks like it was created on 16 Jun 2012, this
 is the result of many years of tweaking and changing.  I have at least
@@ -48,21 +48,21 @@ directory which are added to path. I'll explain several here.
  terminal where you ran ec is released.  Normal workflow for me is
  'ec' a file and work on it.
 
- This workflow came mainly from an article by Bill Clementson at
+This workflow came mainly from an article by Bill Clementson at
  http://bc.tech.coop/blog/071001.html, with some minor tweaks.
 
- My emacs configuration is also here.  It was a seperate repo on
+My emacs configuration is also here.  It was a seperate repo on
  github since Sept 2010.  Currently, that repo still exists, but may
  go away at some point.  Lots and lots of changes in approach and
  tweaking there.  Kinda a hobby of mine, tweaking .emacs.d.  I wish it
  was more fun.
 
- Also in this repo is vim configuration.  I still use vim, but mostly
+Also in this repo is vim configuration.  I still use vim, but mostly
  for quick edits on remote servers.  I used vim for many years as my
  primary editor and can't let go of it.  Using screen allows me this
  flexibility.  Using ansi-term inside emacs did not.
 
- There are also some other bin scripts that may be of interest
+There are also some other bin scripts that may be of interest
  to you. Or maybe not.  There is a setup.sh script that can be used to
  setup symlinks to all these configs.  If run twice though, I does
  unexpected things and I don't have the energy to fix it at this
