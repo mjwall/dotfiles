@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# ctail is a color tail script for log4j files.  It will colorize ERROR and WARN for
-you.
+# ctail is a color tail script for log4j files.  It will colorize ERROR and WARN for you.
 
 # setup colors
 RED=$(tput setaf 1)
