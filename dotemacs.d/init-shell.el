@@ -24,13 +24,13 @@
 ;; truncate buffers continuously
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
 
-(defun make-my-shell-output-read-only (text)
-  "Add to comint-output-filter-functions to make stdout read only in my shells."
-  (if (member (buffer-name) my-shells)
-      (let ((inhibit-read-only t)
-            (output-end (process-mark (get-buffer-process (current-buffer)))))
-        (put-text-property comint-last-output-start output-end 'read-only t))))
-(add-hook 'comint-output-filter-functions 'make-my-shell-output-read-only)
+;; (defun make-my-shell-output-read-only (text)
+;;   "Add to comint-output-filter-functions to make stdout read only in my shells."
+;;   (if (member (buffer-name) my-shells)
+;;       (let ((inhibit-read-only t)
+;;             (output-end (process-mark (get-buffer-process (current-buffer)))))
+;;         (put-text-property comint-last-output-start output-end 'read-only t))))
+;; (add-hook 'comint-output-filter-functions 'make-my-shell-output-read-only)
 
 ;; (defun my-dirtrack-mode ()
 ;;   "Add to shell-mode-hook to use dirtrack mode in my shell buffers."
@@ -43,10 +43,10 @@
 ; interpret and use ansi color codes in shell output windows
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-(defun set-scroll-conservatively ()
-  "Add to shell-mode-hook to prevent jump-scrolling on newlines in shell buffers."
-  (set (make-local-variable 'scroll-conservatively) 10))
-(add-hook 'shell-mode-hook 'set-scroll-conservatively)
+;; (defun set-scroll-conservatively ()
+;;   "Add to shell-mode-hook to prevent jump-scrolling on newlines in shell buffers."
+;;   (set (make-local-variable 'scroll-conservatively) 10))
+;; (add-hook 'shell-mode-hook 'set-scroll-conservatively)
 
 ;; i think this is wrong, and it buries the shell when you run emacsclient from
 ;; it. temporarily removing.
@@ -97,7 +97,7 @@ the line, to capture multiline input. (This only has effect if
 
 ;; not sure why, but comint needs to be reloaded from the source (*not*
 ;; compiled) elisp to make the above advise stick.
-(load "comint.el.gz")
+;; (load "comint.el.gz")
 
 ;; my old stuff
 ;;(setq multi-term-program "/bin/bash")
@@ -133,11 +133,11 @@ the line, to capture multiline input. (This only has effect if
 (ad-activate 'ansi-term)
 
 
-(defun my-set-buffer-name-to-directory ()
-  (interactive)
-  (message "%s" "changing buffer name")
-  (rename-buffer (concat "*" default-directory "*") 1)
-  )
+;; (defun my-set-buffer-name-to-directory ()
+;;   (interactive)
+;;   (message "%s" "changing buffer name")
+;;   (rename-buffer (concat "*" default-directory "*") 1)
+;;   )
 
 (defun my-ansi-term ()
   (interactive)
