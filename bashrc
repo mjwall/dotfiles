@@ -92,14 +92,14 @@ fi
 #source /opt/cloud/bin/cloud-env
 
 # start up screen if it is not running
-if [ "$PS1" != "" -a "${STARTED_SCREEN:-x}" = x -a "${SSH_TTY:-x}" ]
-then
-  STARTED_SCREEN=1 ; export STARTED_SCREEN
-  sleep 1
-  screen -RR && exit 0
+#if [ "$PS1" != "" -a "${STARTED_SCREEN:-x}" = x -a "${SSH_TTY:-x}" ]
+#then
+#  STARTED_SCREEN=1 ; export STARTED_SCREEN
+#  sleep 1
+#  screen -RR && exit 0
   # normally, execution of this rc script ends here...
-  echo "Screen failed! continuing with normal bash startup"
-fi
+#  echo "Screen failed! continuing with normal bash startup"
+#fi
 
 # Below is for reference only on the color codes
 # original colors with ls -G or CLICOLORS = ExFxCxDxBxegedabagacad
