@@ -51,9 +51,9 @@
 
 ;; add some server hooks
 (add-hook 'after-init-hook 'server-start)
-(add-hook 'server-done-hook
-   (lambda ()
-     (shell-command "screen -r -X select `cat ~/.emacsclient-caller`")))
+;(add-hook 'server-done-hook
+;   (lambda ()
+;     (shell-command "screen -r -X select `cat ~/.emacsclient-caller`")))
 
 (defun start-my-server ()
   (progn
