@@ -44,13 +44,13 @@ if [[ -s /Users/mwall/.rvm/scripts/rvm ]] ; then source /Users/mwall/.rvm/script
 
 # editors
 export EDITOR=ec
-export ALTERNATE_EDITOR=em
+export ALTERNATE_EDITOR=vim
 alias emacs="~/bin/ec"
 
 # git
 source ~/.bash_completion.d/git-completion.bash
 export GIT_PS1_SHOWDIRTYSTATE=true
-export GIT_EDITOR=ew #like ec but waits
+export GIT_EDITOR=ec
 export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$'
 
 # from http://jonisalonen.com/2012/your-bash-prompt-needs-this/
