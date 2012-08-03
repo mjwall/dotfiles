@@ -1,5 +1,5 @@
 (add-to-list 'auto-mode-alist '(".bats" . sh-mode))
-
+(add-to-list 'auto-mode-alist '(".bashrc" . sh-mode))
 
 (add-hook 'sh-mode-hook 'run-coding-hook)
 
