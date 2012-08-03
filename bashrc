@@ -17,6 +17,7 @@ export GRAILS_HOME=/Library/Grails/Home
 export GANT_HOME=/Library/Gant/Home
 export GRADLE_HOME=/Library/Gradle/Home
 export LEIN_HOME=~/opt/lein
+export SCALA_HOME=~/opt/scala
 
 # Servers
 export JETTY_HOME=${HOME}/opt/jetty
@@ -25,9 +26,9 @@ export APPENGINE_HOME=/Library/GoogleAppEngine/Home
 export MONGO_HOME=${HOME}/opt/mongo
 
 # Node
-# export NODE_PATH=$HOME/local/node
-# export NODE_BIN=/usr/local/share/npm/bin
-# . ~/.nvm/nvm.sh
+#export NODE_PATH=$HOME/local/node
+#export NODE_BIN=/usr/local/share/npm/bin
+. ~/nvm/nvm.sh
 
 # docbook
 export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
@@ -59,7 +60,7 @@ export PS1="\[\033[G\]$PS1"
 source ~/.bash_completion.d/mvn-completion.bash
 source ~/.bash_completion.d/svn-completion.bash
 
-export PATH="${HOME}/bin:/usr/local/bin:$LEIN_HOME/bin:$ANT_HOME/bin:$GRAILS_HOME/bin:$M2:$NODE_PATH/bin:$MONGO_HOME/bin:$PATH:/usr/local/sbin"
+export PATH="${HOME}/bin:/usr/local/bin:$LEIN_HOME/bin:$ANT_HOME/bin:$GRAILS_HOME/bin:$M2:$NODE_PATH/bin:$MONGO_HOME/bin:$SCALA_HOME/bin:$PATH:/usr/local/sbin"
 
 alias gvim=mvim
 alias gview="mvim -R"
