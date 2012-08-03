@@ -49,18 +49,19 @@
 ;; Transparently open compressed files
 (auto-compression-mode t)
 
-;; add some server hooks
-(add-hook 'after-init-hook 'server-start)
+;; server start stuff
+;; not entirely sure I need it with the way I am not launching emacs
+
 ;(add-hook 'server-done-hook
 ;   (lambda ()
 ;     (shell-command "screen -r -X select `cat ~/.emacsclient-caller`")))
 
-(defun start-my-server ()
+(defun start-my-server()
   (progn
     (message "Starting emacs server")
-    (if (file-exists-p (concat (getenv "TMPDIR") "emacs" (number-to-string (user-real-uid)) "/server"))
-        nil (server-start)
-        (message "Server already started"))))
+    (if (and (fboundp 'server-running-p) (server-running-p))
+      (message "Server already started")
+      (server-start))))
 
 (start-my-server)
 
