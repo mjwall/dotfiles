@@ -5,4 +5,4 @@
 # -a "" starts emacs daemon and reattaches
 # -t starts in terminal, since I won't be using the gui
 # can also pass in -n if you want to have the shell return right awqy
-exec /usr/bin/env emacsclient -a "" -t $@
+exec emacsclient -a "" -t $@

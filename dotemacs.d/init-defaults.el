@@ -56,14 +56,14 @@
 ;   (lambda ()
 ;     (shell-command "screen -r -X select `cat ~/.emacsclient-caller`")))
 
-(defun start-my-server()
-  (progn
-    (message "Starting emacs server")
-    (if (and (fboundp 'server-running-p) (server-running-p))
-      (message "Server already started")
-      (server-start))))
+;(defun start-my-server()
+;  (progn
+;    (message "Starting emacs server")
+;    (if (and (fboundp 'server-running-p) (server-running-p))
+;      (message "Server already started")
+;      (server-start))))
 
-(start-my-server)
+;(start-my-server)
 
 ;; Start server for emacs client if not already started
 (provide 'init-defaults)

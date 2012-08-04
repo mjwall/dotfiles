@@ -43,5 +43,7 @@ setup_dir_link "${CODE_HOME}/bin" "${HOME}/bin"
 setup_dir_link "${CODE_HOME}/bash_completion.d" "${HOME}/.bash_completion.d"
 setup_file_link "${HOME}/.vim/.vimrc" "${HOME}/.vimrc"
 
+echo "Read the bashrc file you are setting up on Mac to get Emacs running"
+
 # to remove everything, run the following.  Not going to automate this, because it is too destructive
 # rm "${HOME}/.bashrc" "${HOME}/.bash_profile" "${HOME}/.gitconfig" "${HOME}/.screenrc" "${HOME}/.vim" "${HOME}/.emacs.d" "${HOME}/bin" "${HOME}/.bash_completion.d" "${HOME}/.vimrc"
