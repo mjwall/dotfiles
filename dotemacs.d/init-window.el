@@ -1,22 +1,12 @@
 (when window-system
-  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
+2  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
   (tooltip-mode -1)
   (mouse-wheel-mode t)
   (blink-cursor-mode -1)
   (menu-bar-mode -1)
 )
 
-;; no fringe, wasted space
-;;(set-fringe-mode 0) ;; interferes with ansi-term
-;;(set-fringe-mode '(0 . 1))
-;;(set-fringe-mode (quote (0 . 2)))
-
-;; Window switching, shift and arrow key changes window
-(windmove-default-keybindings)
-
-(winner-mode 1)
-
-; movement keys C-<left> etc don't seem to work in terminal
+; movement keys C-<left> etc don't seem to work in terminal and winner-mode
 (global-set-key (kbd "C-x <left>") 'windmove-left)
 (global-set-key (kbd "C-x <right>") 'windmove-right)
 (global-set-key (kbd "C-x <down>") 'windmove-down)

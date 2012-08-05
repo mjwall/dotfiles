@@ -1,7 +1,6 @@
 ;; Use a more interesting startup message
 (defun startup-echo-area-message ()
-  "Hacky time...")
-
+  "Go...")
 
 (setq visible-bell nil
       ring-bell-function 'ignore
@@ -32,8 +31,6 @@
       )
 
 
-;;(set-default 'imenu-auto-rescan t)
-
 (defalias 'yes-or-no-p 'y-or-n-p)
 (random t) ;; Seed the random-number generator
 
@@ -49,21 +46,4 @@
 ;; Transparently open compressed files
 (auto-compression-mode t)
 
-;; server start stuff
-;; not entirely sure I need it with the way I am not launching emacs
-
-;(add-hook 'server-done-hook
-;   (lambda ()
-;     (shell-command "screen -r -X select `cat ~/.emacsclient-caller`")))
-
-;(defun start-my-server()
-;  (progn
-;    (message "Starting emacs server")
-;    (if (and (fboundp 'server-running-p) (server-running-p))
-;      (message "Server already started")
-;      (server-start))))
-
-;(start-my-server)
-
-;; Start server for emacs client if not already started
 (provide 'init-defaults)

@@ -4,7 +4,6 @@
 (require 'autopair)
 (setq autopair-autowrap t)
 
-
 ;;----------------------------------------------------------------------------
 ;; Supercharge undo/redo
 ;;----------------------------------------------------------------------------
@@ -14,7 +13,7 @@
 (require 'diminish)
 (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))
 
-(global-set-key (kbd "s-r") 'undo-tree-redo)
+(global-set-key (kbd "M-?") 'undo-tree-redo)
 
 (provide 'init-editing-extras)
 

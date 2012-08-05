@@ -1,4 +1,5 @@
 ;; setup the paths
+;; this was useful when I was using ansi-term, now I am screen/tmux
 (defun set-exec-path-from-shell-PATH ()
   (let ((path-from-shell (shell-command-to-string "$SHELL -i -c 'echo
  $PATH'")))
