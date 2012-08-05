@@ -46,17 +46,17 @@ if [[ -s /Users/mwall/.rvm/scripts/rvm ]] ; then source /Users/mwall/.rvm/script
 export EDITOR=ec
 export ALTERNATE_EDITOR=vim
 # for emacs on MacOS, compile and install 23.4.1 into /Applications/Emacs.app
-# chown -R root:staff
+# chown -R root:staff /Applications/Emacs.app
 #
 # Add the following as /usr/bin/emacs (move old emacs if it is there)
-##!/bin/bash
-#EMACS_PATH=/Applications/Emacs.app/Contents/MacOS/Emacs
+# #!/bin/bash
+# EMACS_PATH=/Applications/Emacs.app/Contents/MacOS/Emacs
 #
-#if [ $(id -u) = "0" ]; then
-#        sudo $EMACS_PATH $*
-#        else
-#        $EMACS_PATH $*
-#        fi
+# if [ $(id -u) = "0" ]; then
+#   sudo $EMACS_PATH $*
+# else
+#   $EMACS_PATH $*
+# fi
 #
 # symlink emacsclient
 # sudo ln -s /Applications/Emacs.app/Contents/MacOS/bin/emacsclient /usr/bin/emacsclient
