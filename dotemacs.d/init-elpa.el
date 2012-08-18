@@ -56,6 +56,5 @@
 (require-package 'yaml-mode)
 (require-package 'markdown-mode)
 (require-package 'php-mode)
-(require-package 'scala-mode)
 
 (provide 'init-elpa)
