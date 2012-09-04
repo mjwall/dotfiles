@@ -51,6 +51,7 @@
 (require 'init-git)
 (require 'init-org-mode)
 (require 'init-project)
+(require 'init-deft)
 
 ;; language specific configs
 (require 'init-coding-hook)
