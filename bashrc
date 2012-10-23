@@ -5,7 +5,8 @@ export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagacad
 
 # Java and friends
-export JAVA_HOME=/Library/Java/Home
+# export JAVA_HOME=/Library/Java/Home # mac
+export JAVA_HOME=/usr/java/default # redhat
 export M2_HOME="${HOME}/opt/maven"
 export MAVEN_OPTS="-Xmx512m -Xms256m -XX:PermSize=128m -XX:MaxPermSize=256m"
 export MAVEN_OPTS_DEBUG="${MAVEN_OPTS} -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8781,server=y,suspend=n"
@@ -33,14 +34,14 @@ export MONGO_HOME=${HOME}/opt/mongo
 # Node
 #export NODE_PATH=$HOME/local/node
 #export NODE_BIN=/usr/local/share/npm/bin
-. ~/nvm/nvm.sh
+#. ~/nvm/nvm.sh
 
 # docbook
 export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
 # mactex
-export MACTEXT_HOME="/usr/local/texlive/2011/bin/x86_64-darwin"
-export PATH="${PATH}:${MACTEXT_HOME}"
+#export MACTEXT_HOME="/usr/local/texlive/2011/bin/x86_64-darwin"
+#export PATH="${PATH}:${MACTEXT_HOME}"
 
 # ruby
 [[ -r /Users/mwall/.rvm/scripts/completion ]] && . /Users/mwall/.rvm/scripts/completion
@@ -97,14 +98,14 @@ shopt -s cmdhist
 
 
 # gpg agent
-export GPG_TTY='tty'
-if [ -f "${HOME}/.gpg-agent-info" ]; then
-  . "${HOME}/.gpg-agent-info"
-  export GPG_AGENT_INFO
-  # export SSH_AUTH_SOCK
-else
-  echo "Starting gpg-agent"
-fi
+#export GPG_TTY='tty'
+#if [ -f "${HOME}/.gpg-agent-info" ]; then
+#  . "${HOME}/.gpg-agent-info"
+#  export GPG_AGENT_INFO
+#  # export SSH_AUTH_SOCK
+#else
+#  echo "Starting gpg-agent"
+#fi
 
 # accumulo stuff
 #ulimit -n 2048
