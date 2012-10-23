@@ -42,6 +42,7 @@ setup_dir_link "${CODE_HOME}/dotemacs.d" "${HOME}/.emacs.d"
 setup_dir_link "${CODE_HOME}/bin" "${HOME}/bin"
 setup_dir_link "${CODE_HOME}/bash_completion.d" "${HOME}/.bash_completion.d"
 setup_file_link "${HOME}/.vim/.vimrc" "${HOME}/.vimrc"
+setup_file_link "${CODE_HOME}/tmux.conf" "${HOME}/.tmux.conf"
 
 echo "Read the bashrc file you are setting up on Mac to get Emacs running"
 
