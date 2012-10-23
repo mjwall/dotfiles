@@ -7,3 +7,5 @@
 ** TODO remove shell stuff that is no longer used
 
 ** TODO remove maxframe stuff
+
+** TODO separate bashrc stuff for different computers
