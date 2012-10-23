@@ -1,0 +1,9 @@
+* my todos for dotfiles
+
+** TODO update main README
+
+** TODO update emacs README
+
+** TODO remove shell stuff that is no longer used
+
+** TODO remove maxframe stuff
