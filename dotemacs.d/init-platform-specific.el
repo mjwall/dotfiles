@@ -6,9 +6,8 @@
 
 (when *is-a-mac*
   (setq default-input-method "MacOSX")
-  (setq default-frame-alist '((font . "Monaco-15")))
   ;; fonts
-  ;;(set-default-font "Monaco-15")
+  (setq default-frame-alist '((font . "Monaco-15")))
 
   ;; Work around a bug on OS X where system-name is FQDN
   (setq system-name (car (split-string system-name "\\.")))
@@ -28,7 +27,8 @@
 
 (when *is-gnu-linux*
   ;;fonts
-  (set-default-font "Monospace-12")
+  (setq default-frame-alist '((font . "Monospace-12")))
+
   ;; give me a familiar quit emacs keybinding
   (global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
   )

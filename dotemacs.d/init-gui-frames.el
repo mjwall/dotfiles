@@ -1,11 +1,11 @@
 ;;----------------------------------------------------------------------------
 ;; Stop C-z from minimizing windows under OS X
 ;;----------------------------------------------------------------------------
-(global-set-key (kbd "C-z")
-                (lambda ()
-                  (interactive)
-                  (unless (and *is-a-mac* window-system)
-                    (suspend-frame))))
+;;(global-set-key (kbd "C-z")
+;;               (lambda ()
+;;                  (interactive)
+;;                  (unless (and *is-a-mac* window-system)
+;;                    (suspend-frame))))
 
 
 ;;----------------------------------------------------------------------------
@@ -55,8 +55,8 @@
 
 
 ;; maximize frame on startup
-(require 'maxframe)
-(add-hook 'window-setup-hook 'maximize-frame t)
+;;(require 'maxframe)
+;;(add-hook 'window-setup-hook 'maximize-frame t)
 
 
 (provide 'init-gui-frames)
