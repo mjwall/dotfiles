@@ -1,0 +1,6 @@
+#!/usr/bin/python
+import json
+import sys
+
+j = json.load(sys.stdin)
+print json.dumps(j, sort_keys=True, indent=2)
