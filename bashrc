@@ -69,7 +69,6 @@ export ALTERNATE_EDITOR=vim
 # git
 source ~/.bash_completion.d/git-completion.bash
 export GIT_PS1_SHOWDIRTYSTATE=true
-export GIT_EDITOR=ec
 export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$'
 
 # from http://jonisalonen.com/2012/your-bash-prompt-needs-this/

@@ -27,9 +27,16 @@
   ;;https://raw.github.com/flavorjones/emacs.d/master/color-theme-vivid-chalk.el
   "A dark color theme" t)
 
+(autoload 'color-theme-tomorrow "color-theme-tomorrow"
+  "Tomorrow color theme" t)
+
 ;;   https://raw.github.com/purcell/color-theme-sanityinc/master/color-theme-sanityinc.el
-(require 'color-theme-sanityinc)
+;;(require 'color-theme-sanityinc)
 ;;(color-theme-sanityinc-dark)
-(color-theme-vivid-chalk)
+
+;;(color-theme-vivid-chalk)
+
+(require 'color-theme-tomorrow)
+(color-theme-tomorrow-night-bright)
 
 (provide 'init-themes)
