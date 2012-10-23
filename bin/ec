@@ -4,25 +4,37 @@
 # -a "" starts emacs daemon and reattaches
 # -c creates a new frame
 # -n returns control back to the terminal
-# -e eval the script 
+# -e eval the script
 
-# Number of current visible frames, daemon always has a visible frame called F1
+# Number of current visible frames,
+# Emacs daemon always has a visible frame called F1
 visible_frames() {
   emacsclient -a "" -e '(length (visible-frame-list))'
 }
 
-# try switching to the frame incase it is just minimized
-if [ "$(visible_frames)" -eq "1" ]; then
-  # echo "One frame, trying to switch"
-  emacsclient -e "(select-frame-set-input-focus (selected-frame))"
-fi
+change_focus() {
+  emacsclient -n -e "(select-frame-set-input-focus (selected-frame))"
+}
 
-# if still less then two, let's create a frame
+# try switching to the frame incase it is just minimized
+test "$(visible_frames)" -eq "1" && change_focus
+
 if [ "$(visible_frames)" -lt  "2" ]; then
-  # echo "Still less than 2"
-  exec emacsclient -n -c $@
+  echo "visible frames < 2"
+  if [ "$#" -eq 0 ]; then
+    echo "no args"
+    emacsclient -n -c  && change_focus
+  else
+    echo "args"
+    emacsclient -n -c $@
+  fi
 else
-  # otherwise, use the existing frame
-  #echo "2 or more"
-  exec emacsclient -n $@ 
+  echo "visible frames >= 2"
+  if [ "$#" -eq 0 ]; then
+    echo "no args"
+    change_focus
+  else
+    echo "args"
+    emacsclient -n $@ && change_focus
+  fi
 fi
