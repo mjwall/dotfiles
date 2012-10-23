@@ -17,7 +17,12 @@ export GRAILS_HOME=/Library/Grails/Home
 export GANT_HOME=/Library/Gant/Home
 export GRADLE_HOME=/Library/Gradle/Home
 export LEIN_HOME=~/opt/lein
-export SCALA_HOME=~/opt/scala
+#export SCALA_HOME=~/opt/scala
+export PLAY_HOME=~/opt/play
+#export SBT_HOME=~/opt/sbt
+export TS_HOME="${HOME}/opt/typesafe-stack"
+export PATH="${TS_HOME}/bin:${PATH}"
+export SBT_HOME="${TS_HOME}/bin"
 
 # Servers
 export JETTY_HOME=${HOME}/opt/jetty
@@ -74,7 +79,7 @@ export PS1="\[\033[G\]$PS1"
 source ~/.bash_completion.d/mvn-completion.bash
 source ~/.bash_completion.d/svn-completion.bash
 
-export PATH="${HOME}/bin:/usr/local/bin:$LEIN_HOME/bin:$ANT_HOME/bin:$GRAILS_HOME/bin:$M2:$NODE_PATH/bin:$MONGO_HOME/bin:$SCALA_HOME/bin:$PATH:/usr/local/sbin"
+export PATH="${HOME}/bin:${HOME}/bin2:/usr/local/bin:$LEIN_HOME/bin:$ANT_HOME/bin:$GRAILS_HOME/bin:$M2:$NODE_PATH/bin:$MONGO_HOME/bin:$SCALA_HOME/bin:$SBT_HOME/bin:$PLAY_HOME:$PATH:/usr/local/sbin"
 
 alias gvim=mvim
 alias gview="mvim -R"

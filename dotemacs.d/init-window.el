@@ -1,5 +1,5 @@
 (when window-system
-2  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
+  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
   (tooltip-mode -1)
   (mouse-wheel-mode t)
   (blink-cursor-mode -1)

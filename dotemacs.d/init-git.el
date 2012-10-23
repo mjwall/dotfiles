@@ -6,6 +6,9 @@
 ;; I do that so often, I want an easier key combo
 (global-set-key "\C-c\C-w" 'server-edit)
 
+;; follow symlinks to real file
+(setq vc-follow-symlinks t)
+
 ;; revbufs from http://www.neilvandyke.org/revbufs/revbufs.el
 ;; most useful when changes branches in a term, emacs will tell you the file has changed
 (require 'revbufs)
