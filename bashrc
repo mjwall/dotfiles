@@ -48,7 +48,7 @@ if [[ -s /Users/mwall/.rvm/scripts/rvm ]] ; then source /Users/mwall/.rvm/script
 #echo 'eval "$(rbenv init -)"'
 
 # editors
-export EDITOR=ec
+export EDITOR=et
 export ALTERNATE_EDITOR=vim
 # for emacs on MacOS, compile and install 23.4.1 into /Applications/Emacs.app
 # chown -R root:staff /Applications/Emacs.app

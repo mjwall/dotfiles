@@ -1,8 +1,28 @@
 #!/bin/bash
-#echo $WINDOW >~/.emacsclient-caller
-#screen -r -X select 1
 
+# emacsclient options for reference
 # -a "" starts emacs daemon and reattaches
-# -t starts in terminal, since I won't be using the gui
-# can also pass in -n if you want to have the shell return right awqy
-exec emacsclient -a "" -t $@
+# -c creates a new frame
+# -n returns control back to the terminal
+# -e eval the script 
+
+# Number of current visible frames, daemon always has a visible frame called F1
+visible_frames() {
+  emacsclient -a "" -e '(length (visible-frame-list))'
+}
+
+# try switching to the frame incase it is just minimized
+if [ "$(visible_frames)" -eq "1" ]; then
+  # echo "One frame, trying to switch"
+  emacsclient -e "(select-frame-set-input-focus (selected-frame))"
+fi
+
+# if still less then two, let's create a frame
+if [ "$(visible_frames)" -lt  "2" ]; then
+  # echo "Still less than 2"
+  exec emacsclient -n -c $@
+else
+  # otherwise, use the existing frame
+  #echo "2 or more"
+  exec emacsclient -n $@ 
+fi

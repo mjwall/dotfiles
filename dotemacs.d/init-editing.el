@@ -128,6 +128,6 @@ A place is considered `tab-width' character columns."
 (global-set-key (kbd "s-s") 'save-buffer-always)
 
 ;; rebind to undo, stop suspending-frame
-(global-set-key (kbd "C-z") 'undo)
+;;(global-set-key (kbd "C-z") 'undo)
 
 (provide 'init-editing)
