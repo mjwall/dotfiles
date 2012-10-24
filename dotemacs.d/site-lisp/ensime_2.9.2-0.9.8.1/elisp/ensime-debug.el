@@ -81,6 +81,17 @@
   "Hook called whenever the debugger suspends a thread.")
 
 
+;; Helpers for building DebugLocation structures
+(defun ensime-db-make-obj-ref-location (obj-id)
+  `(:type reference :object-id ,obj-id))
+(defun ensime-db-make-array-el-location (obj-id index)
+  `(:type element :object-id ,obj-id :index ,index))
+(defun ensime-db-make-obj-field-location (obj-id field-name)
+  `(:type field :object-id ,obj-id :name ,field-name))
+(defun ensime-db-make-stack-slot-location (thread-id frame offset)
+  `(:type slot :thread-id ,thread-id :frame ,frame :offset ,offset))
+
+
 ;; Event Handling
 
 (defun ensime-db-handle-event (evt)
@@ -118,8 +129,9 @@
      (plist-get evt :file)
      (plist-get evt :line)))
 
-  (when-let (exc-val (ensime-rpc-debug-value-for-id
-		      (plist-get evt :exception)))
+  (when-let (exc-val (ensime-rpc-debug-value
+		      (ensime-db-make-obj-ref-location
+		       (plist-get evt :exception))))
     (ensime-ui-show-nav-buffer
      ensime-db-value-buffer
      exc-val t))
@@ -323,8 +335,9 @@
     (ensime-insert-action-link
      name
      `(lambda (x)
-	(let ((stack-val (ensime-rpc-debug-value-for-stack-var
-			  ,thread-id ,frame-index ,index)))
+	(let ((stack-val (ensime-rpc-debug-value
+			  (ensime-db-make-stack-slot-location
+			   ,thread-id ,frame-index ,index))))
 	  (ensime-ui-show-nav-buffer
 	   ensime-db-value-buffer
 	   stack-val t nil)))
@@ -344,10 +357,11 @@
       ;; inside our overlays as we go.
       (ensime-db-ui-make-writable-value
        (- val-start 1) val-end
-       `(lambda (value) (ensime-rpc-debug-set-stack-var
-			 ,thread-id
-			 ,frame-index
-			 ,index
+       `(lambda (value) (ensime-rpc-debug-set-value
+			 (ensime-db-make-stack-slot-location
+			  ,thread-id
+			  ,frame-index
+			  ,index)
 			 value))))))
 
 
@@ -545,9 +559,10 @@
     (funcall (plist-get visitor :object-field) val f path)
     (when-let (sub-expansion (ensime-db-sub-expansion
 			      expansion field-name))
-      (let ((sub-val (ensime-rpc-debug-value-for-field
-		      (plist-get val :object-id)
-		      field-name
+      (let ((sub-val (ensime-rpc-debug-value
+		      (ensime-db-make-obj-field-location
+		       (plist-get val :object-id)
+		       field-name)
 		      )))
 	(ensime-db-visit-value sub-val sub-expansion
 			       (append path (list field-name))
@@ -564,9 +579,10 @@
   (funcall (plist-get visitor :array-el) val i path)
   (when-let (sub-expansion (ensime-db-sub-expansion
 			    expansion i))
-    (let ((sub-val (ensime-rpc-debug-value-for-index
-		    (plist-get val :object-id)
-		    i)))
+    (let ((sub-val (ensime-rpc-debug-value
+		    (ensime-db-make-array-el-location
+		     (plist-get val :object-id)
+		     i))))
       (ensime-db-visit-value sub-val sub-expansion
 			     (append path (list i))
 			     visitor))))
@@ -580,8 +596,9 @@
 
   (case (plist-get val :val-type)
 
-    (ref (when-let (looked-up (ensime-rpc-debug-value-for-id
-			       (plist-get val :object-id)))
+    (ref (when-let (looked-up (ensime-rpc-debug-value
+			       (ensime-db-make-obj-ref-location
+				(plist-get val :object-id))))
 	   (ensime-db-visit-value looked-up
 				  expansion
 				  path
@@ -767,7 +784,7 @@ the current project's dependencies. Returns list of form (cmd [arg]*)"
 
 
 (defun ensime-db-start ()
-  "Run a Scala interpreter in an Emacs buffer"
+  "Start a debug VM"
   (interactive)
 
   (ensime-with-conn-interactive
@@ -791,7 +808,7 @@ the current project's dependencies. Returns list of form (cmd [arg]*)"
 
 
 (defun ensime-db-attach ()
-  "Run a Scala interpreter in an Emacs buffer"
+  "Attach to a debug VM"
   (interactive)
 
   (ensime-with-conn-interactive

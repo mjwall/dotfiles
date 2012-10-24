@@ -680,8 +680,7 @@ Analyzer will be restarted. All source will be recompiled."
 
 
 (defvar ensime-inferior-server-args nil
-  "A buffer local variable in the inferior proccess.
-See `ensime-start'.")
+  "A buffer local variable in the inferior proccess. See `ensime-start'.")
 
 (defun ensime-inferior-server-args (process)
   "Return the initial process arguments.
@@ -767,8 +766,8 @@ If not, message the user."
 
 (defun ensime-temp-file-name (name)
   "Return the path of a temp file with filename 'name'."
-  (concat (file-name-as-directory (ensime-temp-directory))
-	  name))
+  (expand-file-name
+   (concat (file-name-as-directory (ensime-temp-directory)) name)))
 
 (defun ensime-temp-directory ()
   "Return the directory name of the system's temporary file dump."
@@ -2039,7 +2038,8 @@ This idiom is preferred over `lexical-let'."
 	   (ensime-clear-notes 'java))
 
 	  ((:debug-event evt)
-	   (ensime-db-handle-event evt))
+	   (ensime-db-handle-event evt)
+	   (ensime-event-sig :debug-event evt))
 
 	  ((:channel-send id msg)
 	   (ensime-channel-send (or (ensime-find-channel id)
@@ -2961,25 +2961,13 @@ any buffer visiting the given file."
   (ensime-eval
    `(swank:debug-value-for-name ,thread-id ,name)))
 
-(defun ensime-rpc-debug-value-for-field (object-id name)
+(defun ensime-rpc-debug-value (location)
   (ensime-eval
-   `(swank:debug-value-for-field ,object-id ,name)))
+   `(swank:debug-value ,location)))
 
-(defun ensime-rpc-debug-value-for-stack-var (thread-id frame offset)
+(defun ensime-rpc-debug-set-value (location new-val)
   (ensime-eval
-   `(swank:debug-value-for-stack-var ,thread-id ,frame ,offset)))
-
-(defun ensime-rpc-debug-value-for-index (object-id index)
-  (ensime-eval
-   `(swank:debug-value-for-index ,object-id ,index)))
-
-(defun ensime-rpc-debug-value-for-id (object-id)
-  (ensime-eval
-   `(swank:debug-value-for-id ,object-id)))
-
-(defun ensime-rpc-debug-set-stack-var (thread-id frame offset new-val)
-  (ensime-eval
-   `(swank:debug-set-stack-var ,thread-id ,frame ,offset ,new-val)))
+   `(swank:debug-set-value ,location ,new-val)))
 
 (defun ensime-rpc-debug-start (command-line)
   (ensime-eval
