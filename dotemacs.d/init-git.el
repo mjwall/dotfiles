@@ -6,6 +6,10 @@
 ;; I do that so often, I want an easier key combo
 (global-set-key "\C-c\C-w" 'server-edit)
 
+;; load git stuff from git-core contrib, vc-git.el included with emacs now
+(require 'git)
+(require 'git-blame)
+
 ;; follow symlinks to real file
 (setq vc-follow-symlinks t)
 
