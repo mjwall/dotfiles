@@ -2,7 +2,7 @@
   name = Michael Wall
   email = mjwall@gmail.com
 [alias]
-  st = status
+  st = status -sb
   ci = commit
   br = branch
   co = checkout
@@ -16,6 +16,7 @@
 [pager]
   color = true
 [color]
+  ui = true
   diff = auto
   status = auto
   branch = auto
