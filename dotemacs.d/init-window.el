@@ -3,7 +3,7 @@
   (tooltip-mode -1)
   (mouse-wheel-mode t)
   (blink-cursor-mode -1)
-  (menu-bar-mode -1)
+  (menu-bar-mode 1) ; turn on the menu bar in the gui
 )
 
 ; movement keys C-<left> etc don't seem to work in terminal and winner-mode
