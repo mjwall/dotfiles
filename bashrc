@@ -5,8 +5,11 @@ export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagacad
 
 # Java and friends
-# export JAVA_HOME=/Library/Java/Home # mac
-export JAVA_HOME=/usr/java/default # redhat
+if [ $(uname) == "Darwin" ]; then
+  export JAVA_HOME=/Library/Java/Home # mac
+else
+  export JAVA_HOME=/usr/java/default # redhat
+fi
 export M2_HOME="${HOME}/opt/maven"
 export MAVEN_OPTS="-Xmx512m -Xms256m -XX:PermSize=128m -XX:MaxPermSize=256m"
 export MAVEN_OPTS_DEBUG="${MAVEN_OPTS} -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8781,server=y,suspend=n"
