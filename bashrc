@@ -43,8 +43,11 @@ export MONGO_HOME=${HOME}/opt/mongo
 export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
 # mactex
-#export MACTEXT_HOME="/usr/local/texlive/2011/bin/x86_64-darwin"
-#export PATH="${PATH}:${MACTEXT_HOME}"
+if [ $(uname) == "Darwin" ]; then
+  # install mactex from http://www.tug.org/mactex/ and update accordingly
+  export MACTEXT_HOME="/usr/local/texlive/2012/bin/x86_64-darwin"
+  export PATH="${PATH}:${MACTEXT_HOME}"
+fi
 
 # ruby
 [[ -r /Users/mwall/.rvm/scripts/completion ]] && . /Users/mwall/.rvm/scripts/completion

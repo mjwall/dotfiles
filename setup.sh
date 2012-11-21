@@ -32,6 +32,12 @@ setup_dir_link() {
         echo "ERROR: Directory ${source} already exists"
     fi
 }
+# create backup dir if it doesn't exist
+if [ ! -d "${HOME}/.backup" ]; then
+  echo "Creating ~/.backup directory"
+  mkdir "${HOME}/.backup"
+fi
+
 # setup links
 setup_file_link "${CODE_HOME}/bashrc" "${HOME}/.bashrc"
 setup_file_link "${CODE_HOME}/bash_profile" "${HOME}/.bash_profile"
