@@ -7,7 +7,7 @@
 (when *is-a-mac*
   (setq default-input-method "MacOSX")
   ;; fonts
-  (setq default-frame-alist '((font . "Monaco-12")))
+  (setq default-frame-alist '((font . "Monaco-14")))
 
   ;; Work around a bug on OS X where system-name is FQDN
   (setq system-name (car (split-string system-name "\\.")))
