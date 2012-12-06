@@ -22,8 +22,8 @@
         (require-package package min-version t)))))
 
 (add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-
+;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 ;;------------------------------------------------------------------------------
 ;; Fire up package.el and ensure the following packages are installed.
 ;;------------------------------------------------------------------------------
@@ -56,5 +56,6 @@
 (require-package 'yaml-mode)
 (require-package 'markdown-mode)
 (require-package 'php-mode)
+(require-package 'nrepl)
 
 (provide 'init-elpa)

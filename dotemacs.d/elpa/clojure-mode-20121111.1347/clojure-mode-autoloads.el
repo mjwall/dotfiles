@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (clojure-enable-slime-on-existing-buffers clojure-jack-in
-;;;;;;  clojure-mode) "clojure-mode" "clojure-mode.el" (20280 8774))
+;;;;;;  clojure-mode) "clojure-mode" "clojure-mode.el" (20672 53745))
 ;;; Generated autoloads from clojure-mode.el
 
 (autoload 'clojure-mode "clojure-mode" "\
@@ -33,11 +33,25 @@ Not documented
 
 (add-hook 'slime-connected-hook 'clojure-enable-slime-on-existing-buffers)
 
+(put 'clojure-test-ns-segment-position 'safe-local-variable 'integerp)
+
+(put 'clojure-mode-load-command 'safe-local-variable 'stringp)
+
+(put 'clojure-swank-command 'safe-local-variable 'stringp)
+
+(add-hook 'slime-connected-hook 'clojure-enable-slime-on-existing-buffers)
+
+(add-hook 'slime-indentation-update-hooks 'put-clojure-indent)
+
 (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+
+(add-to-list 'interpreter-mode-alist '("jark" . clojure-mode))
+
+(add-to-list 'interpreter-mode-alist '("cake" . clojure-mode))
 
 ;;;***
 
-;;;### (autoloads nil nil ("clojure-mode-pkg.el") (20280 8774 523025))
+;;;### (autoloads nil nil ("clojure-mode-pkg.el") (20672 53745 326722))
 
 ;;;***
 
