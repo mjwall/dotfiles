@@ -50,9 +50,20 @@ if [ $(uname) == "Darwin" ]; then
 fi
 
 # ruby
-[[ -r /Users/mwall/.rvm/scripts/completion ]] && . /Users/mwall/.rvm/scripts/completion
-if [[ -s /Users/mwall/.rvm/scripts/rvm ]] ; then source /Users/mwall/.rvm/scripts/rvm ; fi
+if [ -d "$HOME/.rvm" ]; then
+  PATH=$HOME/.rvm/bin:$PATH
+  if [ -s "$HOME/.rvmrc" ]; then
+    source "$HOME/.rvmrc"
+  fi # to have $rvm_path defined if set
+  if [ -s "${rvm_path-$HOME/.rvm}/scripts/rvm" ]; then
+    source "${rvm_path-$HOME/.rvm}/scripts/rvm"
+  fi
+  [[ -r /Users/mwall/.rvm/scripts/completion ]] && . /Users/mwall/.rvm/scripts/completion
+fi
 #echo 'eval "$(rbenv init -)"'
+
+# python
+export PYTHONPATH="/usr/local/lib/python2.7/site-packages:$PYTHONPATH"
 
 # editors
 export EDITOR=et
@@ -159,3 +170,5 @@ shopt -s cmdhist
 #G  bold cyan
 #H  bold light grey; looks like bright white
 #x  default foreground or background
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
