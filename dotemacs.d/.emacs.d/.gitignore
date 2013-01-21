@@ -1,0 +1,7 @@
+*.el~
+*.elc
+auto-save-list
+backups
+elpa/archives
+tramp
+
