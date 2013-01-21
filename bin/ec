@@ -13,7 +13,7 @@ visible_frames() {
 }
 
 change_focus() {
-  emacsclient -n -e "(select-frame-set-input-focus (selected-frame))"
+  emacsclient -n -e "(select-frame-set-input-focus (selected-frame))" > /dev/null
 }
 
 # try switching to the frame incase it is just minimized
