@@ -141,13 +141,13 @@
 (global-set-key (kbd "C-s-<up>") 'enlarge-window)
 
 ;; setup formatting with not running in terminal
-(when window-system
-  (setq frame-title-format '(buffer-file-name "%f" ("%b")))
-  (tooltip-mode -1)
-  (mouse-wheel-mode t)
-  (blink-cursor-mode -1)
-  (menu-bar-mode 1) ; turn on the menu bar in the gui
-)
+;; (when window-system
+;;   (setq frame-title-format '(buffer-file-name "%f" ("%b")))
+;;   (tooltip-mode -1)
+;;   (mouse-wheel-mode t)
+;;   (blink-cursor-mode -1)
+;;   (menu-bar-mode 1) ; turn on the menu bar in the gui
+;; )
 
 ;; fight modeline clutter, need to eval-after-load for whatever you want diminished
 (require-package 'diminish)
