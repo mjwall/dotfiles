@@ -189,8 +189,7 @@
 (when *is-a-mac*
   (setq default-input-method "MacOSX")
   ;; fonts
-  ;;(setq default-frame-alist '((font . "Monaco-15")))
-  (setq default-frame-alist '((font . "Menlo-15")))
+  (setq default-frame-alist '((font . "Monoco-12")))
 
   ;; Work around a bug on OS X where system-name is FQDN
   (setq system-name (car (split-string system-name "\\.")))
@@ -850,15 +849,3 @@ print json.dumps(j, sort_keys=True, indent=2)
 
 ;; TODO
 ;; autocomplete
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("4d66773cc6d32566eaf2c9c7ce11269d9eb26e428a1a4fa10e97bae46ff615da" default))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
