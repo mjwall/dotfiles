@@ -5,12 +5,12 @@
 ;; - Navigation
 ;; - Editing and formatting
 ;; - Utility functions
-;; - Shell
 ;; - Language specific
 
 ;;----------------------------------------------------------------------------
 ;; - Defaults
 ;;----------------------------------------------------------------------------
+
 ;; Turn off mouse interface early in startup to avoid momentary display, can be turned on later if needed
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -30,14 +30,6 @@
 ;; Set up load path
 (add-to-list 'load-path user-emacs-directory)
 (add-to-list 'load-path site-lisp-dir)
-
-;; (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-;;     (let* ((my-lisp-dir (concat dotfiles-dir "/site-lisp/"))
-;;            (default-directory my-lisp-dir))
-;;       (progn
-;;         (setq load-path (cons my-lisp-dir load-path))
-;;         (normal-top-level-add-subdirs-to-load-path))))
-;; (setq load-path (cons (expand-file-name dotfiles-dir) load-path))
 
 ;; Use a more interesting startup message
 (defun startup-echo-area-message ()
@@ -94,7 +86,8 @@
     (setq exec-path (split-string path-from-shell path-separator))))
 (if window-system (set-exec-path-from-shell-PATH))
 
-;; no line numbers unless I say so, but set the format for when I do, coding-hooks will provide line numbers for all code
+;; no line numbers unless I say so, but set the format for when I do, coding-hooks will
+;; provide line numbers for all code
 (global-linum-mode 0)
 (setq linum-format "%4d ")
 
@@ -103,14 +96,7 @@
 
 ;; Packages
 
-;; REMOVE, not supporting < 24
-;; ;; When switching between Emacs 23 and 24, we always use the bundled package.el in Emacs 24
-;; (let ((package-el-site-lisp-dir (expand-file-name "~/.emacs.d/site-lisp/package")))
-;;   (when (and (file-directory-p package-el-site-lisp-dir)
-;;              (> emacs-major-version 23))
-;;     (message "Removing local package.el from load-path to avoid shadowing bundled version")
-;;     (setq load-path (remove package-el-site-lisp-dir load-path))))
-
+;; not supporting < 24
 (when (< emacs-major-version 24)
   (error "This configuration is not supported for Emacs version < 24"))
 
@@ -135,6 +121,7 @@
 ;;----------------------------------------------------------------------------
 ;; - Display
 ;;----------------------------------------------------------------------------
+
 ;; display variables
 (setq font-lock-maximum-decoration t ;; decoration for fonts
 )
@@ -168,9 +155,9 @@
 (require-package 'solarized-theme)
 ;; https://github.com/chriskempson/tomorrow-theme/tree/master/GNU%20Emacs
 (add-to-list 'custom-theme-load-path (concat dotfiles-dir "themes/tomorrow-theme"))
-;(load-theme 'tomorrow-night-bright t)
-(load-theme 'solarized-dark t)
-
+;; default theme
+;(load-theme 'solarized-dark t)
+(load-theme 'tomorrow-night-bright t)
 
 ;; run only in gui
 (if window-system
@@ -192,6 +179,7 @@
 ;;----------------------------------------------------------------------------
 ;; - Platform specific
 ;;----------------------------------------------------------------------------
+
 ;; set variables based on system type
 (setq *is-a-mac* (eq system-type 'darwin))
 (setq *is-carbon-emacs* (and *is-a-mac* (eq window-system 'mac)))
@@ -223,7 +211,6 @@
 (when *is-gnu-linux*
   ;;fonts
   (setq default-frame-alist '((font . "Monospace-12")))
-
   ;; give me a familiar quit emacs keybinding
   (global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
   )
@@ -231,6 +218,7 @@
 ;;----------------------------------------------------------------------------
 ;; - Navigation
 ;;----------------------------------------------------------------------------
+
 ;; navigation variables
 (setq shift-select-mode t         ;; shift arrow to select
       next-line-add-newlines nil  ;; don't add new lines when scrolling down
@@ -345,15 +333,11 @@
 ;; use this after C-s to search for word under cursor
 (define-key isearch-mode-map "\C-\M-w" 'isearch-yank-symbol)
 
-;; Remove this at some point unless I miss it.  Not in elpa, put in site-lisp
-;; 23 - http://www0.fh-trier.de/~politza/emacs/ido-hacks.el.gz
-;; 24 - https://github.com/scottjad/ido-hacks
-;; (require 'ido-hacks)
-
 ;; ido completion in M-x
 (require-package 'smex)
 (smex-initialize)
 (global-set-key "\M-x" 'smex)
+
 ;; avoid M-x if possible, https://sites.google.com/site/steveyegge2/effective-emacs
 (global-set-key "\C-x\C-m" 'smex)
 (global-set-key "\C-c\C-m" 'smex)
@@ -472,7 +456,7 @@ there's a region, all lines that region covers will be duplicated."
   (textmate-shift-right (* -1 (or arg 1))))
 (global-set-key (kbd "<C-S-left>") 'textmate-shift-left)
 
-;; more a private function for the next 2
+;; more of a private function for the next 2
 (defun move-line (arg)
   "Moves line up or down, depending on the arg."
   (let ((col (current-column)))
@@ -532,10 +516,10 @@ there's a region, all lines that region covers will be duplicated."
 ;; no need to see undo-tree in modeline
 (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))
 
-
 ;;----------------------------------------------------------------------------
 ;; - Utility functions
 ;;----------------------------------------------------------------------------
+
 ;; Insert date string
 (defun insert-date-string ()
  "Insert a nicely formated date string."
@@ -584,75 +568,6 @@ there's a region, all lines that region covers will be duplicated."
   (interactive)
   (browse-url (concat "file://" (buffer-file-name))))
 
-;; show-ascii-chart
-;; ----------------
-;; Display a helpful ASCII reference chart when called.  Useful for quickly
-;; double checking or looking up character codes.  Usually the
-;; what-cursor-position (C-x =) is faster for spot lookups of the number
-;; for a character here and there.  It's terrible, however, for finding the
-;; character given a number.
-;;
-(defun show-ascii-chart ()
-  "Display a helpful ASCII chart."
-  (interactive)
-  (let ((chart (concat
-                "==============================================================================\n"
-                "                        Common ASCII Codes And Escapes\n"
-                "==============================================================================\n"
-                "Char  Dec Hex Oct Esc Name             | Char  Dec Hex Oct Esc Name\n"
-                "------------------------------------------------------------------------------\n"
-                "(nul)   0  00 000 \\0  Null             | (np)   12  0c 014 \\f  Form Feed\n"
-                "(bel)   7  07 007 \\a  Audible Alert    | (cr)   13  0d 015 \\r  Carriage Return\n"
-                "(bs)    8  08 010 \\b  Backspace        | (sp)   32  20 040     Space\n"
-                "(ht)    9  09 011 \\t  Horizontal Tab   | 0      48  30 060     Zero\n"
-                "(nl)   10  0a 012 \\n  New Line         | A      65  41 101     Capital A\n"
-                "(vt)   11  0b 013 \\v  Vertical Tab     | a      97  61 141     Lowercase a\n"
-                "\n"
-                "=============================================================================\n"
-                "                                 ASCII Table\n"
-                "=============================================================================\n"
-                "Char  Dec Hex Oct | Char  Dec Hex Oct | Char  Dec Hex Oct | Char  Dec Hex Oct\n"
-                "-----------------------------------------------------------------------------\n"
-                "(nul)   0  00 000 | (sp)   32  20 040 | @      64  40 100 | `      96  60 140\n"
-                "(soh)   1  01 001 | !      33  21 041 | A      65  41 101 | a      97  61 141\n"
-                "(stx)   2  02 002 | \"      34  22 042 | B      66  42 102 | b      98  62 142\n"
-                "(etx)   3  03 003 | #      35  23 043 | C      67  43 103 | c      99  63 143\n"
-                "(eot)   4  04 004 | $      36  24 044 | D      68  44 104 | d     100  64 144\n"
-                "(enq)   5  05 005 | %      37  25 045 | E      69  45 105 | e     101  65 145\n"
-                "(ack)   6  06 006 | &      38  26 046 | F      70  46 106 | f     102  66 146\n"
-                "(bel)   7  07 007 | '      39  27 047 | G      71  47 107 | g     103  67 147\n"
-                "(bs)    8  08 010 | (      40  28 050 | H      72  48 110 | h     104  68 150\n"
-                "(ht)    9  09 011 | )      41  29 051 | I      73  49 111 | i     105  69 151\n"
-                "(nl)   10  0a 012 | *      42  2a 052 | J      74  4a 112 | j     106  6a 152\n"
-                "(vt)   11  0b 013 | +      43  2b 053 | K      75  4b 113 | k     107  6b 153\n"
-                "(np)   12  0c 014 | ,      44  2c 054 | L      76  4c 114 | l     108  6c 154\n"
-                "(cr)   13  0d 015 | -      45  2d 055 | M      77  4d 115 | m     109  6d 155\n"
-                "(so)   14  0e 016 | .      46  2e 056 | N      78  4e 116 | n     110  6e 156\n"
-                "(si)   15  0f 017 | /      47  2f 057 | O      79  4f 117 | o     111  6f 157\n"
-                "(dle)  16  10 020 | 0      48  30 060 | P      80  50 120 | p     112  70 160\n"
-                "(dc1)  17  11 021 | 1      49  31 061 | Q      81  51 121 | q     113  71 161\n"
-                "(dc2)  18  12 022 | 2      50  32 062 | R      82  52 122 | r     114  72 162\n"
-                "(dc3)  19  13 023 | 3      51  33 063 | S      83  53 123 | s     115  73 163\n"
-                "(dc4)  20  14 024 | 4      52  34 064 | T      84  54 124 | t     116  74 164\n"
-                "(nak)  21  15 025 | 5      53  35 065 | U      85  55 125 | u     117  75 165\n"
-                "(syn)  22  16 026 | 6      54  36 066 | V      86  56 126 | v     118  76 166\n"
-                "(etb)  23  17 027 | 7      55  37 067 | W      87  57 127 | w     119  77 167\n"
-                "(can)  24  18 030 | 8      56  38 070 | X      88  58 130 | x     120  78 170\n"
-                "(em)   25  19 031 | 9      57  39 071 | Y      89  59 131 | y     121  79 171\n"
-                "(sub)  26  1a 032 | :      58  3a 072 | Z      90  5a 132 | z     122  7a 172\n"
-                "(esc)  27  1b 033 | ;      59  3b 073 | [      91  5b 133 | {     123  7b 173\n"
-                "(fs)   28  1c 034 | <      60  3c 074 | \\      92  5c 134 | |     124  7c 174\n"
-                "(gs)   29  1d 035 | =      61  3d 075 | ]      93  5d 135 | }     125  7d 175\n"
-                "(rs)   30  1e 036 | >      62  3e 076 | ^      94  5e 136 | ~     126  7e 176\n"
-                "(us)   31  1f 037 | ?      63  3f 077 | _      95  5f 137 | (del) 127  7f 177\n")))
-    (if (fboundp 'with-displaying-help-buffer)
-        (with-displaying-help-buffer
-         (lambda ()
-           (princ chart))
-         "ASCII Chart")
-      (with-output-to-temp-buffer "ASCII Chart"
-        (princ chart)))))
-
 ;; dired+
 (require-package 'dired+)
 (toggle-diredp-find-file-reuse-dir 1)
@@ -662,7 +577,7 @@ there's a region, all lines that region covers will be duplicated."
 ;; Git stuff
 ;; I hear such good things about magit,
 ;; but I have invested a lot in learning the git commands
-;; Magit is installed, but I am not sure what I'll use it for.
+;; Magit is moved to elpa-noload
 ;;(require-package 'magit)
 
 ;; I use git from the terminal and GIT_EDITOR=et, so I need to close
@@ -679,38 +594,6 @@ there's a region, all lines that region covers will be duplicated."
 ;; follow symlinks to real file
 (setq vc-follow-symlinks t)
 
-;; Org mode, old stuff when I used it for todos
-;(global-set-key (kbd "C-c s") 'org-store-link)
-;(global-set-key (kbd "C-c a") 'org-agenda)
-;(global-set-key (kbd "C-c c") 'org-capture)
-;(global-set-key (kbd "C-c b") 'org-iswitchb)
-;(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-;(setq org-log-done t)
-;(setq org-completion-use-ido t)
-;(setq org-todo-keywords
-;      '((sequence "TODO" "INPROGRESS" "ONHOLD" "|" "DONE" "CANCELLED")))
-;(setq org-directory "~/org")
-;(setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
-; org mobile
-;(setq org-mobile-directory "~/Dropbox/MobileOrg")
-;(setq org-mobile-inbox-for-pull "~/org/todo.org")
-;(setq org-startup-indented t)
-;(add-hook 'after-init-hook 'org-mobile-pull)
-;(add-hook 'kill-emacs-hook 'org-mobile-push)
-; refile to other files
-;(setq org-outline-path-complete-in-steps t)
-;(setq org-refile-use-outline-path 'file)
-;(setq org-refile-targets '((org-agenda-files . (:level . 2))))
-; capture
-; (setq org-capture-templates
-;      '(("t" "Todo" entry (file "~/org/todo.org" )
-;             "* TODO %^{enter todo}\n%?")
-;        ("j" "Journal" entry (file+datetree "~/org/journal.org")
-;         "* %^{journal title}\n%?\nEntered on %U")))
-;(setq org-default-notes-file (concat org-directory "~/org/inbox.org"))
-;; install elpa compliant latest according to
-;; http://orgmode.org/worg/org-faq.html#installing-from-elpa-tarball
-
 ;; Project package
 (require-package 'projectile)
 (projectile-global-mode)
@@ -718,72 +601,6 @@ there's a region, all lines that region covers will be duplicated."
 ;; Deft, like notational velocity for Emacs
 (require-package 'deft)
 (setq deft-use-filename-as-title t)
-
-;;----------------------------------------------------------------------------
-;; - Shell
-;;----------------------------------------------------------------------------
-;; (require 'tramp)
-;; (custom-set-variables
-;;  ;; custom-set-variables was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(background-color nil)
-;;  '(background-mode dark)
-;;  '(comint-buffer-maximum-size 20000)
-;;  '(comint-completion-addsuffix t)
-;;  '(comint-get-old-input (lambda nil "") t)
-;;  '(comint-input-ignoredups t)
-;;  '(comint-input-ring-size 5000)
-;;  '(comint-move-point-for-output nil)
-;;  '(comint-prompt-read-only nil)
-;;  '(comint-scroll-show-maximum-output t)
-;;  '(comint-scroll-to-bottom-on-input t)
-;;  '(cursor-color nil)
-;;  '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
-;;  '(foreground-color nil)
-;;  '(protect-buffer-bury-p nil)
-;;  '(tramp-default-method "ssh"))
-
-;; misc settings
-;; (setenv "PAGER" "cat")
-;; ;; truncate buffers continuously
-;; (add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
-;; ; interpret and use ansi color codes in shell output windows
-;; (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-;; (setq term-default-bg-color nil)
-;; (setq term-default-fg-color nil)
-;; (defun my-term-yank ()
-;;   "Useful when cutting and pasting from a ansi-term running in terminal emacs"
-;;   (interactive)
-;;   (if (term-in-line-mode)
-;;       (yank)
-;;       (term-send-down)))
-;; (add-hook 'ansi-term-after-hook
-;;   (lambda ()
-;;     (define-key term-raw-map "\C-y" 'term-paste)
-;;     (define-key term-raw-map "\M-w" 'my-term-yank) ;; term-send-raw-meta?
-;;     ;;(define-key term-raw-map "\C-x\C-c" 'save-buffers-kill-emacs) ;; Command-q on Mac
-;;     (define-key term-raw-map "\C-c\C-c" 'term-interrupt-subjob)
-;;     ))
-;; (eval-after-load "term"
-;;   '(progn
-;;      (defun term-send-backspace () (interactive) (term-send-raw-string "\C-h"))))
-;; (defadvice ansi-term (after ansi-term-after-advice (arg))
-;;   "run hook as after advice"
-;;   (run-hooks 'ansi-term-after-hook))
-;; (ad-activate 'ansi-term)
-;; ;; attempt to change buffer name based on directory.  Would like to get this working at some point
-;; ;; (defun my-set-buffer-name-to-directory ()
-;; ;;   (interactive)
-;; ;;   (message "%s" "changing buffer name")
-;; ;;   (rename-buffer (concat "*" default-directory "*") 1)
-;; ;;   )
-;; (defun my-ansi-term ()
-;;   (interactive)
-;;   (ansi-term "/bin/bash")
-;;   )
-;; (global-set-key "\C-x\C-z" 'my-ansi-term)
 
 ;;----------------------------------------------------------------------------
 ;; - Language specific
@@ -838,6 +655,8 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; Slime
 ;; -----
+;; slime is in elpa-autoloads.  Using nrepl for clojure
+;;
 ;;(require 'slime)
 ;;(require 'slime-autoloads)
 ;; (setq slime-lisp-implementations
@@ -874,40 +693,6 @@ there's a region, all lines that region covers will be duplicated."
 (add-hook 'emacs-lisp-mode-hook (lambda () (rainbow-delimiters-mode +1)))
 (add-hook 'emacs-lisp-mode-hook 'run-coding-hook)
 ;;(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode) ;;this is cool, but it seems to really slow down editing
-
-;; MIT scheme
-;; ----------
-;; from site-lisp/slime/contrib/swank-mit-scheme.scm
-;; (setq slime-lisp-implementations
-;;       '((mit-scheme ("mit-scheme") :init mit-scheme-init)))
-;; (setq slime-find-buffer-package-function 'find-mit-scheme-package)
-;; (defun mit-scheme-init (file encoding)
-;;   (format "%S\n\n"
-;;           `(begin
-;;             (load-option 'format)
-;;             (load-option 'sos)
-;;             (eval
-;;              '(construct-normal-package-from-description
-;;                (make-package-description '(swank) '(())
-;;                                          (vector) (vector) (vector) false))
-;;              (->environment '(package)))
-;;             (load ,(expand-file-name
-;;                     "contrib/swank-mit-scheme.scm" ; <-- insert your path
-;;                     slime-path)
-;;                   (->environment '(swank)))
-;;             (eval '(start-swank ,file) (->environment '(swank))))))
-;; (defun mit-scheme ()
-;;   (interactive)
-;;   (slime 'mit-scheme))
-;; (defun find-mit-scheme-package ()
-;;   (save-excursion
-;;     (let ((case-fold-search t))
-;;       (and (re-search-backward "^[;]+ package: \\((.+)\\).*$" nil t)
-;;            (match-string-no-properties 1)))))
-;; (add-hook 'scheme-mode-hook 'run-coding-hook)
-;; (add-hook 'scheme-mode-hook (lambda () (paredit-mode +1)))
-;; (add-hook 'scheme-mode-hook (lambda () (rainbow-delimiters-mode +1)))
-;; (add-hook 'scheme-mode-hook 'setup-mit-scheme)
 
 ;; Text mode
 ;; ---------
@@ -1065,3 +850,15 @@ print json.dumps(j, sort_keys=True, indent=2)
 
 ;; TODO
 ;; autocomplete
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("4d66773cc6d32566eaf2c9c7ce11269d9eb26e428a1a4fa10e97bae46ff615da" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
