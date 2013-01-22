@@ -1,3 +1,4 @@
+
 ;; Emacs config outline
 ;; - Defaults
 ;; - Display
@@ -189,7 +190,7 @@
 (when *is-a-mac*
   (setq default-input-method "MacOSX")
   ;; fonts
-  (setq default-frame-alist '((font . "Monoco-12")))
+  (setq default-frame-alist '((font . "Monoco-15")))
 
   ;; Work around a bug on OS X where system-name is FQDN
   (setq system-name (car (split-string system-name "\\.")))
@@ -600,6 +601,9 @@ there's a region, all lines that region covers will be duplicated."
 ;; Deft, like notational velocity for Emacs
 (require-package 'deft)
 (setq deft-use-filename-as-title t)
+
+;; install ESS
+(require-package 'ess)
 
 ;;----------------------------------------------------------------------------
 ;; - Language specific
