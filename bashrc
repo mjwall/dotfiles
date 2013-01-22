@@ -39,6 +39,9 @@ export MONGO_HOME=${HOME}/opt/mongo
 #export NODE_BIN=/usr/local/share/npm/bin
 #. ~/nvm/nvm.sh
 
+# Python, installed with brew install python
+export PYTHONPATH="$(brew --prefix)/lib/python2.7/site-packages:$PYTHONPATH"
+
 # docbook
 export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
