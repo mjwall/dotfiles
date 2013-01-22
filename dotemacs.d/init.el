@@ -851,5 +851,9 @@ print json.dumps(j, sort_keys=True, indent=2)
         (nxml-mode)
         (indent-region begin end)))
 
+;; Thrift mode
+;; lifted from https://gist.github.com/2470924
+(require 'thrift-mode)
+(add-hook 'thift-mode-hook 'run-coding-hook)
 ;; TODO
 ;; autocomplete
