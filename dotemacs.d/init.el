@@ -701,6 +701,7 @@ there's a region, all lines that region covers will be duplicated."
 ;; ---------
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'text-mode-hook 'turn-on-flyspell)
+(add-hook 'text-mode-hook 'turn-off-truncate-lines)
 
 ;; Latex mode
 ;; ----------
