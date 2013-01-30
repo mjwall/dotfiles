@@ -190,7 +190,8 @@
 (when *is-a-mac*
   (setq default-input-method "MacOSX")
   ;; fonts
-  (setq default-frame-alist '((font . "Monoco-15")))
+  ;;(setq default-frame-alist '((font . "Monoco-15")))
+  (setq default-frame-alist '((font . "Liberation Mono-15")))
 
   ;; Work around a bug on OS X where system-name is FQDN
   (setq system-name (car (split-string system-name "\\.")))
@@ -604,6 +605,16 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; install ESS
 (require-package 'ess)
+
+;; org-mode
+;; active Org-babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(;; other Babel languages
+   (plantuml . t)))
+
+(setq org-plantuml-jar-path
+      (expand-file-name (concat user-emacs-directory "/site-lisp/plantuml.jar")))
 
 ;;----------------------------------------------------------------------------
 ;; - Language specific
