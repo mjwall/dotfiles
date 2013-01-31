@@ -196,13 +196,6 @@
   ;; Work around a bug on OS X where system-name is FQDN
   (setq system-name (car (split-string system-name "\\.")))
 
-  ;; Fix shift+up for iterm2
-  ;;(lists.gnu.org/archive/html/help-gnu-emacs/2011-05/msg00211.html)
-  (if (equal "xterm" (substring (tty-type) 0 5))
-    (define-key input-decode-map "\e[1;2A" [S-up]))
-
-
-
   (when *is-cocoa-emacs*
     ;; allows me to drag into the doc icon and open editor: see
     ;; http://stackoverflow.com/questions/1850292/emacs-23-1-and-mac-os-x-problem-with-files-drag-and-drop
@@ -235,6 +228,23 @@
       scroll-up-aggressively 0          ;; ... are very ...
       scroll-down-aggressively 0        ;; ... annoying
 )
+
+;; Fix shift+up when running emacs in terminal
+;; see http://lists.gnu.org/archive/html/help-gnu-emacs/2011-05/msg00211.html
+;; and http://emacswiki.org/emacs/ElispCookbook#toc4
+;; (defun string/starts-with (s arg)
+;;         "returns non-nil if string S starts with ARG.  Else nil."
+;;         (cond ((>= (length s) (length arg))
+;;             (string-equal (substring s 0 (length arg)) arg))
+;;                        (t nil)))
+
+;; (if (string/starts-with (tty-type) "xterm")
+;;     (progn
+;;       (message "fixing xterm")))
+;;(define-key input-decode-map "\e[1;2A" [S-up])
+(defadvice terminal-init-xterm (after select-shift-up activate)
+      (define-key input-decode-map "\e[1;2A" [S-up]))
+
 
 ; movement keys C-<left> etc don't seem to work in terminal and winner-mode
 (global-set-key (kbd "C-x <left>") 'windmove-left)
@@ -367,9 +377,10 @@
       require-final-newline t           ;; end files with a newline
       ;; set ispell to use brew installed aspell, see http://sunny.in.th/2010/05/08/emacs-enabling-flyspell-mode-gave-an-error.html
       ispell-program-name "aspell"
-      ;; make backspace mode work correctly, use F1 instead of Ctrl-h when running in the terminal
-      normal-erase-is-backspace t
 )
+
+;; make backspace work as expected
+(normal-erase-is-backspace-mode 1)
 
 ;; delete selected on keypress
 (delete-selection-mode 1)
