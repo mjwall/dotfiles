@@ -608,6 +608,7 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; org-mode
 ;; active Org-babel languages
+(setq org-support-shift-select t)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(;; other Babel languages
