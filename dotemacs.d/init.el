@@ -196,6 +196,13 @@
   ;; Work around a bug on OS X where system-name is FQDN
   (setq system-name (car (split-string system-name "\\.")))
 
+  ;; Fix shift+up for iterm2
+  ;;(lists.gnu.org/archive/html/help-gnu-emacs/2011-05/msg00211.html)
+  (if (equal "xterm" (substring (tty-type) 0 5))
+    (define-key input-decode-map "\e[1;2A" [S-up]))
+
+
+
   (when *is-cocoa-emacs*
     ;; allows me to drag into the doc icon and open editor: see
     ;; http://stackoverflow.com/questions/1850292/emacs-23-1-and-mac-os-x-problem-with-files-drag-and-drop
