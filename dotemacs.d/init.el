@@ -597,18 +597,23 @@ there's a region, all lines that region covers will be duplicated."
 ;; I hear such good things about magit,
 ;; but I have invested a lot in learning the git commands
 ;; Magit is moved to elpa-noload
-;;(require-package 'magit)
+(require-package 'magit)
 
 ;; I use git from the terminal and GIT_EDITOR=et, so I need to close
 ;; the commit message when I am done.  C-x # is the command, which runs
 ;; server-edit.  But I do that so often, I want an easier key combo
-(global-set-key "\C-c\C-w" 'server-edit)
+;;(global-set-key "\C-c\C-w" 'server-edit)
 
 ;; load git stuff from git-core contrib/emacs into site-lisp,
 ;; see http://git.kernel.org/?p=git/git.git;a=tree;hb=HEAD;f=contrib/emacs
 ;; vc-git.el included with emacs now
 (require 'git)
 (require 'git-blame)
+
+;; git-gutter
+(require-package 'git-gutter)
+(global-git-gutter-mode t)
+(global-set-key (kbd "C-x C-g") 'git-gutter:toggle)
 
 ;; follow symlinks to real file
 (setq vc-follow-symlinks t)
@@ -634,6 +639,9 @@ there's a region, all lines that region covers will be duplicated."
 
 (setq org-plantuml-jar-path
       (expand-file-name (concat user-emacs-directory "/site-lisp/plantuml.jar")))
+
+;; multi-term
+(require-package 'multi-term)
 
 ;;----------------------------------------------------------------------------
 ;; - Language specific
@@ -665,7 +673,7 @@ there's a region, all lines that region covers will be duplicated."
 (add-hook 'coding-hook 'turn-on-whitespace)
 (add-hook 'coding-hook 'add-watchwords)
 (add-hook 'coding-hook 'turn-on-hideshow)
-(add-hook 'coding-hook 'turn-on-linum)
+;(add-hook 'coding-hook 'turn-on-linum)
 (add-hook 'coding-hook 'bye-flyspell)
 (add-hook 'coding-hook 'autopair-mode)
 
@@ -719,6 +727,7 @@ there's a region, all lines that region covers will be duplicated."
 (add-hook 'clojure-mode-hook (lambda () (paredit-mode +1)))
 (add-hook 'clojure-mode-hook (lambda () (rainbow-delimiters-mode +1)))
 (require-package 'nrepl)
+(require 'lein)
 
 ;; Elisp
 ;; -----

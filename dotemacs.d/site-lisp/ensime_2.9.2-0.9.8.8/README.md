@@ -2,7 +2,8 @@
 the ENhanced Scala Interaction Mode for Emacs
 
 # Links
-- [ Downloads ](https://github.com/aemoncannon/ensime/downloads)
+- [ Download releases ](https://www.dropbox.com/sh/ryd981hq08swyqr/V9o9rDvxkS/ENSIME%20Releases)
+- [ Older releases ](https://github.com/aemoncannon/ensime/downloads)
 - [ Manual ](http://aemoncannon.github.com/ensime/index.html)
 - [ Manual as PDF ](http://aemoncannon.github.com/ensime/manual.pdf)
 - [ Discussion Group ](http://groups.google.com/group/ensime?hl=en)
@@ -21,13 +22,13 @@ the ENhanced Scala Interaction Mode for Emacs
 - Automated Refactorings (rename, organize imports, extract method)
 - Source Formatting
 - AST-based selection
-- Supports sbt7,10,11
+- Supports 11,12
 - Embedded sbt shell
 - REPL
 - Debug support
 
 
-## Demo Videos
+## Demo Videos (some are very out of date!)
 
 - [Overview (a bit out of date)](http://www.youtube.com/watch?v=A2Lai8IjLoY)
 - [Searching](http://www.youtube.com/watch?v=fcgnAJz98QE)
@@ -51,14 +52,13 @@ the ENhanced Scala Interaction Mode for Emacs
 
 ## Getting Started
 
-__1) Install scala-mode__
+__1) Install scala-mode2__
 
-Although it's not required, ENSIME is designed to compliment scala-mode. scala-mode can be found in the Scala distribution under ./misc/scala-tool-support/emacs/.
-
+Although it's not required, ENSIME is designed to compliment an existing scala major mode. scala-mode2 is an excellent scala mode, and can be found at https://github.com/hvesalai/scala-mode2
 
 __2) Install the ENSIME Server__
 
-Download the ENSIME distribution from the github [downloads page](http://github.com/aemoncannon/ensime/downloads). Unpack the ENSIME distribution into a directory of your choosing. 
+Download the ENSIME distribution from the [releases page](https://www.dropbox.com/sh/ryd981hq08swyqr/V9o9rDvxkS/ENSIME%20Releases). Unpack the ENSIME distribution into a directory of your choosing. 
 
 Add the following lines to your .emacs file:
 
@@ -87,7 +87,7 @@ Note: Currently, it may be necessary to first delete your project/target directo
 You should now have a .ensime file in the root of your project. There's no need to edit this file manually as you can now specify ENSIME settings directly from your sbt build file. Check the [manual](http://aemoncannon.github.com/ensime/index.html#tth_sEc3.1.1) for details.
 
 
-__5) Start ENSIME__
+__4) Start ENSIME__
 
 From inside Emacs, execute M-x ensime
 

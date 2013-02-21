@@ -314,7 +314,7 @@
 	(goto-char target-point)
 	(setq ensime-scalex-selection-overlay
 	      (ensime-make-overlay target-point (point-at-eol)
-				   nil 'ensime-warnline))
+				   nil 'ensime-warnline-highlight))
 	(set-window-point (ensime-window-showing-buffer
 			   ensime-scalex-target-buffer)
 			  target-point)

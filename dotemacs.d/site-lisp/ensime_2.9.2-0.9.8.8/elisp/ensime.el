@@ -504,15 +504,13 @@ Do not show 'Writing..' message."
     (let* ((point (posn-point (event-end event)))
            (ident (tooltip-identifier-from-point point))
            (note-overlays (ensime-overlays-at point))
-	   (val-at-pt (ensime-db-value-for-name-at-point point)))
-
+           (val-at-pt (ensime-db-tooltip point)))
 
       (cond
 
        ;; If debugger is active and we can get the value of the symbol
        ;; at the point, show it in the tooltip.
-       (val-at-pt (ensime-tooltip-show-message (ensime-db-value-short-name
-						val-at-pt)) t)
+       (val-at-pt (ensime-tooltip-show-message val-at-pt) t)
 
        ;; If error or warning overlays exist,
        ;; show that message..
@@ -2168,62 +2166,61 @@ This idiom is preferred over `lexical-let'."
   "Create an overlay highlighting the given line in
 any buffer visiting the given file."
   (let ((beg b)
-	(end e))
+        (end e))
+    (assert (or (integerp line)
+                (and (integerp beg) (integerp end))))
     (when-let (buf (find-buffer-visiting file))
+              (with-current-buffer buf
+                (if (and (integerp beg) (integerp end))
+                    ;; If DOS eol's, fix the positioning
+                    ;; Note: this is impossible without the line argument.
+                    (when (and (integerp line)
+                               (eq 1 (coding-system-eol-type
+                                      (buffer-local-value
+                                       'buffer-file-coding-system buf))))
+                      (setq beg (- beg (1- line)))
+                      (setq end (- end (1- line))))
 
-      ;; If line provided, use line to define region
-      (when (integerp line)
-	(with-current-buffer buf
-	  (save-excursion
-	    (ensime-goto-line line)
-	    (setq beg (point-at-bol))
-	    (setq end (point-at-eol)))))
+                  ;; If line provided, use line to define region
+                  (save-excursion
+                    (goto-line line)
+                    (setq beg (point-at-bol))
+                    (setq end (point-at-eol)))))
 
-      ;; If DOS eol's, fix the positioning
-      (when (eq 1 (coding-system-eol-type
-		   (buffer-local-value
-		    'buffer-file-coding-system buf
-		    )))
-	(with-current-buffer buf
-	  (setq beg (- beg (- (line-number-at-pos beg) 1)))
-	  (setq end (- end (- (line-number-at-pos end) 1)))))
-
-
-      (ensime-make-overlay beg end msg face nil buf))
+              (ensime-make-overlay beg end msg face nil buf))
     ))
-
 
 
 (defun ensime-make-note-overlays (notes)
   (dolist (note notes)
     (destructuring-bind
-	(&key severity msg beg end line col file &allow-other-keys) note
+        (&key severity msg beg end line col file &allow-other-keys) note
 
       ;; No empty note overlays!
       (when (eq beg end)
-	(setq beg (- beg 1)))
+        (setq beg (- beg 1)))
 
       (let ((lang
-	     (cond
-	      ((ensime-java-file-p file) 'java)
-	      ((ensime-scala-file-p file) 'scala)
-	      (t 'scala)))
-	    (face
-	     (cond
-	      ((equal severity 'error)
-	       'ensime-errline-highlight)
-	      (t
-	       'ensime-warnline-highlight))))
+             (cond
+              ((ensime-java-file-p file) 'java)
+              ((ensime-scala-file-p file) 'scala)
+              (t 'scala)))
+            (face
+             (cond
+              ((equal severity 'error)
+               'ensime-errline-highlight)
+              (t
+               'ensime-warnline-highlight))))
 
-	(when-let (ov (ensime-make-overlay-at
-		       file nil
-		       (+ beg ensime-ch-fix)
-		       (+ end ensime-ch-fix)
-		       msg face))
-	  (overlay-put ov 'lang lang)
-	  (push ov ensime-note-overlays))
+        (when-let (ov (ensime-make-overlay-at
+                       file line
+                       (+ beg ensime-ch-fix)
+                       (+ end ensime-ch-fix)
+                       msg face))
+                  (overlay-put ov 'lang lang)
+                  (push ov ensime-note-overlays))
 
-	))))
+        ))))
 
 
 (defun ensime-update-note-counts ()
@@ -2253,35 +2250,15 @@ any buffer visiting the given file."
     (ensime-make-note-overlays notes)
     ))
 
-
-(defface ensime-errline
-  '((((class color) (background dark)) (:background "Firebrick4"))
-    (((class color) (background light)) (:background "LightPink"))
-    (t (:bold t)))
-  "Face used for marking the line on which an error occurs."
-  :group 'ensime-ui)
-
 (defface ensime-errline-highlight
-  '((((class color) (background dark)) (:background "Firebrick3"))
-    (((class color) (background light)) (:background "HotPink"))
-    (t (:bold t)))
+  '((t (:inherit flymake-errline)))
   "Face used for marking the specific region of an error, if available."
   :group 'ensime-ui)
 
-(defface ensime-warnline
-  '((((class color) (background dark)) (:background "DarkBlue"))
-    (((class color) (background light)) (:background "LightBlue2"))
-    (t (:bold t)))
-  "Face used for marking the line on which an warning occurs."
-  :group 'ensime-ui)
-
 (defface ensime-warnline-highlight
-  '((((class color) (background dark)) (:background "dark slate blue"))
-    (((class color) (background light)) (:background "DeepSkyBlue1"))
-    (t (:bold t)))
+  '((t (:inherit flymake-warnline)))
   "Face used for marking the specific region of an warning, if available."
   :group 'ensime-ui)
-
 
 (defun ensime-make-overlay (beg end tooltip-text face &optional mouse-face buf)
   "Allocate a ensime overlay in range BEG and END."
@@ -2742,30 +2719,43 @@ any buffer visiting the given file."
 (defun ensime-show-all-errors-and-warnings ()
   "Show a summary of all compilation notes."
   (interactive)
-  (let ((notes (append (ensime-java-compiler-notes (ensime-connection))
-		       (ensime-scala-compiler-notes (ensime-connection)))))
+  (let ((notes
+         (append (ensime-java-compiler-notes (ensime-connection))
+                 (ensime-scala-compiler-notes (ensime-connection)))))
     (ensime-show-compile-result-buffer
      notes)))
 
-
 (defun ensime-sym-at-point (&optional point)
+  "Return information about the symbol at point, using the an RPC request.
+ If not looking at a symbol, return nil."
+  (save-excursion
+    (goto-char (or point (point)))
+    (let* ((info (ensime-rpc-symbol-at-point)))
+      (if (null info) (ensime-local-sym-at-point point)
+        (let ((start (ensime-pos-offset (ensime-symbol-decl-pos info)))
+              (name (plist-get info :local-name)))
+            (setq start (+ start ensime-ch-fix))
+            (list :start start
+                  :end (+ start (string-width name))
+                  :name name))))))
+
+(defun ensime-local-sym-at-point (&optional point)
   "Return information about the symbol at point. If not looking at a
  symbol, return nil."
   (save-excursion
     (goto-char (or point (point)))
     (let ((start nil)
-	  (end nil))
+          (end nil))
       (when (thing-at-point 'symbol)
-	(save-excursion
-	  (search-backward-regexp "\\W" nil t)
-	  (setq start (+ (point) 1)))
-	(save-excursion
-	  (search-forward-regexp "\\W" nil t)
-	  (setq end (- (point) 1)))
-	(list :start start
-	      :end end
-	      :name (buffer-substring-no-properties start end))))))
-
+        (save-excursion
+          (search-backward-regexp "\\W" nil t)
+          (setq start (+ (point) 1)))
+        (save-excursion
+          (search-forward-regexp "\\W" nil t)
+          (setq end (- (point) 1)))
+        (list :start start
+              :end end
+              :name (buffer-substring-no-properties start end))))))
 
 (defun ensime-insert-import (qualified-name)
   "A simple, hacky import insertion."
@@ -2783,7 +2773,7 @@ any buffer visiting the given file."
       )
 
     (when (looking-at "^\\s-*import\\s-")
-      (left-char 1)
+      (backward-char)
       (while (progn
 	     (if (looking-at "[\n\t ]*import\\s-\\(.+\\)\n")
 		 (let ((imported-name (match-string 1)))
@@ -2806,7 +2796,7 @@ any buffer visiting the given file."
   "Suggest possible imports of the qualified name at point.
  If user selects and import, add it to the import list."
   (interactive)
-  (let* ((sym (ensime-sym-at-point))
+  (let* ((sym (ensime-local-sym-at-point))
 	 (name (plist-get sym :name))
 	 (name-start (plist-get sym :start))
 	 (name-end (plist-get sym :end))
@@ -2824,7 +2814,8 @@ any buffer visiting the given file."
 		 names :point (point)))))
 	(when selected-name
 	  (save-excursion
-	    (when (not (equal selected-name name))
+	    (when (and (not (equal selected-name name))
+                       name-start name-end)
 	      (goto-char name-start)
 	      (delete-char (- name-end name-start))
 	      (insert (get-text-property
@@ -2938,6 +2929,39 @@ any buffer visiting the given file."
 	    (end (cadr range)))
 	(ensime-set-selection start end)))))
 
+(defun ensime-inspect-bytecode ()
+  "Show the bytecode for the current method."
+  (interactive)
+  (let ((bc (ensime-rpc-method-bytecode buffer-file-name (current-line))))
+    (if (not bc)
+	(message "Could not find bytecode.")
+      (progn
+	(ensime-ui-show-nav-buffer "*ensime-method-bytecode-buffer*" bc t)
+	))))
+
+(defvar ensime-ui-method-bytecode-handler
+  (list
+   :init (lambda (info)
+	   (ensime-ui-insert-method-bytecode info))
+   :update (lambda (info))
+   :help-text "Press q to quit."
+   :writable nil
+   :keymap `()
+   ))
+
+(defun ensime-ui-insert-method-bytecode (val)
+  (destructuring-bind
+      (&key class-name name bytecode &allow-other-keys) val
+    (insert class-name)
+    (insert "\n")
+    (insert name)
+    (insert "\n\n")
+    (dolist (op bytecode)
+      (ensime-insert-with-face (car op) 'font-lock-constant-face)
+      (insert " ")
+      (ensime-insert-with-face (cadr op) 'font-lock-variable-name-face)
+      (insert "\n")
+      )))
 
 ;; Basic RPC calls
 
@@ -2957,13 +2981,17 @@ any buffer visiting the given file."
   (ensime-eval-async
    `(swank:debug-backtrace ,thread-id ,index ,count) continue))
 
-(defun ensime-rpc-debug-value-for-name (thread-id name)
+(defun ensime-rpc-debug-locate-name (thread-id name)
   (ensime-eval
-   `(swank:debug-value-for-name ,thread-id ,name)))
+   `(swank:debug-locate-name ,thread-id ,name)))
 
 (defun ensime-rpc-debug-value (location)
   (ensime-eval
    `(swank:debug-value ,location)))
+
+(defun ensime-rpc-debug-to-string (thread-id location)
+  (ensime-eval
+   `(swank:debug-to-string ,thread-id ,location)))
 
 (defun ensime-rpc-debug-set-value (location new-val)
   (ensime-eval
@@ -3115,6 +3143,11 @@ with the current project's dependencies loaded. Returns a property list."
 (defun ensime-rpc-inspect-type-at-point ()
   (ensime-eval
    `(swank:inspect-type-at-point ,buffer-file-name ,(ensime-computed-point))))
+
+(defun ensime-rpc-inspect-type-at-range (&optional range)
+  (ensime-eval
+   `(swank:inspect-type-at-point ,buffer-file-name
+                                 ,(or range (ensime-computed-range)))))
 
 (defun ensime-rpc-inspect-type-by-id (id)
   (if (and (integerp id) (> id -1))
@@ -3401,7 +3434,7 @@ with the current project's dependencies loaded. Returns a property list."
 	(ensime-rpc-inspect-type-by-id
 	 (ensime-type-id imported-type))
       ;; otherwise do normal type inspection
-      (ensime-rpc-inspect-type-at-point))))
+      (ensime-rpc-inspect-type-at-range))))
 
 (defun ensime-inspect-java-type-at-point ()
   "Use the global index to search for type at point.
@@ -3955,6 +3988,13 @@ It should be used for \"background\" messages such as argument lists."
  that are hidden by Emacs."
   (ensime-externalize-offset (point)))
 
+(defun ensime-computed-range ()
+  (if (and transient-mark-mode mark-active)
+      (list
+       (ensime-externalize-offset (min (mark) (point)))
+       (ensime-externalize-offset (max (mark) (point))))
+    (list (ensime-computed-point) (ensime-computed-point))))
+
 (defun ensime-externalize-offset (offset)
   (+ offset (- ensime-ch-fix)
      (if (eq 1 (coding-system-eol-type buffer-file-coding-system))
@@ -3963,7 +4003,12 @@ It should be used for \"background\" messages such as argument lists."
      ))
 
 (defun ensime-internalize-offset (offset)
-  (+ offset ensime-ch-fix))
+  (when offset
+    (- offset (- ensime-ch-fix)
+       (if (eq 1 (coding-system-eol-type buffer-file-coding-system))
+           (- (line-number-at-pos (point)) 1)
+         0)
+       )))
 
 (defun ensime-internalize-offset-fields (plist &rest keys)
   (dolist (key keys)
