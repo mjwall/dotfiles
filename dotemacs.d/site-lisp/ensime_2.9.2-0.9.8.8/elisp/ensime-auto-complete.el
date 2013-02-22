@@ -26,6 +26,11 @@
   :type 'boolean
   :group 'ensime-ui)
 
+(defcustom ensime-ac-override-settings t
+    "If non-nil, override auto-complete settings."
+    :type 'boolean
+    :group 'ensime-ui)
+
 (defcustom ensime-ac-case-sensitive nil
   "If non-nil, omit completions that don't match the case of prefix."
   :type 'boolean
@@ -58,7 +63,7 @@
 			    'is-callable is-callable
 			    'to-insert to-insert
 			    'summary (ensime-ac-trunc-summary
-				      (ensime-ac-get-doc type-sig))
+				      (ensime-ac-brief-type-sig type-sig))
 			    )))
 	    completions)
     ))
@@ -95,9 +100,26 @@ changes will be forgotten."
 	(concat (substring str 0 40) "...")
       str)))
 
+(defun ensime-ac-brief-type-sig (type-sig)
+  "Return doc for given item."
+  ;;(ensime-ac-brief-type-sig '(((("aemon" "Person"))) "Dude"))
+  (let* ((sections (car type-sig))
+	 (return-type (cadr type-sig)))
+    (if sections
+	(format "%s: %s"
+		(mapconcat
+		 (lambda (section)
+		   (format "(%s)"
+			   (mapconcat
+			    (lambda (param-pair)
+			      (format "%s:%s" (car param-pair) (cadr param-pair)))
+			    section ", ")))
+		 sections "=>") return-type)
+      return-type)))
+
 (defun ensime-ac-get-doc (item)
   "Return doc for given item."
-  (format "%s" item))
+  (ensime-ac-brief-type-sig (get-text-property 0 'type-sig item)))
 
 (defun ensime-ac-candidate-to-insert (item)
   "Return to-insert for given item."
@@ -268,44 +290,45 @@ be used later to give contextual help when entering arguments."
 
 
 (defun ensime-ac-enable ()
-  (make-local-variable 'ac-sources)
-  (setq ac-sources '(ac-source-ensime-completions))
+  (when ensime-ac-override-settings
+    (make-local-variable 'ac-sources)
+	(setq ac-sources '(ac-source-ensime-completions))
 
-  (make-local-variable 'ac-use-comphist)
-  (setq ac-use-comphist nil)
+	(make-local-variable 'ac-use-comphist)
+	(setq ac-use-comphist nil)
 
-  (make-local-variable 'ac-auto-show-menu)
-  (setq ac-auto-show-menu 0.5)
+	(make-local-variable 'ac-auto-show-menu)
+	(setq ac-auto-show-menu 0.5)
 
-  (make-local-variable 'ac-candidates-cache)
-  (setq ac-candidates-cache nil)
+	(make-local-variable 'ac-candidates-cache)
+	(setq ac-candidates-cache nil)
 
-  (make-local-variable 'ac-auto-start)
-  (setq ac-auto-start nil)
+	(make-local-variable 'ac-auto-start)
+	(setq ac-auto-start nil)
 
-  (make-local-variable 'ac-expand-on-auto-complete)
-  (setq ac-expand-on-auto-complete t)
+	(make-local-variable 'ac-expand-on-auto-complete)
+	(setq ac-expand-on-auto-complete t)
 
-  (make-local-variable 'ac-use-fuzzy)
-  (setq ac-use-fuzzy nil)
+	(make-local-variable 'ac-use-fuzzy)
+	(setq ac-use-fuzzy nil)
 
-  (make-local-variable 'ac-dwim)
-  (setq ac-dwim nil)
+	(make-local-variable 'ac-dwim)
+	(setq ac-dwim nil)
 
-  (make-local-variable 'ac-use-quick-help)
-  (setq ac-use-quick-help t)
+	(make-local-variable 'ac-use-quick-help)
+	(setq ac-use-quick-help t)
 
-  (make-local-variable 'ac-delete-dups)
-  (setq ac-delete-dups nil)
+	(make-local-variable 'ac-delete-dups)
+	(setq ac-delete-dups nil)
 
-  (make-local-variable 'ac-ignore-case)
-  (setq ac-ignore-case t)
+	(make-local-variable 'ac-ignore-case)
+	(setq ac-ignore-case t)
 
-  (make-local-variable 'ac-trigger-key)
-  (ac-set-trigger-key "TAB")
+	(make-local-variable 'ac-trigger-key)
+	(ac-set-trigger-key "TAB")
 
-  (auto-complete-mode 1)
-  )
+	(auto-complete-mode 1)
+  ))
 
 (defun ensime-ac-disable ()
   (auto-complete-mode 0)

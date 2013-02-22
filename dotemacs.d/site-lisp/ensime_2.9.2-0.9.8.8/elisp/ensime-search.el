@@ -288,7 +288,7 @@
 	(goto-char target-point)
 	(setq ensime-search-selection-overlay
 	      (ensime-make-overlay target-point (point-at-eol)
-				   nil 'ensime-warnline))
+				   nil 'ensime-warnline-highlight))
 	(set-window-point (ensime-window-showing-buffer
 			   ensime-search-target-buffer)
 			  target-point)

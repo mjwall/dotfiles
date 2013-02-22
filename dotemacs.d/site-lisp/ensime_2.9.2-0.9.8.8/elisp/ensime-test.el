@@ -197,6 +197,7 @@
 		   (or (null guard-func) (funcall guard-func value)))
 	      (let ((handler-func (plist-get handler :func))
 		    (is-last (plist-get handler :is-last)))
+                (ensime-test-output (format "   ...handling %s" event))
 		(pop ensime-async-handler-stack)
 		(save-excursion
 		  (condition-case signal
@@ -223,7 +224,7 @@
 (defun ensime-test-output-result (result)
   "Helper for writing results to testing buffer."
   (if (equal result t)
-      (ensime-test-output (format "OK" ))
+      (ensime-test-output (format "." ))
     (ensime-test-output (format "%s\n" result))))
 
 (defun ensime-run-suite (suite)
@@ -382,6 +383,12 @@
        (with-current-buffer ensime-testing-buffer
 	 (signal 'ensime-test-assert-failed
 		 (format "Expected %s to equal %S, but was %S." ',a val-b val-a))))))
+
+(defun ensime-assert-file-contains-string (f str)
+  (with-temp-buffer
+    (insert-file-contents-literally f)
+    (goto-char (point-min))
+    (ensime-assert (search-forward str nil t))))
 
 (defun ensime-stop-tests ()
   "Forcibly stop all tests in progress."
@@ -577,6 +584,75 @@
 (defvar ensime-slow-suite
 
   (ensime-test-suite
+
+   (ensime-async-test
+    "Test inspect type at point."
+    (let* ((proj (ensime-create-tmp-project
+                  `((:name
+                     "test.scala"
+                     :contents ,(ensime-test-concat-lines
+                                 "package pack.a"
+                                 "class A(value:/*1*/String){"
+                                 "}"
+                                 )
+                     )
+                    ))))
+      (ensime-test-init-proj proj))
+
+    ((:connected connection-info))
+
+    ((:full-typecheck-finished val)
+     (ensime-test-with-proj
+      (proj src-files)
+      (find-file (car src-files))
+      (ensime-test-eat-label "1")
+      (ensime-write-buffer)
+      (forward-char 1)
+      (let* ((info (ensime-rpc-inspect-type-at-point)))
+	(ensime-assert (not (null info)))
+	(ensime-assert-equal "String" (plist-get (plist-get info :type) :name)))
+      (ensime-test-cleanup proj)
+      ))
+    )
+
+   (ensime-async-test
+    "Test inspect type in range."
+    (let* ((proj (ensime-create-tmp-project
+                  `((:name
+                     "test.scala"
+                     :contents ,(ensime-test-concat-lines
+                                 "package pack.a"
+                                 "class A {"
+                                 " def foo = {"
+                                 "  /*1*/this bar 2"
+                                 "  val x = 10"
+                                 " }"
+                                 " def bar(i:Int) = \"dlkjf\""
+                                 "}"
+                                 )
+                     )
+                    ))))
+      (ensime-test-init-proj proj))
+
+    ((:connected connection-info))
+
+    ((:full-typecheck-finished val)
+     (ensime-test-with-proj
+      (proj src-files)
+      (find-file (car src-files))
+      (ensime-test-eat-label "1")
+      (ensime-typecheck-current-file)
+      (forward-char 1)
+      (let ((mark (point)))
+        (goto-char (point-at-eol))
+        (let* ((info (ensime-rpc-inspect-type-at-range
+                      (list (- mark 1) (- (point) 1)))))
+          (ensime-assert (not (null info)))
+          (ensime-assert-equal
+           (plist-get (plist-get info :type) :name) "String")
+          ))
+      (ensime-test-cleanup proj)))
+    )
 
    (ensime-async-test
     "Test completing members."
@@ -788,9 +864,8 @@
       (ensime-refactor-organize-imports)))
 
     ((:refactor-at-confirm-buffer val)
-     (progn
-       (switch-to-buffer ensime-refactor-info-buffer-name)
-       (funcall (key-binding (kbd "c")))))
+     (switch-to-buffer ensime-refactor-info-buffer-name)
+     (funcall (key-binding (kbd "c"))))
 
     ((:refactor-done touched-files)
      (ensime-test-with-proj
@@ -804,7 +879,7 @@
 
 
    (ensime-async-test
-    "Test rename refactoring."
+    "Test rename refactoring over multiple files."
     (let* ((proj (ensime-create-tmp-project
 		  `((:name
 		     "hello_world.scala"
@@ -812,8 +887,18 @@
 				 "package com.helloworld"
 				 "class /*1*/HelloWorld{"
 				 "}"
-				 )
-		     )))))
+				 ))
+		    (:name
+		     "another.scala"
+		     :contents ,(ensime-test-concat-lines
+				 "package com.helloworld"
+				 "object Another {"
+				 "def main(args:Array[String]) {"
+				 "val a = new HelloWorld()"
+				 "}"
+				 "}"
+				 ))
+		    ))))
       (ensime-test-init-proj proj))
 
     ((:connected connection-info))
@@ -821,22 +906,53 @@
     ((:full-typecheck-finished val)
      (ensime-test-with-proj
       (proj src-files)
-      (ensime-test-eat-label "1")
-      (forward-char)
-      (ensime-save-buffer-no-hooks)
-      (ensime-refactor-rename "DudeFace")))
+      (ensime-assert (null (ensime-all-notes))))
+     (ensime-test-eat-label "1")
+     (forward-char)
+     (ensime-save-buffer-no-hooks)
+     (ensime-typecheck-current-file) ;; So ensime-sym-at-point sees latest.
+     (ensime-refactor-rename "DudeFace"))
 
     ((:refactor-at-confirm-buffer val)
-     (progn
-       (switch-to-buffer ensime-refactor-info-buffer-name)
-       (funcall (key-binding (kbd "c")))))
+     (switch-to-buffer ensime-refactor-info-buffer-name)
+     (funcall (key-binding (kbd "c"))))
 
     ((:refactor-done touched-files)
      (ensime-test-with-proj
       (proj src-files)
+      (ensime-assert-file-contains-string (car src-files) "class DudeFace")
+      (ensime-assert-file-contains-string (cadr src-files) "new DudeFace()")
+      ))
+
+    ((:full-typecheck-finished val)
+     (ensime-test-with-proj
+      (proj src-files)
+      ;; Do a followup refactoring to make sure compiler reloaded
+      ;; all touched files after the first rename...
+      (find-file (car src-files))
       (goto-char (point-min))
-      (ensime-assert (search-forward "class DudeFace" nil t))
-      (ensime-test-cleanup proj)))
+      (search-forward "Dude" nil t)
+      (ensime-refactor-rename "Horse")
+      ))
+
+    ((:refactor-at-confirm-buffer val)
+     (switch-to-buffer ensime-refactor-info-buffer-name)
+     (funcall (key-binding (kbd "c"))))
+
+    ((:refactor-done touched-files)
+     (ensime-test-with-proj
+      (proj src-files)
+      (ensime-assert-file-contains-string (car src-files) "class Horse")
+      (ensime-assert-file-contains-string (cadr src-files) "new Horse()")
+      ))
+
+    ((:full-typecheck-finished val)
+     (ensime-test-with-proj
+      (proj src-files)
+      (ensime-assert (null (ensime-all-notes)))
+      (ensime-test-cleanup proj)
+      ))
+
     )
 
 
@@ -876,13 +992,11 @@
       (ensime-show-uses-of-symbol-at-point)))
 
     ((:references-buffer-shown val)
-     (progn
-       (switch-to-buffer ensime-uses-buffer-name)
-       (goto-char (point-min))
-       (ensime-assert (search-forward "class B(value:String) extends A" nil t))
-       (funcall (key-binding (kbd "q")))
-       (ensime-test-cleanup proj)
-       ))
+     (switch-to-buffer ensime-uses-buffer-name)
+     (goto-char (point-min))
+     (ensime-assert (search-forward "class B(value:String) extends A" nil t))
+     (funcall (key-binding (kbd "q")))
+     (ensime-test-cleanup proj))
 
     )
 
@@ -995,7 +1109,7 @@
     ((:return-value val)
      (ensime-test-with-proj
       (proj src-files)
-      
+
       ;; Don't check source immediately cause it might not be rendered in buffer..."
       (ensime-typecheck-current-file)))
 
@@ -1365,9 +1479,7 @@
 
     ((:debug-event evt (equal (plist-get evt :type) 'breakpoint))
      (let* ((thread-id (plist-get evt :thread-id)))
-       (ensime-assert (ensime-rpc-debug-backtrace thread-id 0 -1))
-       (let ((val (ensime-rpc-debug-value-for-name thread-id "a")))
-	 (ensime-assert-equal (plist-get val :summary) "\"cat\"")))
+       (ensime-assert (ensime-rpc-debug-backtrace thread-id 0 -1)))
      (ensime-rpc-debug-stop))
 
     ((:debug-event evt (equal (plist-get evt :type) 'disconnect))
@@ -1439,7 +1551,7 @@
   "Run a signle test selected by title."
   (interactive)
   (catch 'done
-    (let ((key (read-string 
+    (let ((key (read-string
 		"Enter a regex matching a test's title: "))
 	  (tests (append ensime-fast-suite ensime-slow-suite)))
       (dolist (test tests)
