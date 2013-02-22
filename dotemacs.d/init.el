@@ -827,9 +827,12 @@ print json.dumps(j, sort_keys=True, indent=2)
 
 ;; Scala mode
 ;; ----------
-(require-package 'scala-mode)
+(require-package 'scala-mode2)
+
 ;; ensime doesn't appear to have been update for 24, comment out until I can look at it
-;;(require 'ensime) ;; in site-lib from https://github.com/aemoncannon/ensime/downloads
+(add-to-list 'load-path (concat site-lisp-dir "/ensime/elisp/"))
+(require 'ensime) ;; in site-lib from https://github.com/aemoncannon/ensime/downloads
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
 (add-to-list 'auto-mode-alist '(".sbt" . scala-mode))
 
