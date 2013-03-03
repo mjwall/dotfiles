@@ -88,12 +88,14 @@ export ALTERNATE_EDITOR=vim
 # sudo ln -s /Applications/Emacs.app/Contents/MacOS/bin/emacsclient /usr/bin/emacsclient
 
 # git
-source ~/.bash_completion.d/git-completion.bash
+source /usr/local/etc/bash_completion.d/git-completion.bash
+source /usr/local/etc/bash_completion.d/git-prompt.sh
 export GIT_PS1_SHOWDIRTYSTATE=true
 export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$'
 
 # from http://jonisalonen.com/2012/your-bash-prompt-needs-this/
-export PS1="\[\033[G\]$PS1"
+# Seems to stop text response such as curl from showing up
+#export PS1="\[\033[G\]$PS1"
 
 # other completion scripts
 source ~/.bash_completion.d/mvn-completion.bash
