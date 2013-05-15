@@ -5,8 +5,9 @@
 
 ;;;### (autoloads (multi-term-dedicated-select multi-term-dedicated-toggle
 ;;;;;;  multi-term-dedicated-open multi-term-prev multi-term-next
-;;;;;;  multi-term) "multi-term" "multi-term.el" (20763 43873))
-;;; Generated autoloads from multi-term.el
+;;;;;;  multi-term) "multi-term" "../../../../../.emacs.d/elpa/multi-term-20130108.2305/multi-term.el"
+;;;;;;  "6b403c0b41a3f9cab5c442a0c05c245c")
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/multi-term-20130108.2305/multi-term.el
 
 (autoload 'multi-term "multi-term" "\
 Create new term buffer.
@@ -44,7 +45,9 @@ Select the `multi-term' dedicated window.
 
 ;;;***
 
-;;;### (autoloads nil nil ("multi-term-pkg.el") (20763 43873 902156))
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/multi-term-20130108.2305/multi-term-pkg.el"
+;;;;;;  "../../../../../.emacs.d/elpa/multi-term-20130108.2305/multi-term.el")
+;;;;;;  (20882 58143 296956 0))
 
 ;;;***
 

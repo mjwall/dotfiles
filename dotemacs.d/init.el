@@ -377,6 +377,7 @@
       require-final-newline t           ;; end files with a newline
       ;; set ispell to use brew installed aspell, see http://sunny.in.th/2010/05/08/emacs-enabling-flyspell-mode-gave-an-error.html
       ispell-program-name "aspell"
+      tab-width 2
 )
 
 ;; make backspace work as expected
@@ -621,6 +622,7 @@ there's a region, all lines that region covers will be duplicated."
 ;; Project package
 (require-package 'projectile)
 (projectile-global-mode)
+(setq projectile-enable-caching t)
 
 ;; Deft, like notational velocity for Emacs
 (require-package 'deft)
@@ -785,10 +787,13 @@ print json.dumps(j, sort_keys=True, indent=2)
 (add-to-list 'auto-mode-alist '("Isolate" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.autotest" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\Gemfile" . ruby-mode))
+(setq ruby-indent-level 2)
 (add-hook 'ruby-mode-hook 'run-coding-hook)
 
-(require-package 'rvm)
-(rvm-use-default) ;; use rvm's default ruby for the current Emacs session
+;(require-package 'rvm)
+;(rvm-use-default) ;; use rvm's default ruby for the current Emacs session
+(require-package 'rbenv)
+(global-rbenv-mode)
 
 (require-package 'rinari)
 
@@ -838,7 +843,7 @@ print json.dumps(j, sort_keys=True, indent=2)
 ;; ----------
 (require-package 'scala-mode2)
 
-;; ensime doesn't appear to have been update for 24, comment out until I can look at it
+;; awesomeness for scala
 (add-to-list 'load-path (concat site-lisp-dir "/ensime/elisp/"))
 (require 'ensime) ;; in site-lib from https://github.com/aemoncannon/ensime/downloads
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)

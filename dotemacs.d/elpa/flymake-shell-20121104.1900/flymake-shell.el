@@ -3,7 +3,8 @@
 ;;; Copyright (C) 2011 Steve Purcell
 ;;; Author: Steve Purcell <steve@sanityinc.com>
 ;;; URL: https://github.com/purcell/flymake-shell
-;;; Version: DEV
+;; Version: 20121104.1900
+;;; X-Original-Version: DEV
 ;;; Package-Requires: ((flymake-easy "0.1"))
 ;;;
 ;;; Commentary:

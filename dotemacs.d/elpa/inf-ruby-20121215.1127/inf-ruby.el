@@ -6,7 +6,8 @@
 ;; URL: http://github.com/nonsequitur/inf-ruby
 ;; Created: 8 April 1998
 ;; Keywords: languages ruby
-;; Version: 2.2.4
+;; Version: 20121215.1127
+;; X-Original-Version: 2.2.4
 
 ;;; Commentary:
 ;;

@@ -4,8 +4,9 @@
 
 
 ;;;### (autoloads (pluralize-string singularize-string) "inflections"
-;;;;;;  "inflections.el" (20731 25483 0 0))
-;;; Generated autoloads from inflections.el
+;;;;;;  "../../../../../.emacs.d/elpa/inflections-20121016.957/inflections.el"
+;;;;;;  "ef34788cc0457080c47237e8f5c7b3cc")
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/inflections-20121016.957/inflections.el
 
 (autoload 'singularize-string "inflections" "\
 
@@ -19,8 +20,9 @@
 
 ;;;***
 
-;;;### (autoloads nil nil ("inflections-pkg.el") (20731 25483 283996
-;;;;;;  0))
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/inflections-20121016.957/inflections-pkg.el"
+;;;;;;  "../../../../../.emacs.d/elpa/inflections-20121016.957/inflections.el")
+;;;;;;  (20882 58146 826831 0))
 
 ;;;***
 

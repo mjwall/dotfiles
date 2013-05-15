@@ -4,7 +4,8 @@
 
 ;; Author: Eric Schulte
 ;; URL: http://github.com/eschulte/jump.el/tree/master
-;; Version: DEV
+;; Version: 20121016.1203
+;; X-Original-Version: DEV
 ;; Created: 2008-08-21
 ;; Keywords: project, convenience, navigation
 ;; Package-Requires: ((findr "0.7") (inflections "1.1"))

@@ -3,8 +3,9 @@
 ;;; Code:
 
 
-;;;### (autoloads nil nil ("markup-faces-pkg.el" "markup-faces.el")
-;;;;;;  (20731 27677 394784 0))
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/markup-faces-20130117.1146/markup-faces-pkg.el"
+;;;;;;  "../../../../../.emacs.d/elpa/markup-faces-20130117.1146/markup-faces.el")
+;;;;;;  (20882 58154 43099 0))
 
 ;;;***
 

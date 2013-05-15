@@ -4,8 +4,9 @@
 
 
 ;;;### (autoloads (run-ruby inf-ruby inf-ruby-setup-keybindings)
-;;;;;;  "inf-ruby" "inf-ruby.el" (20731 25486 0 0))
-;;; Generated autoloads from inf-ruby.el
+;;;;;;  "inf-ruby" "../../../../../.emacs.d/elpa/inf-ruby-20121215.1127/inf-ruby.el"
+;;;;;;  "1d284e66688886a961ccacb38d35450f")
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/inf-ruby-20121215.1127/inf-ruby.el
 
 (autoload 'inf-ruby-setup-keybindings "inf-ruby" "\
 Set local key defs to invoke inf-ruby from ruby-mode.
@@ -35,8 +36,9 @@ of `ruby-program-name').  Runs the hooks `inferior-ruby-mode-hook'
 
 ;;;***
 
-;;;### (autoloads nil nil ("inf-ruby-pkg.el") (20731 25486 678342
-;;;;;;  0))
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/inf-ruby-20121215.1127/inf-ruby-pkg.el"
+;;;;;;  "../../../../../.emacs.d/elpa/inf-ruby-20121215.1127/inf-ruby.el")
+;;;;;;  (20882 58148 287862 0))
 
 ;;;***
 
