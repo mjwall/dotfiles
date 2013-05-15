@@ -24,3 +24,5 @@
   default = tracking
 [push]
   default = tracking
+[credential]
+	helper = osxkeychain
