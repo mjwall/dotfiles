@@ -196,6 +196,13 @@
   ;; Work around a bug on OS X where system-name is FQDN
   (setq system-name (car (split-string system-name "\\.")))
 
+  ;; make the modifiers work like linux
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifer nil) ;; could be super
+
+  ;; turn off delete frame, I hit that too much
+  (global-unset-key (kbd "s-w"))
+
   (when *is-cocoa-emacs*
     ;; allows me to drag into the doc icon and open editor: see
     ;; http://stackoverflow.com/questions/1850292/emacs-23-1-and-mac-os-x-problem-with-files-drag-and-drop
