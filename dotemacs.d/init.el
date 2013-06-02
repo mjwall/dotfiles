@@ -177,6 +177,15 @@
 (global-set-key (kbd "C-9") '(lambda () (interactive) (adjust-opacity nil 5)))
 (global-set-key (kbd "C-0") '(lambda () (interactive) (modify-frame-parameters nil `((alpha . 100)))))
 
+;; modeline styling, https://github.com/jonathanchu/emacs-powerline
+(require 'powerline)
+(setq powerline-color1 "grey22")
+(setq powerline-color2 "grey40")
+(set-face-attribute 'mode-line nil
+                    :background "SteelBlue4"
+                    :box nil)
+(setq powerline-arrow-shape 'arrow)
+
 ;;----------------------------------------------------------------------------
 ;; - Platform specific
 ;;----------------------------------------------------------------------------
