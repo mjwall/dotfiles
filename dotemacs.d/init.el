@@ -76,7 +76,8 @@
 ;; show empty lines after buffer end
 (set-default 'indicate-empty-lines t)
 
-;; make emacs revert files when they change, for example when you switch git branches
+;; make emacs revert files when they change, for example
+;; when you switch git branches
 (global-auto-revert-mode 1)
 
 ;; setup the paths, this was useful when I was using ansi-term
@@ -87,8 +88,8 @@
     (setq exec-path (split-string path-from-shell path-separator))))
 (if window-system (set-exec-path-from-shell-PATH))
 
-;; no line numbers unless I say so, but set the format for when I do, coding-hooks will
-;; provide line numbers for all code
+;; no line numbers unless I say so, but set the format for when I do,
+;; coding-hooks will provide line numbers for all code
 (global-linum-mode 0)
 (setq linum-format "%4d ")
 
@@ -104,6 +105,7 @@
 (require 'package)
 
 ;; On-demand installation of packages
+;; may have to run package-refresh-contents
 (defun require-package (package &optional min-version no-refresh)
   "Ask elpa to install given PACKAGE."
   (if (package-installed-p package min-version)
@@ -115,8 +117,11 @@
         (require-package package min-version t)))))
 
 (add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/"))
-;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;; not sure about marmalade yet
+;;(add-to-list 'package-archives
+;;  '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
 
 ;;----------------------------------------------------------------------------
@@ -124,8 +129,8 @@
 ;;----------------------------------------------------------------------------
 
 ;; display variables
-(setq font-lock-maximum-decoration t ;; decoration for fonts
-)
+;; decoration for fonts
+(setq font-lock-maximum-decoration t)
 
 ;; Enable syntax highlighting for older Emacsen that have it off
 (global-font-lock-mode t)
@@ -149,7 +154,8 @@
 ;;   (menu-bar-mode 1) ; turn on the menu bar in the gui
 ;; )
 
-;; fight modeline clutter, need to eval-after-load for whatever you want diminished
+;; fight modeline clutter, need to eval-after-load for
+;; whatever you want diminished
 (require-package 'diminish)
 
 ;; themes
@@ -160,7 +166,7 @@
 ;(load-theme 'solarized-dark t)
 (load-theme 'tomorrow-night-bright t)
 
-;; run only in gui
+;; run only in gui, doesn't play well with daemon
 (if window-system
     (setq use-file-dialog nil)
     (setq use-dialog-box nil))
@@ -273,7 +279,8 @@
   (global-set-key (kbd "C-x C-b") 'ibuffer))
 
 ;; ido-mode is like magic pixie dust!
-(ido-mode t)  ; use 'buffer rather than t to use only buffer switching
+;; use 'buffer rather than t to use only buffer switching
+(ido-mode t)
 
 ;; Use C-f during file selection to switch to regular find-file
 (ido-everywhere t)
@@ -297,9 +304,12 @@
 
 ;; Display ido results vertically, rather than horizontally
 ;; from http://www.emacswiki.org/emacs/InteractivelyDoThings#toc17
-  (setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
-  (defun ido-disable-line-trucation () (set (make-local-variable 'truncate-lines) nil))
-  (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
+(setq ido-decorations
+      (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]"
+              " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
+(defun ido-disable-line-trucation ()
+  (set (make-local-variable 'truncate-lines) nil))
+(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
 
 ;; update keybindings so up and down move next with vertical results
 (add-hook 'ido-setup-hook
@@ -313,7 +323,7 @@
 (recentf-mode 1)
 (setq recentf-max-saved-items 100)
 
-;; taken from http://github.com/superbobry/emacs/blob/master/rc/emacs-rc-defuns.el
+;; From http://github.com/superbobry/emacs/blob/master/rc/emacs-rc-defuns.el
 (defun recentf-ido-find-file ()
   "Find a recent file using ido."
   (interactive)
@@ -372,7 +382,8 @@
 (smex-initialize)
 (global-set-key "\M-x" 'smex)
 
-;; avoid M-x if possible, https://sites.google.com/site/steveyegge2/effective-emacs
+;; avoid M-x if possible, see
+;; https://sites.google.com/site/steveyegge2/effective-emacs
 (global-set-key "\C-x\C-m" 'smex)
 (global-set-key "\C-c\C-m" 'smex)
 
@@ -643,6 +654,7 @@ there's a region, all lines that region covers will be duplicated."
 (require-package 'git-gutter)
 (global-git-gutter-mode t)
 (global-set-key (kbd "C-x C-g") 'git-gutter:toggle)
+(eval-after-load "git-gutter" '(diminish 'git-gutter-mode))
 
 ;; follow symlinks to real file
 (setq vc-follow-symlinks t)
@@ -651,6 +663,8 @@ there's a region, all lines that region covers will be duplicated."
 (require-package 'projectile)
 (projectile-global-mode)
 (setq projectile-enable-caching t)
+(diminish 'projectile-mode "proj")
+
 
 ;; Deft, like notational velocity for Emacs
 (require-package 'deft)
@@ -717,8 +731,7 @@ there's a region, all lines that region covers will be duplicated."
 (autoload 'paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code."
   t)
-
-(require-package 'rainbow-delimiters)
+(eval-after-load "paredit" '(diminish 'paredit-mode "pe"))
 
 (define-key lisp-mode-shared-map (kbd "RET") 'reindent-then-newline-and-indent)
 (define-key lisp-mode-shared-map (kbd "C-c l") "lambda")
@@ -765,6 +778,9 @@ there's a region, all lines that region covers will be duplicated."
 (add-hook 'emacs-lisp-mode-hook (lambda () (rainbow-delimiters-mode +1)))
 (add-hook 'emacs-lisp-mode-hook 'run-coding-hook)
 ;;(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode) ;;this is cool, but it seems to really slow down editing
+(add-hook
+ 'emacs-lisp-mode-hook
+ (lambda () (setq mode-name "Elisp")))
 
 ;; Text mode
 ;; ---------
