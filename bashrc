@@ -16,6 +16,7 @@ export MAVEN_OPTS_DEBUG="${MAVEN_OPTS} -Xdebug -Xnoagent -Djava.compiler=NONE -X
 export JAVA_OPTS="${MAVEN_OPTS} -Duser.timezone=UTC -Djava.awt.headless=true -d32"
 export M2="$M2_HOME/bin"
 export ANT_HOME="${HOME}/opt/ant"
+export ANT_OPTS="-Xmx512m"
 export GROOVY_HOME=/Library/Groovy/Home
 export GRAILS_HOME=/Library/Grails/Home
 export GANT_HOME=/Library/Gant/Home
@@ -53,17 +54,16 @@ if [ $(uname) == "Darwin" ]; then
 fi
 
 # ruby
-if [ -d "$HOME/.rvm" ]; then
-  PATH=$HOME/.rvm/bin:$PATH
-  if [ -s "$HOME/.rvmrc" ]; then
-    source "$HOME/.rvmrc"
-  fi # to have $rvm_path defined if set
-  if [ -s "${rvm_path-$HOME/.rvm}/scripts/rvm" ]; then
-    source "${rvm_path-$HOME/.rvm}/scripts/rvm"
-  fi
-  [[ -r /Users/mwall/.rvm/scripts/completion ]] && . /Users/mwall/.rvm/scripts/completion
-fi
-#echo 'eval "$(rbenv init -)"'
+# if [ -d "$HOME/.rvm" ]; then
+#   PATH=$HOME/.rvm/bin:$PATH
+#   if [ -s "$HOME/.rvmrc" ]; then
+#     source "$HOME/.rvmrc"
+#   fi # to have $rvm_path defined if set
+#   if [ -s "${rvm_path-$HOME/.rvm}/scripts/rvm" ]; then
+#     source "${rvm_path-$HOME/.rvm}/scripts/rvm"
+#   fi
+#   [[ -r /Users/mwall/.rvm/scripts/completion ]] && . /Users/mwall/.rvm/scripts/completion
+# fi
 
 # python
 export PYTHONPATH="/usr/local/lib/python2.7/site-packages:$PYTHONPATH"
@@ -109,6 +109,9 @@ alias sshaddme='ssh-add ~/.ssh/id_*sa.1'
 alias ..="cd .."
 alias work="screen -c ~/.work-screen"
 alias tar="COPYFILE_DISABLE=true tar" # we don't need ._ files everywhere on a mac, see http://www.commandlinefu.com/commands/view/5965/create-.tar-file-on-mac-os-x-leopard-snow-leopard-without-._-files
+alias edb="export EMISSARY_DBG_OPTIONS=\"-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005\""
+alias noedb="unset EMISSARY_DBG_OPTIONS"
+
 
 #history stuff
 shopt -s histappend
@@ -117,6 +120,14 @@ shopt -s cdspell
 export HISTCONTROL="ignoredups"
 export HISTIGNORE="&:ls:[bf]g:exit"
 shopt -s cmdhist
+
+# standalone hadoop-1.0.4
+#export HADOOP_PREFIX=/opt/hadoop-1.0.4
+#export PATH="${HADOOP_PREFIX}/bin:${PATH}"
+
+# standalone for hadoop-0.20.205.0
+export HADOOP_PREFIX=/opt/hadoop-0.20.205.0
+export PATH="${HADOOP_PREFIX}/bin:${PATH}"
 
 
 # gpg agent
@@ -176,4 +187,6 @@ shopt -s cmdhist
 #H  bold light grey; looks like bright white
 #x  default foreground or background
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+#PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export PATH="${HOME}/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"

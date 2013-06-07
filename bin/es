@@ -12,8 +12,10 @@ server_ok() {
 }
 
 if [ "t" == "$(server_ok)" ]; then
-    echo "Shutting down Emacs server"
-    emacsclient -e "(server-force-delete)"
+  echo "Shutting down Emacs server"
+  # wasn't removing emacs from ALT-TAB on mac
+  # emacsclient -e "(server-force-delete)"
+  emacsclient -e '(kill-emacs)'
 else
-    echo "Emacs server not running"
+  echo "Emacs server not running"
 fi

@@ -387,13 +387,18 @@
 ;; - Editing and formatting
 ;;----------------------------------------------------------------------------
 ;; editing and formatting variables
-(setq x-select-enable-clipboard t       ;; make emacs use the clipboard
-      kill-whole-line t                 ;; delete line in one stage
-      mouse-yank-at-point t             ;; paste at cursor, NOT at mouse pointer position
-      require-final-newline t           ;; end files with a newline
-      ;; set ispell to use brew installed aspell, see http://sunny.in.th/2010/05/08/emacs-enabling-flyspell-mode-gave-an-error.html
-      ispell-program-name "aspell"
-      tab-width 2
+(setq
+ ;; make emacs use the clipboard
+ x-select-enable-clipboard t
+ ;; delete line in one stage
+ kill-whole-line t
+ ;; paste at cursor, NOT at mouse pointer position
+ mouse-yank-at-point t
+ ;; end files with a newline
+ require-final-newline t
+ ;; set ispell to use brew installed aspell, see
+ ;; http://sunny.in.th/2010/05/08/emacs-enabling-flyspell-mode-gave-an-error.html
+ ispell-program-name "aspell"
 )
 
 ;; make backspace work as expected
@@ -403,7 +408,10 @@
 (delete-selection-mode 1)
 
 ;; use spaces to indent
-(set-default 'indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq indent-line-function 'insert-tab)
+
 
 ;; Highlight matching parentheses when the point is on them.
 (show-paren-mode 1)
@@ -411,11 +419,12 @@
 ;; some more familiar keybindings for default functions
 (global-set-key (kbd "C-c C-j") 'join-line)
 (global-set-key "\r" 'newline-and-indent)
-(global-set-key (kbd "C-;") 'comment-region)
+(global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 
 ;; set whitespace style, mode turned on later in run-coding-hook
-(setq whitespace-style '(trailing space-before-tab indentation
-                             space-after-tab tabs tab-mark)
+(setq whitespace-style
+      '(trailing space-before-tab indentation
+                 space-after-tab tabs tab-mark)
       c-basic-indent 2
       tab-width 4
       indent-tabs-mode nil)
@@ -523,7 +532,7 @@ there's a region, all lines that region covers will be duplicated."
 (global-set-key (kbd "s-s") 'save-buffer-always)
 
 ;; rebind to undo, stop suspending-frame
-;;(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-z") 'undo)
 
 ;; Hippie expand: at times perhaps too hip
 ;;(delete 'try-expand-line hippie-expand-try-functions-list)
@@ -539,7 +548,7 @@ there's a region, all lines that region covers will be duplicated."
         ))
 
 ;;hippie expand binding
-(global-set-key (kbd "M-TAB") 'hippie-expand)
+(global-set-key [C-tab] 'hippie-expand)
 
 ;; autopair quotes and parentheses
 (require-package 'autopair)
@@ -551,6 +560,9 @@ there's a region, all lines that region covers will be duplicated."
 (global-set-key (kbd "M-?") 'undo-tree-redo)
 ;; no need to see undo-tree in modeline
 (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))
+
+(require-package 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
 
 ;;----------------------------------------------------------------------------
 ;; - Utility functions
@@ -605,16 +617,16 @@ there's a region, all lines that region covers will be duplicated."
   (browse-url (concat "file://" (buffer-file-name))))
 
 ;; dired+
-(require-package 'dired+)
-(toggle-diredp-find-file-reuse-dir 1)
-(setq dired-recursive-deletes 'top)
-(define-key dired-mode-map [mouse-2] 'dired-find-file)
+;;(require-package 'dired+)
+;;(toggle-diredp-find-file-reuse-dir 1)
+;;(setq dired-recursive-deletes 'top)
+;;(define-key dired-mode-map [mouse-2] 'dired-find-file)
 
 ;; Git stuff
 ;; I hear such good things about magit,
 ;; but I have invested a lot in learning the git commands
 ;; Magit is moved to elpa-noload
-(require-package 'magit)
+;;(require-package 'magit)
 
 ;; I use git from the terminal and GIT_EDITOR=et, so I need to close
 ;; the commit message when I am done.  C-x # is the command, which runs
@@ -659,7 +671,7 @@ there's a region, all lines that region covers will be duplicated."
       (expand-file-name (concat user-emacs-directory "/site-lisp/plantuml.jar")))
 
 ;; multi-term
-(require-package 'multi-term)
+;;(require-package 'multi-term)
 
 ;;----------------------------------------------------------------------------
 ;; - Language specific
@@ -843,6 +855,10 @@ print json.dumps(j, sort_keys=True, indent=2)
 (add-to-list 'interpreter-mode-alist '("bash" . sh-mode))
 
 (add-hook 'sh-mode-hook 'run-coding-hook)
+(add-hook 'sh-mode-hook
+          '(lambda ()
+             (setq sh-basic-offset 2
+                   sh-indentation 2)))
 (require-package 'flymake-shell)
 (add-hook 'sh-mode-hook 'flymake-shell-load)
 
@@ -861,7 +877,8 @@ print json.dumps(j, sort_keys=True, indent=2)
 
 ;; awesomeness for scala
 (add-to-list 'load-path (concat site-lisp-dir "/ensime/elisp/"))
-(require 'ensime) ;; in site-lib from https://github.com/aemoncannon/ensime/downloads
+;; in site-lib from https://github.com/aemoncannon/ensime/downloads
+(require 'ensime)
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
 (add-to-list 'auto-mode-alist '(".sbt" . scala-mode))
