@@ -633,12 +633,9 @@ there's a region, all lines that region covers will be duplicated."
 ;;(define-key dired-mode-map [mouse-2] 'dired-find-file)
 
 ;; Git stuff
-;; I hear such good things about magit,
-;; but I have invested a lot in learning the git commands
-;; Magit is moved to elpa-noload
-;;(require-package 'magit)
+(require-package 'magit)
 
-;; I use git from the terminal and GIT_EDITOR=et, so I need to close
+;; When I used git from the terminal and GIT_EDITOR=et, I need to close
 ;; the commit message when I am done.  C-x # is the command, which runs
 ;; server-edit.  But I do that so often, I want an easier key combo
 ;;(global-set-key "\C-c\C-w" 'server-edit)
@@ -647,7 +644,8 @@ there's a region, all lines that region covers will be duplicated."
 ;; see http://git.kernel.org/?p=git/git.git;a=tree;hb=HEAD;f=contrib/emacs
 ;; vc-git.el included with emacs now
 (require 'git)
-(require 'git-blame)
+(require-package 'mo-git-blame)
+;;(require 'git-blame)
 
 ;; git-gutter
 (require-package 'git-gutter)
