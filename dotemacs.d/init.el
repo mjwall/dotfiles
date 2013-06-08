@@ -782,6 +782,12 @@ there's a region, all lines that region covers will be duplicated."
  'emacs-lisp-mode-hook
  (lambda () (setq mode-name "Elisp")))
 
+;; from http://nullprogram.com/blog/2010/06/10/
+(add-hook 'ielm-mode-hook (lambda () (paredit-mode 1)))
+(defadvice ielm-eval-input (after ielm-paredit activate)
+  "Begin each IELM prompt with a ParEdit parenthesis pair."
+  (paredit-open-round)) ; backspace if you don't want it
+
 ;; Text mode
 ;; ---------
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
@@ -804,6 +810,9 @@ there's a region, all lines that region covers will be duplicated."
 ;; JavaScript mode
 ;; ---------------
 (add-hook 'js-mode-hook 'run-coding-hook)
+(require 'json)
+(add-to-list 'js-mode-alist '(".json" . js-mode))
+
 
 (defun json-pretty-format ()
   "Runs a jsonlint shell script on the region and then indents
