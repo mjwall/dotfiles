@@ -71,6 +71,7 @@ export PYTHONPATH="/usr/local/lib/python2.7/site-packages:$PYTHONPATH"
 # editors
 export EDITOR=et
 export ALTERNATE_EDITOR=vim
+export GIT_EDITOR=emacsclient # for running git in ansi-term
 # for emacs on MacOS, compile and install 23.4.1 into /Applications/Emacs.app
 # chown -R root:staff /Applications/Emacs.app
 #

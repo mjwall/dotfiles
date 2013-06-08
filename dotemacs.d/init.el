@@ -1,4 +1,3 @@
-
 ;; Emacs config outline
 ;; - Defaults
 ;; - Display
@@ -811,7 +810,7 @@ there's a region, all lines that region covers will be duplicated."
 ;; ---------------
 (add-hook 'js-mode-hook 'run-coding-hook)
 (require 'json)
-(add-to-list 'js-mode-alist '(".json" . js-mode))
+(add-to-list 'auto-mode-alist '(".json" . js-mode))
 
 
 (defun json-pretty-format ()
@@ -900,11 +899,11 @@ print json.dumps(j, sort_keys=True, indent=2)
 ;; ----------
 (require-package 'scala-mode2)
 
-;; awesomeness for scala
-(add-to-list 'load-path (concat site-lisp-dir "/ensime/elisp/"))
+;; awesomeness for scala, but doesn't appear to be updated for emacs 24
+;;(add-to-list 'load-path (concat site-lisp-dir "/ensime/elisp/"))
 ;; in site-lib from https://github.com/aemoncannon/ensime/downloads
-(require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+;;(require 'ensime)
+;;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
 (add-to-list 'auto-mode-alist '(".sbt" . scala-mode))
 
