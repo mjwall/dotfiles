@@ -212,7 +212,7 @@
 
   ;; make the modifiers work like linux
   (setq mac-command-modifier 'meta)
-  (setq mac-option-modifer nil) ;; could be super
+  (setq mac-option-modifier 'super)
 
   ;; turn off delete frame, I hit that too much
   (global-unset-key (kbd "s-w"))
@@ -661,7 +661,6 @@ there's a region, all lines that region covers will be duplicated."
 (projectile-global-mode)
 (setq projectile-enable-caching t)
 (diminish 'projectile-mode "proj")
-
 
 ;; Deft, like notational velocity for Emacs
 (require-package 'deft)
