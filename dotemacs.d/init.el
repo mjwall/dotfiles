@@ -631,6 +631,10 @@ there's a region, all lines that region covers will be duplicated."
 ;;(toggle-diredp-find-file-reuse-dir 1)
 ;;(setq dired-recursive-deletes 'top)
 ;;(define-key dired-mode-map [mouse-2] 'dired-find-file)
+;; so 'a' in dired works
+(put 'dired-find-alternate-file 'disabled nil)
+
+
 
 ;; Git stuff
 (require-package 'magit)
