@@ -165,6 +165,11 @@
 ;(load-theme 'solarized-dark t)
 (load-theme 'tomorrow-night-bright t)
 
+;; fix cursor on some linux,
+;; see https://github.com/chriskempson/tomorrow-theme/issues/42
+(add-hook 'window-setup-hook '(lambda () (set-cursor-color "#778899")))
+(add-hook 'after-make-frame-functions '(lambda (f) (with-selected-frame f (set-cursor-color "#778899"))))
+
 ;; run only in gui, doesn't play well with daemon
 (if window-system
     (setq use-file-dialog nil)
@@ -273,6 +278,30 @@
 (global-set-key (kbd "C-x <down>") 'windmove-down)
 (global-set-key (kbd "C-x <up>") 'windmove-up)
 
+;; ido-jump-to-window was taken from http://www.emacswiki.org/emacs/WindowNavigation
+
+(defun my/swap (l)
+  (if (cdr l)
+      (cons (cadr l) (cons (car l) (cddr l)))
+    l))
+(defun ido-jump-to-window ()
+  (interactive)
+  (let* ((visible-buffers
+          (my/swap (mapcar '(lambda (window) (buffer-name (window-buffer window))) (window-list))))
+         (buffer-name (ido-completing-read "Window: " visible-buffers))
+         window-of-buffer)
+    (if (not (member buffer-name visible-buffers))
+        (error "'%s' does not have a visible window" buffer-name)
+      (setq window-of-buffer
+            (delq nil (mapcar '(lambda (window)
+                                 (if (equal buffer-name (buffer-name (window-buffer window)))
+                                     window
+                                   nil))
+                              (window-list))))
+      (select-window (car window-of-buffer)))))
+(global-set-key (kbd "\C-x v") 'ido-jump-to-window)
+(global-set-key (kbd "\C-x C-v") 'ido-jump-to-window)
+
 ;; keybinding to bring up ibuffer
 (when (fboundp 'ibuffer)
   (global-set-key (kbd "C-x C-b") 'ibuffer))
@@ -314,7 +343,10 @@
 (add-hook 'ido-setup-hook
           (lambda ()
             (define-key ido-completion-map (kbd "<up>") 'ido-prev-match)
-            (define-key ido-completion-map (kbd "<down>") 'ido-next-match)))
+            (define-key ido-completion-map (kbd "<down>") 'ido-next-match)
+            (define-key ido-completion-map (kbd "C-p") 'ido-prev-match)
+            (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+            ))
 
 (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
 
@@ -604,6 +636,9 @@ there's a region, all lines that region covers will be duplicated."
     (delete-file (buffer-file-name))
     (kill-this-buffer)))
 
+;; not sure why this works on Mac but not Linux
+(global-set-key (kbd "s-k") 'kill-this-buffer)
+
 ;; Rename the current file
 (defun rename-this-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
@@ -626,6 +661,12 @@ there's a region, all lines that region covers will be duplicated."
   (interactive)
   (browse-url (concat "file://" (buffer-file-name))))
 
+;; show full filename, with path
+(defun show-file-name ()
+  "Show the full path file name in the minibuffer."
+  (interactive)
+  (message (buffer-file-name)))
+
 ;; dired+
 ;;(require-package 'dired+)
 ;;(toggle-diredp-find-file-reuse-dir 1)
@@ -633,7 +674,6 @@ there's a region, all lines that region covers will be duplicated."
 ;;(define-key dired-mode-map [mouse-2] 'dired-find-file)
 ;; so 'a' in dired works
 (put 'dired-find-alternate-file 'disabled nil)
-
 
 
 ;; Git stuff
@@ -669,6 +709,8 @@ there's a region, all lines that region covers will be duplicated."
 ;; Deft, like notational velocity for Emacs
 (require-package 'deft)
 (setq deft-use-filename-as-title t)
+(setq deft-directory "~/.deft") ;default, but here if you need to change it
+(setq deft-auto-save-interval 30) ;defaults to 1 second, I type too slow
 
 ;; install ESS
 (require-package 'ess)
@@ -846,6 +888,7 @@ print json.dumps(j, sort_keys=True, indent=2)
 ;(require-package 'rvm)
 ;(rvm-use-default) ;; use rvm's default ruby for the current Emacs session
 (require-package 'rbenv)
+(setq rbenv-installation-dir "~/.rbenv") ;default, but here in case
 (global-rbenv-mode)
 
 (require-package 'rinari)
