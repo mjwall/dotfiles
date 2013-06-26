@@ -41,7 +41,9 @@ export MONGO_HOME=${HOME}/opt/mongo
 #. ~/nvm/nvm.sh
 
 # Python, installed with brew install python
-export PYTHONPATH="$(brew --prefix)/lib/python2.7/site-packages:$PYTHONPATH"
+if [ $(uname) == "Darwin" ]; then
+  which brew && export PYTHONPATH="$(brew --prefix)/lib/python2.7/site-packages:$PYTHONPATH"
+fi
 
 # docbook
 export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
@@ -71,7 +73,7 @@ export PYTHONPATH="/usr/local/lib/python2.7/site-packages:$PYTHONPATH"
 # editors
 export EDITOR=et
 export ALTERNATE_EDITOR=vim
-export GIT_EDITOR=emacsclient # for running git in ansi-term
+#export GIT_EDITOR=emacsclient # for running git in ansi-term
 # for emacs on MacOS, compile and install 23.4.1 into /Applications/Emacs.app
 # chown -R root:staff /Applications/Emacs.app
 #
@@ -89,8 +91,11 @@ export GIT_EDITOR=emacsclient # for running git in ansi-term
 # sudo ln -s /Applications/Emacs.app/Contents/MacOS/bin/emacsclient /usr/bin/emacsclient
 
 # git
-source /usr/local/etc/bash_completion.d/git-completion.bash
-source /usr/local/etc/bash_completion.d/git-prompt.sh
+# TODO: make this smarter, currently in ~/.bashrc-custom if different
+if [ -d /usr/local/etc/bash_completion.d ]; then
+  source /usr/local/etc/bash_completion.d/git-completion.bash
+  source /usr/local/etc/bash_completion.d/git-prompt.sh
+fi
 export GIT_PS1_SHOWDIRTYSTATE=true
 export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$'
 
@@ -102,7 +107,7 @@ export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$'
 source ~/.bash_completion.d/mvn-completion.bash
 source ~/.bash_completion.d/svn-completion.bash
 
-export PATH="${HOME}/bin:${HOME}/bin2:/usr/local/bin:$ANT_HOME/bin:$GRAILS_HOME/bin:$M2:$NODE_PATH/bin:$MONGO_HOME/bin:$SCALA_HOME/bin:$SBT_HOME/bin:$PLAY_HOME:$PATH:/usr/local/sbin"
+export PATH="${HOME}/bin:${HOME}/bin2:${JAVA_HOME}/bin:/usr/local/bin:$ANT_HOME/bin:$GRAILS_HOME/bin:$M2:$NODE_PATH/bin:$MONGO_HOME/bin:$SCALA_HOME/bin:$SBT_HOME/bin:$PLAY_HOME:$PATH:/usr/local/sbin"
 
 alias gvim=mvim
 alias gview="mvim -R"
@@ -191,3 +196,7 @@ export PATH="${HADOOP_PREFIX}/bin:${PATH}"
 #PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 export PATH="${HOME}/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+
+# this bashrc-custom file is not committed, allowing for differences
+# between installs.  Just create the file and edit with your needs
+source ~/.bashrc-custom
