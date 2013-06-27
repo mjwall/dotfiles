@@ -16,7 +16,7 @@ export MAVEN_OPTS_DEBUG="${MAVEN_OPTS} -Xdebug -Xnoagent -Djava.compiler=NONE -X
 export JAVA_OPTS="${MAVEN_OPTS} -Duser.timezone=UTC -Djava.awt.headless=true -d32"
 export M2="$M2_HOME/bin"
 export ANT_HOME="${HOME}/opt/ant"
-export ANT_OPTS="-Xmx512m"
+export ANT_OPTS="-Xms512M -Xmx2048M -Xss1M -XX:MaxPermSize=128M"
 export GROOVY_HOME=/Library/Groovy/Home
 export GRAILS_HOME=/Library/Grails/Home
 export GANT_HOME=/Library/Gant/Home
