@@ -42,7 +42,7 @@ export MONGO_HOME=${HOME}/opt/mongo
 
 # Python, installed with brew install python
 if [ $(uname) == "Darwin" ]; then
-  which brew && export PYTHONPATH="$(brew --prefix)/lib/python2.7/site-packages:$PYTHONPATH"
+  which brew 1> /dev/null && export PYTHONPATH="$(brew --prefix)/lib/python2.7/site-packages:$PYTHONPATH"
 fi
 
 # docbook
