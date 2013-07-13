@@ -678,6 +678,7 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; Git stuff
 (require-package 'magit)
+(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; next section from https://github.com/cjohansen/.emacs.d/blob/master/setup-magit.el
 (require 'magit-svn)
