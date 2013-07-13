@@ -715,12 +715,10 @@ there's a region, all lines that region covers will be duplicated."
 
 (defun magit-quit-session ()
   "Restores the previous window configuration and kills all magit buffers"
-  ;; requires dash.el and s.el
   (interactive)
-  (-each (buffer-list)
-         (lambda (b)
-           (if (s-starts-with? "*magit" (buffer-name b))
-               (kill-buffer b))))
+  (mapc (lambda (b)
+          (if (string-prefix-p "*magit" (buffer-name b)) (kill-buffer b)))
+        (buffer-list))
   ;;(kill-buffer)
   (jump-to-register :magit-fullscreen))
 
