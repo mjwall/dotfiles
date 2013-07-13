@@ -759,6 +759,10 @@ there's a region, all lines that region covers will be duplicated."
 (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
 ;; end stuff from https://github.com/cjohansen/.emacs.d/blob/master/setup-magit.el
 
+;; help me format better commit messages please
+;; https://github.com/lunaryorn/git-modes
+(require-package 'git-commit-mode)
+
 ;; When I used git from the terminal and GIT_EDITOR=et, I need to close
 ;; the commit message when I am done.  C-x # is the command, which runs
 ;; server-edit.  But I do that so often, I want an easier key combo
