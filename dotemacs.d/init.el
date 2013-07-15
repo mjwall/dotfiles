@@ -1092,5 +1092,9 @@ print json.dumps(j, sort_keys=True, indent=2)
 ;; lifted from https://gist.github.com/2470924
 (require 'thrift-mode)
 (add-hook 'thift-mode-hook 'run-coding-hook)
+
+;; Markdown mode
+(require-package 'markdown-mode)
+
 ;; TODO
 ;; autocomplete
