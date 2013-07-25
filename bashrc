@@ -135,6 +135,12 @@ shopt -s cmdhist
 export HADOOP_PREFIX=/opt/hadoop-0.20.205.0
 export PATH="${HADOOP_PREFIX}/bin:${PATH}"
 
+#todo.txt
+export TODO_DIR="${HOME}/.todo"
+if [ -d "${TODO_DIR}" ]; then
+  export PATH="${TODO_DIR}:${PATH}"
+  . "${TODO_DIR}/todo_completion"
+fi
 
 # gpg agent
 #export GPG_TTY='tty'

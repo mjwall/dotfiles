@@ -788,6 +788,10 @@ there's a region, all lines that region covers will be duplicated."
 ;; follow symlinks to real file
 (setq vc-follow-symlinks t)
 
+;; todo.txt from https://raw.github.com/rpdillon/todotxt.el/master/todotxt.el
+(require 'todotxt)
+(setq todotxt-file "~/.todo/todo.txt")
+
 ;; Project package
 (require-package 'projectile)
 (projectile-global-mode)
