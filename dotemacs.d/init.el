@@ -175,6 +175,11 @@
     (setq use-file-dialog nil)
     (setq use-dialog-box nil))
 
+;; show menu-bar-mode in GUI
+(if (display-graphic-p)
+    (menu-bar-mode 1)
+  (menu-bar-mode -1))
+
 ;; function to change opacity
 (defun adjust-opacity (frame incr)
   (let* ((oldalpha (or (frame-parameter frame 'alpha) 100))
