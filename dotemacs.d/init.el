@@ -1103,6 +1103,9 @@ print json.dumps(j, sort_keys=True, indent=2)
         (nxml-mode)
         (indent-region begin end)))
 
+;; autocomplete tags on </
+(setq nxml-slash-auto-complete-flag t)
+
 ;; Thrift mode
 ;; lifted from https://gist.github.com/2470924
 (require 'thrift-mode)
