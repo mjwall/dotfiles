@@ -615,6 +615,12 @@ there's a region, all lines that region covers will be duplicated."
 ;; - Utility functions
 ;;----------------------------------------------------------------------------
 
+;; reload init.el
+;; can also open the file and call eval-buffer
+(defun reload-init.el ()
+  (interactive)
+  (load-file (concat user-emacs-directory "init.el")))
+
 ;; Insert date string
 (defun insert-date-string ()
  "Insert a nicely formated date string."
