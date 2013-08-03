@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# simple script to shutdown the running Emacs daemon
+
 # emacsclient options for reference
 # -a Alternate editor, runs bin/false in this case
 # -e eval the script

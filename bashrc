@@ -117,7 +117,8 @@ alias work="screen -c ~/.work-screen"
 alias tar="COPYFILE_DISABLE=true tar" # we don't need ._ files everywhere on a mac, see http://www.commandlinefu.com/commands/view/5965/create-.tar-file-on-mac-os-x-leopard-snow-leopard-without-._-files
 alias edb="export EMISSARY_DBG_OPTIONS=\"-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005\""
 alias noedb="unset EMISSARY_DBG_OPTIONS"
-alias magit='emacsclient -a emacs -e "(magit-status \"$(pwd)\")"'
+# magit alias uses the ec script, see ~/bin
+alias magit='ec -e "(magit-status \"$(pwd)\")"'
 
 #history stuff
 shopt -s histappend
