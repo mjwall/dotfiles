@@ -621,6 +621,14 @@ there's a region, all lines that region covers will be duplicated."
   (interactive)
   (load-file (concat user-emacs-directory "init.el")))
 
+;; make a new frame
+(defun pop-off-buffer ()
+  (interactive)
+  (bury-buffer)
+  (make-frame)
+  (unbury-buffer)
+  (message"new frame created"))
+
 ;; Insert date string
 (defun insert-date-string ()
  "Insert a nicely formated date string."
