@@ -80,12 +80,12 @@
 (global-auto-revert-mode 1)
 
 ;; setup the paths, this was useful when I was using ansi-term
-(defun set-exec-path-from-shell-PATH ()
-  (let ((path-from-shell (shell-command-to-string "$SHELL -i -c 'echo
- $PATH'")))
-    (setenv "PATH" path-from-shell)
-    (setq exec-path (split-string path-from-shell path-separator))))
-(if window-system (set-exec-path-from-shell-PATH))
+;; (defun set-exec-path-from-shell-PATH ()
+;;   (let ((path-from-shell (shell-command-to-string "$SHELL -i -c 'echo
+;;  $PATH'")))
+;;     (setenv "PATH" path-from-shell)
+;;     (setq exec-path (split-string path-from-shell path-separator))))
+;; (if window-system (set-exec-path-from-shell-PATH))
 
 ;; no line numbers unless I say so, but set the format for when I do,
 ;; coding-hooks will provide line numbers for all code
@@ -831,6 +831,25 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; multi-term
 ;;(require-package 'multi-term)
+
+(require 'tramp-term)
+
+;; better term keybindings
+(add-hook 'ansi-term-after-hook
+  (lambda ()
+    (define-key term-raw-map "\C-y" 'term-paste)
+    (define-key term-raw-map "\C-c\C-c" 'term-interrupt-subjob)))
+(defadvice ansi-term (after ansi-term-after-advice (arg))
+  "run hook as after advice"
+  (run-hooks 'ansi-term-after-hook))
+(ad-activate 'ansi-term)
+
+;; could have just set a variable, but maybe I will expand this
+(defun my-ansi-term ()
+  (interactive)
+  (ansi-term "/bin/bash"))
+(global-set-key [f6] 'my-ansi-term)
+
 
 ;;----------------------------------------------------------------------------
 ;; - Language specific
