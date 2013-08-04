@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# launcher for google chrome on a mac
+
+open -a "Google Chrome" "$@"
