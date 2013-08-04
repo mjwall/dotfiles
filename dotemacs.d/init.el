@@ -838,25 +838,47 @@ there's a region, all lines that region covers will be duplicated."
 
 (require 'tramp-term)
 
+;; just give some indication, maybe this should be in the modeline
+;; but I don't know how to do that
+(defun my-term-line-mode ()
+  (interactive)
+  (term-line-mode)
+  (message "entering term-line-mode"))
+(defun my-term-char-mode ()
+  (interactive)
+  (term-char-mode)
+  (message "entering term-char-mode"))
+
+;; these don't appear to be in term, so copied from multi-term
+(defun my-term-send-backward-word ()
+  "Move backward word in term mode."
+  (interactive)
+  (term-send-raw-string "\eb"))
+(defun my-term-send-forward-word ()
+  "Move forward word in term mode."
+  (interactive)
+  (term-send-raw-string "\ef"))
+
 ;; better term keybindings
 (add-hook 'ansi-term-after-hook
   (lambda ()
-    (define-key term-raw-map "C-y" 'term-paste)
-    (define-key term-raw-map "C-c C-c" 'term-interrupt-subjob)
-    (define-key term-raw-map "C-p" 'previous-line)
-    (define-key term-raw-map "C-n" 'next-line)
-    (define-key term-raw-map "M-f" 'term-send-forward-word)
-    (define-key term-raw-map "M-b" 'term-send-backward-word)
-    (define-key term-raw-map "C-c C-j" 'term-line-mode)
-    (define-key term-raw-map "C-c C-k" 'term-char-mode)
-    (define-key term-raw-map "M-DEL" 'term-send-backward-kill-word)
-    (define-key term-raw-map "M-d" 'term-send-forward-kill-word)
-    (define-key term-raw-map "<C-left>" 'term-send-backward-word)
-    (define-key term-raw-map "<C-right>" 'term-send-forward-word)
-    (define-key term-raw-map "C-r" 'term-send-reverse-search-history)
-    (define-key term-raw-map "M-p" 'term-send-raw-meta)
-    (define-key term-raw-map "M-y" 'term-send-raw-meta)
-    ;(define-key term-raw-map "C-y" 'term-send-raw)
+    ;; char-mode-map
+    (define-key term-raw-map (kbd "C-y") 'term-paste)
+    (define-key term-raw-map (kbd "C-c C-c") 'term-interrupt-subjob)
+    (define-key term-raw-map (kbd "C-s") 'isearch-forward)
+    (define-key term-raw-map (kbd "C-r") 'isearch-backward)
+    ; I don't really like these, means I have to use arrows to scoll history
+    ;(define-key term-raw-map (kbd "C-p") 'previous-line)
+    ;(define-key term-raw-map (kbd "C-n") 'next-line)
+    (define-key term-raw-map (kbd "M-f") 'my-term-send-forward-word)
+    (define-key term-raw-map (kbd "M-b") 'my-term-send-backward-word)
+    (define-key term-raw-map (kbd "C-c C-j") 'my-term-line-mode)
+    (define-key term-raw-map (kbd "M-DEL") 'term-send-backward-kill-word)
+    (define-key term-raw-map (kbd "M-d") 'term-send-forward-kill-word)
+    (define-key term-raw-map (kbd "C-r") 'term-send-reverse-search-history)
+    (define-key term-raw-map (kbd "M-w") 'kill-ring-save)
+    ;; line-mode map
+    (define-key term-mode-map (kbd "C-c C-k") 'my-term-char-mode)
     ))
 (defadvice ansi-term (after ansi-term-after-advice (arg))
   "run hook as after advice"
