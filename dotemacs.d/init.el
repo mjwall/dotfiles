@@ -597,10 +597,6 @@ there's a region, all lines that region covers will be duplicated."
 ;;hippie expand binding
 (global-set-key [C-tab] 'hippie-expand)
 
-;; autopair quotes and parentheses
-(require-package 'autopair)
-(setq autopair-autowrap t)
-
 ;; supercharge undo/redo
 (require-package 'undo-tree)
 (global-undo-tree-mode)
@@ -906,7 +902,8 @@ there's a region, all lines that region covers will be duplicated."
 (add-hook 'coding-hook 'turn-on-hideshow)
 ;(add-hook 'coding-hook 'turn-on-linum)
 (add-hook 'coding-hook 'bye-flyspell)
-(add-hook 'coding-hook 'autopair-mode)
+(add-hook 'coding-hook 'electric-pair-mode)
+(add-hook 'coding-hook 'electric-indent-mode)
 
 (defun run-coding-hook ()
   (interactive)
@@ -1020,6 +1017,7 @@ print json.dumps(j, sort_keys=True, indent=2)
 ;; Ruby mode
 ;; ---------
 (require 'ruby-mode)
+(require-package 'ruby-end)
 (add-to-list 'auto-mode-alist '("buildfile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.ru" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
@@ -1029,6 +1027,7 @@ print json.dumps(j, sort_keys=True, indent=2)
 (add-to-list 'auto-mode-alist '("\\Gemfile" . ruby-mode))
 (setq ruby-indent-level 2)
 (add-hook 'ruby-mode-hook 'run-coding-hook)
+(add-hook 'ruby-mode-hook 'ruby-end-mode)
 
 ;(require-package 'rvm)
 ;(rvm-use-default) ;; use rvm's default ruby for the current Emacs session
