@@ -611,7 +611,7 @@ there's a region, all lines that region covers will be duplicated."
 
 (require-package 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
-(global-set-key (kbd "C-=") 'er/contract-region)
+(global-set-key (kbd "C--") 'er/contract-region)
 
 ;;----------------------------------------------------------------------------
 ;; - Utility functions
