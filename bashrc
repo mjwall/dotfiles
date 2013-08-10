@@ -97,7 +97,7 @@ if [ -d /usr/local/etc/bash_completion.d ]; then
   source /usr/local/etc/bash_completion.d/git-prompt.sh
 fi
 export GIT_PS1_SHOWDIRTYSTATE=true
-export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$'
+export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
 
 # from http://jonisalonen.com/2012/your-bash-prompt-needs-this/
 # Seems to stop text response such as curl from showing up
