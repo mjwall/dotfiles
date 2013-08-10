@@ -164,8 +164,9 @@
 ;; https://github.com/chriskempson/tomorrow-theme/tree/master/GNU%20Emacs
 (add-to-list 'custom-theme-load-path (concat dotfiles-dir "themes/tomorrow-theme"))
 ;; default theme
+(load-theme 'underwater t)
 ;;(load-theme 'solarized-dark t)
-(load-theme 'tomorrow-night-bright t)
+;;(load-theme 'tomorrow-night-bright t)
 
 ;; fix cursor on some linux,
 ;; see https://github.com/chriskempson/tomorrow-theme/issues/42
@@ -610,6 +611,7 @@ there's a region, all lines that region covers will be duplicated."
 
 (require-package 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
+(global-set-key (kbd "C-=") 'er/contract-region)
 
 ;;----------------------------------------------------------------------------
 ;; - Utility functions
