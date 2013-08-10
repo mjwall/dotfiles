@@ -136,7 +136,7 @@
 
 ;; Change Font size, only works in GUI
 (global-set-key (kbd "C-+") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "C-_") 'text-scale-decrease)
 
 ;; bind some window resizing
 (global-set-key (kbd "C-s-<left>") 'shrink-window-horizontally)
@@ -159,10 +159,12 @@
 
 ;; themes
 (require-package 'solarized-theme)
+(require-package 'zenburn-theme)
+(require-package 'underwater-theme)
 ;; https://github.com/chriskempson/tomorrow-theme/tree/master/GNU%20Emacs
 (add-to-list 'custom-theme-load-path (concat dotfiles-dir "themes/tomorrow-theme"))
 ;; default theme
-;(load-theme 'solarized-dark t)
+;;(load-theme 'solarized-dark t)
 (load-theme 'tomorrow-night-bright t)
 
 ;; fix cursor on some linux,
@@ -193,14 +195,16 @@
 (global-set-key (kbd "C-0") '(lambda () (interactive) (modify-frame-parameters nil `((alpha . 100)))))
 
 ;; modeline styling, https://github.com/jonathanchu/emacs-powerline
-(require 'powerline)
-(setq powerline-color1 "grey22")
-(setq powerline-color2 "grey40")
-(set-face-attribute 'mode-line nil
-                    :background "SteelBlue4"
-                    :box nil)
-(setq powerline-arrow-shape 'arrow)
+;;(require 'powerline)
+;;(setq powerline-color1 "grey22")
+;;(setq powerline-color2 "grey40")
+;; (set-face-attribute 'mode-line nil
+;;                     :background "SteelBlue4"
+;;                     :box nil)
+;; (setq powerline-arrow-shape 'arrow)
 
+(require-package 'powerline)
+(powerline-default-theme)
 ;;----------------------------------------------------------------------------
 ;; - Platform specific
 ;;----------------------------------------------------------------------------
