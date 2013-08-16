@@ -1,12 +1,3 @@
-;; Emacs config outline
-;; - Defaults
-;; - Display
-;; - Platform specific
-;; - Navigation
-;; - Editing and formatting
-;; - Utility functions
-;; - Language specific
-
 ;;----------------------------------------------------------------------------
 ;; - Defaults
 ;;----------------------------------------------------------------------------
@@ -348,6 +339,10 @@
 (defun ido-disable-line-trucation ()
   (set (make-local-variable 'truncate-lines) nil))
 (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
+
+; imenu with ido
+(require-package 'idomenu)
+(global-set-key (kbd "C-.") 'idomenu)
 
 ;; update keybindings so up and down move next with vertical results
 (add-hook 'ido-setup-hook
@@ -999,6 +994,11 @@ there's a region, all lines that region covers will be duplicated."
 (defadvice ielm-eval-input (after ielm-paredit activate)
   "Begin each IELM prompt with a ParEdit parenthesis pair."
   (paredit-open-round)) ; backspace if you don't want it
+
+(defun imenu-elisp-sections ()
+  (setq imenu-prev-index-position-function nil)
+  (add-to-list 'imenu-generic-expression '("Sections" "^;; - \\(.+\\)$" 1) t))
+ (add-hook 'emacs-lisp-mode-hook 'imenu-elisp-sections)
 
 ;; Text mode
 ;; ---------
