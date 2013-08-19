@@ -1150,13 +1150,26 @@ print json.dumps(j, sort_keys=True, indent=2)
 
 ;; Adoc mode (asciidoc)
 ;; -------------------
-(require-package 'adoc-mode)
-(add-to-list 'auto-mode-alist (cons "\\.asc\\'" 'adoc-mode))
-(add-to-list 'auto-mode-alist (cons "\\.asciidoc\\'" 'adoc-mode))
+;;(require-package 'adoc-mode)
+;;(add-to-list 'auto-mode-alist (cons "\\.asc\\'" 'adoc-mode))
+;;(add-to-list 'auto-mode-alist (cons "\\.asciidoc\\'" 'adoc-mode))
+;;(add-to-list 'auto-mode-alist (cons "\\.adoc\\'" 'adoc-mode))
 ;; change font face in asciidoc files
-(add-hook 'adoc-mode-hook (lambda() (buffer-face-mode t)))
+;;(add-hook 'adoc-mode-hook (lambda() (buffer-face-mode t)))
 ;; turn on spellcheck
-(add-hook 'adoc-mode-hook 'turn-on-flyspell)
+;;(add-hook 'adoc-mode-hook 'turn-on-flyspell)
+(add-to-list 'load-path (concat site-lisp-dir "/doc-mode-1.1"))
+(autoload 'doc-mode "doc-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.adoc$" . doc-mode))
+(add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
+(add-hook 'doc-mode-hook
+          '(lambda ()
+             (turn-off-auto-fill)
+             (turn-on-flyspell)
+             (require 'asciidoc)
+             ))
+
+
 
 ;; XML mode
 ;; --------
