@@ -196,7 +196,8 @@
 ;; (setq powerline-arrow-shape 'arrow)
 
 (require-package 'powerline)
-(powerline-default-theme)
+;;(powerline-default-theme) ;moved to bottom
+
 ;;----------------------------------------------------------------------------
 ;; - Platform specific
 ;;----------------------------------------------------------------------------
@@ -932,6 +933,9 @@ there's a region, all lines that region covers will be duplicated."
   (interactive)
   (run-hooks 'coding-hook))
 
+(require-package 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
 ;; All Lisps
 ;; -----
 (require-package 'paredit)
@@ -1207,3 +1211,20 @@ print json.dumps(j, sort_keys=True, indent=2)
 
 ;; TODO
 ;; autocomplete
+
+
+
+(powerline-default-theme)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("7a2c92b6267b84ae28a396f24dd832e29a164c1942f1f8b3fe500f1c25f8e09d" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
