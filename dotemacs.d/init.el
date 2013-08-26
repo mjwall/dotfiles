@@ -598,6 +598,19 @@ there's a region, all lines that region covers will be duplicated."
 ;;hippie expand binding
 (global-set-key [C-tab] 'hippie-expand)
 
+(require-package 'yasnippet)
+(yas-global-mode 1)
+;;autocomplete
+(require-package 'auto-complete)
+(require 'auto-complete-config)
+(ac-config-default)
+
+(define-key ac-complete-mode-map "\C-n" 'ac-next)
+(define-key ac-complete-mode-map "\C-p" 'ac-previous)
+(setq ac-auto-start nil)
+(global-set-key "\M-/" 'ac-start)
+(define-key ac-complete-mode-map "\M-/" 'ac-stop)
+
 ;; supercharge undo/redo
 (require-package 'undo-tree)
 (global-undo-tree-mode)
@@ -804,10 +817,6 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; follow symlinks to real file
 (setq vc-follow-symlinks t)
-
-;; todo.txt from https://raw.github.com/rpdillon/todotxt.el/master/todotxt.el
-(require 'todotxt)
-(setq todotxt-file "~/.todo/todo.txt")
 
 ;; Project package
 (require-package 'projectile)
