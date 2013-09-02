@@ -1,4 +1,4 @@
-;;----------------------------------------------------------------------------
+2;;----------------------------------------------------------------------------
 ;; - Defaults
 ;;----------------------------------------------------------------------------
 
@@ -431,6 +431,7 @@
 ;; ECB, not sure how to use it yet
 (require-package 'ecb)
 
+(require-package 'window-numbering) ;;enabled at bottom
 ;;----------------------------------------------------------------------------
 ;; - Editing and formatting
 ;;----------------------------------------------------------------------------
@@ -1224,6 +1225,7 @@ print json.dumps(j, sort_keys=True, indent=2)
 
 
 (powerline-default-theme)
+(window-numbering-mode 1)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
