@@ -1,4 +1,4 @@
-2;;----------------------------------------------------------------------------
+;;----------------------------------------------------------------------------
 ;; - Defaults
 ;;----------------------------------------------------------------------------
 
@@ -705,6 +705,8 @@ there's a region, all lines that region covers will be duplicated."
 ;;(define-key dired-mode-map [mouse-2] 'dired-find-file)
 ;; so 'a' in dired works
 (put 'dired-find-alternate-file 'disabled nil)
+
+(autoload 'dirtree "dirtree" "Add directory to tree view" t)
 
 
 ;; Git stuff
