@@ -715,7 +715,7 @@ there's a region, all lines that region covers will be duplicated."
 (global-set-key (kbd "C-x g") 'magit-status)
 
 ;; next section from https://github.com/cjohansen/.emacs.d/blob/master/setup-magit.el
-(require 'magit-svn)
+(require-package 'magit-svn)
 
 ;; Subtler highlight
 (set-face-background 'magit-item-highlight "#121212")
