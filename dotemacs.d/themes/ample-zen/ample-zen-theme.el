@@ -30,35 +30,35 @@
 ;;; Color Palette
 
 (defvar ample-zen-colors-alist
-  '(("ample-zen-fg"       . "#DCDCCC")
-    ("ample-zen-fg-1"     . "#656555")
-    ("ample-zen-bg-1"     . "#2B2B2B")
-    ("ample-zen-bg-05"    . "#383838")
-    ("ample-zen-bg"       . "#3F3F3F")
-    ("ample-zen-bg+1"     . "#4F4F4F")
-    ("ample-zen-bg+2"     . "#5F5F5F")
-    ("ample-zen-bg+3"     . "#6F6F6F")
-    ("ample-zen-red+1"    . "#DCA3A3")
-    ("ample-zen-red"      . "#CC9393")
-    ("ample-zen-red-1"    . "#BC8383")
-    ("ample-zen-red-2"    . "#AC7373")
-    ("ample-zen-red-3"    . "#9C6363")
-    ("ample-zen-red-4"    . "#8C5353")
-    ("ample-zen-orange-1" . "#DFBF7F")
-    ("ample-zen-orange"   . "#DFAF8F")
-    ("ample-zen-yellow"   . "#F0DFAF")
-    ("ample-zen-yellow-1" . "#E0CF9F")
-    ("ample-zen-yellow-2" . "#D0BF8F")
-    ("ample-zen-green-1"  . "#5F7F5F")
-    ("ample-zen-green"    . "#7F9F7F")
-    ("ample-zen-green+1"  . "#8FB28F")
-    ("ample-zen-green+2"  . "#9FC59F")
-    ("ample-zen-green+3"  . "#AFD8AF")
-    ("ample-zen-green+4"  . "#BFEBBF")
-    ("ample-zen-cyan"     . "#93E0E3")
-    ("ample-zen-blue+1"   . "#94BFF3")
-    ("ample-zen-blue"     . "#8CD0D3")
-    ("ample-zen-blue-1"   . "#7CB8BB")
+  '(("ample-zen-fg"       . "#bdbdb3") ;
+    ("ample-zen-fg-1"     . "#b1bab8")
+    ("ample-zen-bg-1"     . "#3b3b3b") ;
+    ("ample-zen-bg-05"    . "#2e2e2e") ;
+    ("ample-zen-bg"       . "#212121") ;
+    ("ample-zen-bg+1"     . "#141414") ;
+    ("ample-zen-bg+2"     . "#0a0a0a") ;
+    ("ample-zen-bg+3"     . "#000000") ;
+    ("ample-zen-red+1"    . "#AA5542")
+    ("ample-zen-red"      . "#CC5542") ;
+    ("ample-zen-red-1"    . "#dd5542")
+    ("ample-zen-red-2"    . "#ee5542")
+    ("ample-zen-red-3"    . "#ff5542")
+    ("ample-zen-red-4"    . "#ff6642")
+    ("ample-zen-orange-1" . "#cc8512")
+    ("ample-zen-orange"   . "#fb8512") ;
+    ("ample-zen-yellow"   . "#7d7c61") ;
+    ("ample-zen-yellow-1" . "#bdbc61") ;
+    ("ample-zen-yellow-2" . "#baba36") ;
+    ("ample-zen-green-1"  . "#6abd50")
+    ("ample-zen-green"    . "#6aaf50") ;
+    ("ample-zen-green+1"  . "#6aa350")
+    ("ample-zen-green+2"  . "#6a9550")
+    ("ample-zen-green+3"  . "#6a8550")
+    ("ample-zen-green+4"  . "#6a7550")
+    ("ample-zen-cyan"     . "#9b55c3") ;
+    ("ample-zen-blue+1"   . "#6380b3")
+    ("ample-zen-blue"     . "#5180b3") ;
+    ("ample-zen-blue-1"   . "#528fd1") ;
     ("ample-zen-blue-2"   . "#6CA0A3")
     ("ample-zen-blue-3"   . "#5C888B")
     ("ample-zen-blue-4"   . "#4C7073")
@@ -681,4 +681,9 @@ This requires library `rainbow-mode'.")
 (add-to-list 'safe-local-eval-forms
              '(when (require 'rainbow-mode nil t) (rainbow-mode 1)))
 
+;; Local Variables:
+;; no-byte-compile: t
+;; indent-tabs-mode: nil
+;; eval: (when (require 'rainbow-mode nil t) (rainbow-mode 1))
+;; End:
 ;;; ample-zen-theme.el ends here
