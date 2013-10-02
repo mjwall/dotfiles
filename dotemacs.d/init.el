@@ -144,13 +144,16 @@
 (require-package 'solarized-theme)
 (require-package 'zenburn-theme)
 (require-package 'underwater-theme)
+(require-package 'ample-theme)
 ;; https://github.com/chriskempson/tomorrow-theme/tree/master/GNU%20Emacs
 (add-to-list 'custom-theme-load-path (concat dotfiles-dir "themes/tomorrow-theme"))
 ;; default theme
 ;;(load-theme 'underwater t)
 ;;(load-theme 'solarized-dark t)
 ;;(load-theme 'tomorrow-night-bright t)
-(load-theme 'ample t)
+;;(load-theme 'ample t)
+(add-to-list 'custom-theme-load-path (concat dotfiles-dir "themes/ample-zen"))
+(load-theme 'ample-zen t)
 
 ;; fix cursor on some linux,
 ;; see https://github.com/chriskempson/tomorrow-theme/issues/42
@@ -272,6 +275,9 @@
 (global-set-key (kbd "\C-x v") 'ido-jump-to-window)
 (global-set-key (kbd "\C-x C-v") 'ido-jump-to-window)
 
+;; make Alt-` go to other frame as expected, like s-`
+(global-set-key (kbd "M-`") 'other-frame)
+
 ;; keybinding to bring up ibuffer
 (when (fboundp 'ibuffer)
   (global-set-key (kbd "C-x C-b") 'ibuffer))
@@ -363,6 +369,12 @@
   (lambda ()
     (interactive)
     (call-with-current-isearch-string-as-regex 'all)))
+
+;; show counts of matchs in modeline
+(require-package 'anzu)
+(global-anzu-mode +1)
+(eval-after-load "anzu" '(setq anzu-search-threshold 1000))
+(eval-after-load "anzu" '(diminish 'anzu-mode))
 
 ;; Search back/forth for the symbol at point
 ;; See http://www.emacswiki.org/emacs/SearchAtPoint
@@ -772,6 +784,12 @@ there's a region, all lines that region covers will be duplicated."
 (global-set-key (kbd "C-x C-g") 'git-gutter:toggle)
 (eval-after-load "git-gutter" '(diminish 'git-gutter-mode))
 
+;; call magit from eshell
+(defun eshell/magit ()
+  "Run magit status here."
+  (call-interactively #'magit-status)
+  nil)
+
 ;; follow symlinks to real file
 (setq vc-follow-symlinks t)
 
@@ -856,7 +874,7 @@ there's a region, all lines that region covers will be duplicated."
   (ansi-term "/bin/bash"))
 (global-set-key [f6] 'my-ansi-term)
 
-
+(require-package 'rainbow-mode)
 ;;----------------------------------------------------------------------------
 ;; - Language specific
 ;;----------------------------------------------------------------------------
@@ -1164,6 +1182,14 @@ print json.dumps(j, sort_keys=True, indent=2)
 ;; Markdown mode
 (require-package 'markdown-mode)
 
+;; web mode
+(require-package 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 (window-numbering-mode 1)
 
@@ -1172,7 +1198,12 @@ print json.dumps(j, sort_keys=True, indent=2)
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("94d66281c0398118afd3fdb921d8b813401a36748ce4541e7ad6b1533a557a9f" "364a5e1aecdd0d24b70089050368851ea5ee593dc8cc6fb58cff1b8cfe88a264" "7a2c92b6267b84ae28a396f24dd832e29a164c1942f1f8b3fe500f1c25f8e09d" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default))))
+ '(ansi-color-names-vector ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
+ '(custom-safe-themes (quote ("e209d30d21ffe66ebf76d74e5bb9ba422c6488275b4f9df9c0db7fec4b9a0fff" "62b86b142b243071b5adb4d48a0ab89aefd3cf79ee3adc0bb297ea873b36d23f" "94d66281c0398118afd3fdb921d8b813401a36748ce4541e7ad6b1533a557a9f" "364a5e1aecdd0d24b70089050368851ea5ee593dc8cc6fb58cff1b8cfe88a264" "7a2c92b6267b84ae28a396f24dd832e29a164c1942f1f8b3fe500f1c25f8e09d" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(fci-rule-color "#383838")
+ '(vc-annotate-background "#2B2B2B")
+ '(vc-annotate-color-map (quote ((20 . "#BC8383") (40 . "#CC9393") (60 . "#DFAF8F") (80 . "#D0BF8F") (100 . "#E0CF9F") (120 . "#F0DFAF") (140 . "#5F7F5F") (160 . "#7F9F7F") (180 . "#8FB28F") (200 . "#9FC59F") (220 . "#AFD8AF") (240 . "#BFEBBF") (260 . "#93E0E3") (280 . "#6CA0A3") (300 . "#7CB8BB") (320 . "#8CD0D3") (340 . "#94BFF3") (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

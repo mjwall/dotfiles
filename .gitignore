@@ -6,3 +6,5 @@
 \#*
 .netrwhist
 dotemacs.d/site-lisp/ajc-java-complete-b771dbc7/target
+/dotemacs.d/eshell/history
+/dotemacs.d/eshell/lastdir
