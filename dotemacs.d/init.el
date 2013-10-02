@@ -35,6 +35,7 @@
   "Go...")
 
 ;; default variables
+(defvar uniquify-buffer-name-style)
 (setq visible-bell nil
       ring-bell-function 'ignore
       echo-keystrokes 0.1
@@ -81,8 +82,8 @@
 ;; no line numbers unless I say so, but set the format for when I do,
 ;; coding-hooks will provide line numbers for all code
 (global-linum-mode 0)
-(defvar linum-format)
-(setq linum-format "%4d ")
+(eval-after-load "linum-mode"
+  '(setq linum-format "%4d "))
 
 ;; no mail
 (global-unset-key (kbd "C-x m"))
@@ -98,7 +99,9 @@
 ;; On-demand installation of packages
 ;; may have to run package-refresh-contents
 (defun require-package (package &optional min-version no-refresh)
-  "Ask elpa to install given PACKAGE."
+  "Ask elpa to install given PACKAGE.
+MIN-VERSION optional
+NO-REFRESH optional"
   (if (package-installed-p package min-version)
       t
     (if (or (assoc package package-archive-contents) no-refresh)
@@ -172,6 +175,7 @@
 
 ;; function to change opacity
 (defun adjust-opacity (frame incr)
+  "Function to change the opacity of the FRAME by the given INCR."
   (let* ((oldalpha (or (frame-parameter frame 'alpha) 100))
          (newalpha (+ incr oldalpha)))
     (when (and (<= frame-alpha-lower-limit newalpha) (>= 100 newalpha))
@@ -252,12 +256,13 @@
 (global-set-key (kbd "C-x <down>") 'windmove-down)
 (global-set-key (kbd "C-x <up>") 'windmove-up)
 
-;; ido-jump-to-window was taken from http://www.emacswiki.org/emacs/WindowNavigation
 (defun my/swap (l)
+  "Swap function use in ido-jump-to-window.  Take first element of L."
   (if (cdr l)
       (cons (cadr l) (cons (car l) (cddr l)))
     l))
 (defun ido-jump-to-window ()
+  "This ido-jump-to-window function taken from http://www.emacswiki.org/emacs/WindowNavigation."
   (interactive)
   (let* ((visible-buffers
           (my/swap (mapcar #'(lambda (window) (buffer-name (window-buffer window))) (window-list))))
@@ -353,8 +358,8 @@
 (global-set-key "\C-\M-s" 'isearch-forward)
 (global-set-key "\C-\M-r" 'isearch-backward)
 
-;; function for isearch as regex
 (defun call-with-current-isearch-string-as-regex (f)
+  "Takes current selection as F and then search with isearch string."
   (let ((case-fold-search isearch-case-fold-search))
     (funcall f (if isearch-regexp isearch-string (regexp-quote isearch-string)))))
 
@@ -425,10 +430,12 @@
  mouse-yank-at-point t
  ;; end files with a newline
  require-final-newline t
- ;; set ispell to use brew installed aspell, see
- ;; http://sunny.in.th/2010/05/08/emacs-enabling-flyspell-mode-gave-an-error.html
- ispell-program-name "aspell"
-)
+ )
+
+(eval-after-load "ispell-mode"
+  ;; set ispell to use brew installed aspell, see
+  ;; http://sunny.in.th/2010/05/08/emacs-enabling-flyspell-mode-gave-an-error.html
+  '(setq ispell-program-name "aspell"))
 
 ;; make backspace work as expected
 (normal-erase-is-backspace-mode 1)
@@ -494,7 +501,7 @@
 ;; grabbed from http://blog.tuxicity.se/elisp/emacs/2010/03/11/duplicate-current-line-or-region-in-emacs.html
 (defun duplicate-current-line-or-region (arg)
   "Duplicates the current line or region ARG times.
-If there's no region, the current line will be duplicated. However, if
+If there's no region, the current line will be duplicated.  However, if
 there's a region, all lines that region covers will be duplicated."
   (interactive "p")
   (let (beg end (origin (point)))
@@ -532,7 +539,7 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; more of a private function for the next 2
 (defun move-line (arg)
-  "Moves line up or down, depending on the arg."
+  "Move line up or down, depending on the ARG."
   (let ((col (current-column)))
     (save-excursion
       (forward-line)
@@ -540,14 +547,14 @@ there's a region, all lines that region covers will be duplicated."
     (if (eql arg 1) (forward-line))
     (move-to-column col)))
 
-;; move current line up 1
 (defun move-line-up ()
+  "Move current line up one."
   (interactive)
   (move-line -1))
 (global-set-key (kbd "M-<up>") 'move-line-up)
 
-;; move current line down 1
 (defun move-line-down ()
+  "Move current line down one."
   (interactive)
   (move-line 1))
 (global-set-key (kbd "M-<down>") 'move-line-down)
@@ -567,6 +574,7 @@ there's a region, all lines that region covers will be duplicated."
 ;;(delete 'try-expand-line hippie-expand-try-functions-list)
 ;;(delete 'try-expand-list hippie-expand-try-functions-list)
 (defun try-complete-abbrev (old)
+  "Define a hippie complete function using abbrev using OLD."
    (if (expand-abbrev) t nil))
 
 (setq hippie-expand-try-functions-list
@@ -613,8 +621,8 @@ there's a region, all lines that region covers will be duplicated."
   (interactive)
   (load-file (concat user-emacs-directory "init.el")))
 
-;; make a new frame
 (defun pop-off-buffer ()
+  "Make a new frame with the current buffer, and bury that buffer on the old frame."
   (interactive)
   (bury-buffer)
   (make-frame)
@@ -629,7 +637,7 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; delete all buffers except scratch
 (defun clean-slate ()
-    "Kills all buffers except *scratch*"
+    "Kill all buffers except *scratch*."
     (interactive)
     (let ((buffers (buffer-list)) (safe '("*scratch*")))
       (while buffers
@@ -711,12 +719,13 @@ there's a region, all lines that region covers will be duplicated."
 ;; full screen magit-status
 
 (defadvice magit-status (around magit-fullscreen activate)
+  "Setup advice for magit status iwth AROUND, MAGIT-FULLSCREEN and ACTIVATE so it can be put back on quit."
   (window-configuration-to-register :magit-fullscreen)
   ad-do-it
   (delete-other-windows))
 
 (defun magit-quit-session ()
-  "Restores the previous window configuration and kills all magit buffers"
+  "Quit magit, restoring the previous window configuration and killing all magit buffers."
   (interactive)
   (mapc (lambda (b)
           (if (string-prefix-p "*magit" (buffer-name b)) (kill-buffer b)))
@@ -730,7 +739,7 @@ there's a region, all lines that region covers will be duplicated."
 ;; full screen vc-annotate
 
 (defun vc-annotate-quit ()
-  "Restores the previous window configuration and kills the vc-annotate buffer"
+  "Restore the previous window configuration and kill the \"vc-annotate\" buffer."
   (interactive)
   (kill-buffer)
   (jump-to-register :vc-annotate-fullscreen))
@@ -746,21 +755,24 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; ignore whitespace
 
-(defun magit-toggle-whitespace ()
-  (interactive)
-  (if (member "-w" magit-diff-options)
-      (magit-dont-ignore-whitespace)
-    (magit-ignore-whitespace)))
+(eval-after-load "magit"
+  '(defun magit-toggle-whitespace ()
+    (interactive)
+    (if (member "-w" magit-diff-options)
+        (magit-dont-ignore-whitespace)
+      (magit-ignore-whitespace))))
 
-(defun magit-ignore-whitespace ()
-  (interactive)
-  (add-to-list 'magit-diff-options "-w")
-  (magit-refresh))
+(eval-after-load "magit"
+  '(defun magit-ignore-whitespace ()
+    (interactive)
+    (add-to-list 'magit-diff-options "-w")
+    (magit-refresh)))
 
-(defun magit-dont-ignore-whitespace ()
-  (interactive)
-  (setq magit-diff-options (remove "-w" magit-diff-options))
-  (magit-refresh))
+(eval-after-load "magit"
+  '(defun magit-dont-ignore-whitespace ()
+    (interactive)
+    (setq magit-diff-options (remove "-w" magit-diff-options))
+    (magit-refresh)))
 
 (eval-after-load "magit"
   '(define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace))
@@ -773,6 +785,7 @@ there's a region, all lines that region covers will be duplicated."
 ;; load git stuff from git-core contrib/emacs into site-lisp,
 ;; see http://git.kernel.org/?p=git/git.git;a=tree;hb=HEAD;f=contrib/emacs
 ;; vc-git.el included with emacs now
+(add-to-list 'load-path (concat site-lisp-dir "/git.el"))
 (require 'git)
 
 (require-package 'mo-git-blame)
@@ -824,10 +837,12 @@ there's a region, all lines that region covers will be duplicated."
 ;; just give some indication, maybe this should be in the modeline
 ;; but I don't know how to do that
 (defun my-term-line-mode ()
+    "Create message on entering term line mode."
   (interactive)
   (term-line-mode)
   (message "entering term-line-mode"))
 (defun my-term-char-mode ()
+  "Create message on entering term char mode."
   (interactive)
   (term-char-mode)
   (message "entering term-char-mode"))
@@ -864,12 +879,13 @@ there's a region, all lines that region covers will be duplicated."
     (define-key term-mode-map (kbd "C-c C-k") 'my-term-char-mode)
     ))
 (defadvice ansi-term (after ansi-term-after-advice (arg))
-  "run hook as after advice"
+  "Run hook as after advice for \"ansi-term\"."
   (run-hooks 'ansi-term-after-hook))
 (ad-activate 'ansi-term)
 
 ;; could have just set a variable, but maybe I will expand this
 (defun my-ansi-term ()
+  "My \"ansi-term\" function."
   (interactive)
   (ansi-term "/bin/bash"))
 (global-set-key [f6] 'my-ansi-term)
@@ -886,20 +902,27 @@ there's a region, all lines that region covers will be duplicated."
   "Hook that gets run on activation of any programming mode.")
 
 (defun turn-on-whitespace ()
+  "Turn on whitespace."
   (whitespace-mode t)
   (add-hook 'before-save-hook 'delete-trailing-whitespace))
 
-(defun turn-on-hideshow () (hs-minor-mode t))
+(defun turn-on-hideshow ()
+  "Turn on hideshow."
+  (hs-minor-mode t))
 
-(defun turn-on-linum () (linum-mode t))
+(defun turn-on-linum ()
+  "Turn on linum."
+  (linum-mode t))
 
 (defun add-watchwords ()
+  "Add watchwords."
   (font-lock-add-keywords
    nil
    '(("\\<\\(FIX\\|FIXME\\|TODO\\|BUG\\|XXX\\):"
       1 font-lock-warning-face t))))
 
 (defun bye-flyspell ()
+  "Turn off flyspell."
   (turn-off-flyspell))
 
 (add-hook 'coding-hook 'turn-on-whitespace)
@@ -911,6 +934,7 @@ there's a region, all lines that region covers will be duplicated."
 (add-hook 'coding-hook 'electric-indent-mode)
 
 (defun run-coding-hook ()
+  "Run my coding hook."
   (interactive)
   (run-hooks 'coding-hook))
 
@@ -981,6 +1005,7 @@ there's a region, all lines that region covers will be duplicated."
   (paredit-open-round)) ; backspace if you don't want it
 
 (defun imenu-elisp-sections ()
+  "Define section in elisp imenu."
   (setq imenu-prev-index-position-function nil)
   (add-to-list 'imenu-generic-expression '("Sections" "^;; - \\(.+\\)$" 1) t))
  (add-hook 'emacs-lisp-mode-hook 'imenu-elisp-sections)
@@ -1012,7 +1037,7 @@ there's a region, all lines that region covers will be duplicated."
 
 
 (defun json-pretty-format ()
-  "Runs a jsonlint shell script on the region and then indents
+  "Run a jsonlint shell script on the region and then indent.
 
   jsonlint is on my path and looks like this
 #!/usr/bin/python
@@ -1020,8 +1045,7 @@ import json
 import sys
 
 j = json.load(sys.stdin)
-print json.dumps(j, sort_keys=True, indent=2)
-"
+print json.dumps(j, sort_keys=True, indent=2)"
     (interactive)
     (save-excursion
         (shell-command-on-region (point-min) (point-max) "jsonlint -" (buffer-name) t)
@@ -1162,7 +1186,7 @@ print json.dumps(j, sort_keys=True, indent=2)
 (add-hook 'nxml-mode-hook 'run-coding-hook)
 
 (defun nxml-pretty-format ()
-  "Function to format the current selected region
+  "Function to format the current selected region.
 
   calls xmllint in a shell"
     (interactive)
@@ -1210,3 +1234,6 @@ print json.dumps(j, sort_keys=True, indent=2)
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(provide 'init)
+;;; init.el ends here

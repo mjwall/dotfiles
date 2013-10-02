@@ -30,35 +30,36 @@
 ;;; Color Palette
 
 (defvar ample-zen-colors-alist
-  '(("ample-zen-fg"       . "#bdbdb3") ;
-    ("ample-zen-fg-1"     . "#b1bab8")
-    ("ample-zen-bg-1"     . "#3b3b3b") ;
-    ("ample-zen-bg-05"    . "#2e2e2e") ;
-    ("ample-zen-bg"       . "#212121") ;
-    ("ample-zen-bg+1"     . "#141414") ;
-    ("ample-zen-bg+2"     . "#0a0a0a") ;
-    ("ample-zen-bg+3"     . "#000000") ;
+  '(("ample-zen-fg-1"     . "#c9c9c9")
+    ("ample-zen-fg"       . "#bdbdb3")
+    ("ample-zen-fg+1"     . "#9b9b9b")
+    ("ample-zen-bg-1"     . "#3b3b3b")
+    ("ample-zen-bg-05"    . "#2e2e2e")
+    ("ample-zen-bg"       . "#212121")
+    ("ample-zen-bg+1"     . "#141414")
+    ("ample-zen-bg+2"     . "#0a0a0a")
+    ("ample-zen-bg+3"     . "#000000")
     ("ample-zen-red+1"    . "#AA5542")
-    ("ample-zen-red"      . "#CC5542") ;
+    ("ample-zen-red"      . "#CC5542")
     ("ample-zen-red-1"    . "#dd5542")
     ("ample-zen-red-2"    . "#ee5542")
     ("ample-zen-red-3"    . "#ff5542")
     ("ample-zen-red-4"    . "#ff6642")
     ("ample-zen-orange-1" . "#cc8512")
-    ("ample-zen-orange"   . "#fb8512") ;
-    ("ample-zen-yellow"   . "#7d7c61") ;
-    ("ample-zen-yellow-1" . "#bdbc61") ;
-    ("ample-zen-yellow-2" . "#baba36") ;
+    ("ample-zen-orange"   . "#fb8512")
+    ("ample-zen-yellow"   . "#7d7c61")
+    ("ample-zen-yellow-1" . "#bdbc61")
+    ("ample-zen-yellow-2" . "#baba36")
     ("ample-zen-green-1"  . "#6abd50")
-    ("ample-zen-green"    . "#6aaf50") ;
+    ("ample-zen-green"    . "#6aaf50")
     ("ample-zen-green+1"  . "#6aa350")
     ("ample-zen-green+2"  . "#6a9550")
     ("ample-zen-green+3"  . "#6a8550")
     ("ample-zen-green+4"  . "#6a7550")
-    ("ample-zen-cyan"     . "#9b55c3") ;
+    ("ample-zen-cyan"     . "#9b55c3")
     ("ample-zen-blue+1"   . "#6380b3")
-    ("ample-zen-blue"     . "#5180b3") ;
-    ("ample-zen-blue-1"   . "#528fd1") ;
+    ("ample-zen-blue"     . "#5180b3")
+    ("ample-zen-blue-1"   . "#528fd1")
     ("ample-zen-blue-2"   . "#6CA0A3")
     ("ample-zen-blue-3"   . "#5C888B")
     ("ample-zen-blue-4"   . "#4C7073")
@@ -92,7 +93,7 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(default ((t (:foreground ,ample-zen-fg :background ,ample-zen-bg))))
    `(cursor ((t (:foreground ,ample-zen-fg :background ,ample-zen-orange-1))))
    `(escape-glyph ((t (:foreground ,ample-zen-yellow :bold t))))
-   `(fringe ((t (:foreground ,ample-zen-fg :background ,ample-zen-bg+1))))
+   `(fringe ((t (:foreground ,ample-zen-fg :background ,ample-zen-bg))))
    `(header-line ((t (:foreground ,ample-zen-yellow
                                   :background ,ample-zen-bg-1
                                   :box (:line-width -1 :style released-button)))))
@@ -102,6 +103,24 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(error ((t (:foreground ,ample-zen-red+1 :weight bold))))
    `(vertical-border ((t (:background "black" :foreground "black"))))
    `(minibuffer-prompt ((t (:foreground ,ample-zen-yellow :weight bold))))
+   `(menu ((t (:foreground ,ample-zen-fg :background ,ample-zen-bg))))
+   `(minibuffer-prompt ((t (:foreground ,ample-zen-yellow))))
+   `(mode-line
+     ((,class (:foreground ,ample-zen-fg-1
+                           :background ,ample-zen-bg+3
+                           :box (:line-width -1 :style released-button)))
+      (t :inverse-video t)))
+   `(mode-line-buffer-id ((t (:foreground ,ample-zen-orange-1 :weight bold))))
+   `(mode-line-inactive
+     ((t (:foreground ,ample-zen-fg+1
+                      :background ,ample-zen-bg-1
+                      :box nil :weight light))))
+   `(region ((,class (:background ,ample-zen-bg-1))
+             (t :inverse-video t)))
+   `(secondary-selection ((t (:background ,ample-zen-bg+2))))
+   `(trailing-whitespace ((t (:background ,ample-zen-red))))
+   `(vertical-border ((t (:foreground ,ample-zen-fg))))
+   `(scroll-bar ((t (:background ,ample-zen-bg+2 :foreground ,ample-zen-fg+1))))
 ;;;;; compilation
    `(compilation-column-face ((t (:foreground ,ample-zen-yellow))))
    `(compilation-enter-directory-face ((t (:foreground ,ample-zen-green))))
@@ -127,24 +146,6 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(isearch ((t (:foreground ,ample-zen-yellow-2 :weight bold :background ,ample-zen-bg-1))))
    `(isearch-fail ((t (:foreground ,ample-zen-fg :background ,ample-zen-red-4))))
    `(lazy-highlight ((t (:foreground ,ample-zen-yellow-2 :weight bold :background ,ample-zen-bg-05))))
-
-   `(menu ((t (:foreground ,ample-zen-fg :background ,ample-zen-bg))))
-   `(minibuffer-prompt ((t (:foreground ,ample-zen-yellow))))
-   `(mode-line
-     ((,class (:foreground ,ample-zen-green+1
-                           :background ,ample-zen-bg-1
-                           :box (:line-width -1 :style released-button)))
-      (t :inverse-video t)))
-   `(mode-line-buffer-id ((t (:foreground ,ample-zen-yellow :weight bold))))
-   `(mode-line-inactive
-     ((t (:foreground ,ample-zen-green-1
-                      :background ,ample-zen-bg-05
-                      :box (:line-width -1 :style released-button)))))
-   `(region ((,class (:background ,ample-zen-bg-1))
-             (t :inverse-video t)))
-   `(secondary-selection ((t (:background ,ample-zen-bg+2))))
-   `(trailing-whitespace ((t (:background ,ample-zen-red))))
-   `(vertical-border ((t (:foreground ,ample-zen-fg))))
 ;;;;; font lock
    `(font-lock-builtin-face ((t (:foreground ,ample-zen-fg :weight bold))))
    `(font-lock-comment-face ((t (:foreground ,ample-zen-green))))
@@ -295,10 +296,10 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(erc-timestamp-face ((t (:foreground ,ample-zen-green+1))))
    `(erc-underline-face ((t (:underline t))))
 ;;;;; git-gutter
-   `(git-gutter:added ((t (:foreground ,ample-zen-green :weight bold :inverse-video t))))
-   `(git-gutter:deleted ((t (:foreground ,ample-zen-red :weight bold :inverse-video t))))
-   `(git-gutter:modified ((t (:foreground ,ample-zen-magenta :weight bold :inverse-video t))))
-   `(git-gutter:unchanged ((t (:foreground ,ample-zen-fg :weight bold :inverse-video t))))
+   `(git-gutter:added ((t (:foreground ,ample-zen-green :weight bold))))
+   `(git-gutter:deleted ((t (:foreground ,ample-zen-red :weight bold))))
+   `(git-gutter:modified ((t (:foreground ,ample-zen-yellow-2 :weight bold))))
+   `(git-gutter:unchanged ((t (:foreground ,ample-zen-fg :weight bold))))
 ;;;;; git-gutter-fr
    `(git-gutter-fr:added ((t (:foreground ,ample-zen-green  :weight bold))))
    `(git-gutter-fr:deleted ((t (:foreground ,ample-zen-red :weight bold))))
@@ -504,7 +505,7 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(rainbow-delimiters-depth-11-face ((t (:foreground ,ample-zen-green))))
    `( rainbow-delimiters-depth-12-face ((t (:foreground ,ample-zen-blue-5))))
 ;;;;; rbenv
-   `(rbenv-active-ruby-face ((t (:foreground ,ample-zen-green+1))))
+   `(rbenv-active-ruby-face ((t (:foreground ,ample-zen-fg))))
 ;;;;; rcirc
    `(rcirc-my-nick ((t (:foreground ,ample-zen-blue))))
    `(rcirc-other-nick ((t (:foreground ,ample-zen-orange))))
