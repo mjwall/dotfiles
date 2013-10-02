@@ -1,4 +1,10 @@
-;;----------------------------------------------------------------------------
+;;; package --- ~/.emacs.d/init.el for mjwall
+
+;;; Commentary:
+;;; This is my Emacs init.el file
+
+;;; Code:
+
 ;; - Defaults
 ;;----------------------------------------------------------------------------
 
@@ -8,13 +14,15 @@
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ;; Make elisp more civilized
-(require 'cl)
+(eval-when-compile (require 'cl))
 
 ;; default load path
+(defvar dotfiles-dir)
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
 
 ;; Set path to dependencies
+(defvar site-lisp-dir)
 (setq site-lisp-dir
       (expand-file-name "site-lisp" user-emacs-directory))
 
@@ -70,17 +78,10 @@
 ;; when you switch git branches
 (global-auto-revert-mode 1)
 
-;; setup the paths, this was useful when I was using ansi-term
-;; (defun set-exec-path-from-shell-PATH ()
-;;   (let ((path-from-shell (shell-command-to-string "$SHELL -i -c 'echo
-;;  $PATH'")))
-;;     (setenv "PATH" path-from-shell)
-;;     (setq exec-path (split-string path-from-shell path-separator))))
-;; (if window-system (set-exec-path-from-shell-PATH))
-
 ;; no line numbers unless I say so, but set the format for when I do,
 ;; coding-hooks will provide line numbers for all code
 (global-linum-mode 0)
+(defvar linum-format)
 (setq linum-format "%4d ")
 
 ;; no mail
@@ -135,15 +136,6 @@
 (global-set-key (kbd "C-s-<down>") 'shrink-window)
 (global-set-key (kbd "C-s-<up>") 'enlarge-window)
 
-;; setup formatting with not running in terminal
-;; (when window-system
-;;   (setq frame-title-format '(buffer-file-name "%f" ("%b")))
-;;   (tooltip-mode -1)
-;;   (mouse-wheel-mode t)
-;;   (blink-cursor-mode -1)
-;;   (menu-bar-mode 1) ; turn on the menu bar in the gui
-;; )
-
 ;; fight modeline clutter, need to eval-after-load for
 ;; whatever you want diminished
 (require-package 'diminish)
@@ -162,8 +154,8 @@
 
 ;; fix cursor on some linux,
 ;; see https://github.com/chriskempson/tomorrow-theme/issues/42
-(add-hook 'window-setup-hook '(lambda () (set-cursor-color "#778899")))
-(add-hook 'after-make-frame-functions '(lambda (f) (with-selected-frame f (set-cursor-color "#778899"))))
+;; (add-hook 'window-setup-hook '(lambda () (set-cursor-color "#778899")))
+;; (add-hook 'after-make-frame-functions '(lambda (f) (with-selected-frame f (set-cursor-color "#778899"))))
 
 ;; run only in gui, doesn't play well with daemon
 (if window-system
@@ -187,23 +179,15 @@
 (global-set-key (kbd "C-9") '(lambda () (interactive) (adjust-opacity nil 5)))
 (global-set-key (kbd "C-0") '(lambda () (interactive) (modify-frame-parameters nil `((alpha . 100)))))
 
-;; modeline styling, https://github.com/jonathanchu/emacs-powerline
-;;(require 'powerline)
-;;(setq powerline-color1 "grey22")
-;;(setq powerline-color2 "grey40")
-;; (set-face-attribute 'mode-line nil
-;;                     :background "SteelBlue4"
-;;                     :box nil)
-;; (setq powerline-arrow-shape 'arrow)
-
-(require-package 'powerline)
-;;(powerline-default-theme) ;moved to bottom
-
 ;;----------------------------------------------------------------------------
 ;; - Platform specific
 ;;----------------------------------------------------------------------------
 
 ;; set variables based on system type
+(defvar *is-a-mac*)
+(defvar *is-carbon-emacs*)
+(defvar *is-cocoa-emacs*)
+(defvar *is-gnu-linux*)
 (setq *is-a-mac* (eq system-type 'darwin))
 (setq *is-carbon-emacs* (and *is-a-mac* (eq window-system 'mac)))
 (setq *is-cocoa-emacs* (and *is-a-mac* (eq window-system 'ns)))
@@ -258,22 +242,6 @@
       scroll-down-aggressively 0        ;; ... annoying
 )
 
-;; Fix shift+up when running emacs in terminal
-;; see http://lists.gnu.org/archive/html/help-gnu-emacs/2011-05/msg00211.html
-;; and http://emacswiki.org/emacs/ElispCookbook#toc4
-;; (defun string/starts-with (s arg)
-;;         "returns non-nil if string S starts with ARG.  Else nil."
-;;         (cond ((>= (length s) (length arg))
-;;             (string-equal (substring s 0 (length arg)) arg))
-;;                        (t nil)))
-
-;; (if (string/starts-with (tty-type) "xterm")
-;;     (progn
-;;       (message "fixing xterm")))
-;;(define-key input-decode-map "\e[1;2A" [S-up])
-(defadvice terminal-init-xterm (after select-shift-up activate)
-      (define-key input-decode-map "\e[1;2A" [S-up]))
-
 
 ; movement keys C-<left> etc don't seem to work in terminal and winner-mode
 (global-set-key (kbd "C-x <left>") 'windmove-left)
@@ -282,7 +250,6 @@
 (global-set-key (kbd "C-x <up>") 'windmove-up)
 
 ;; ido-jump-to-window was taken from http://www.emacswiki.org/emacs/WindowNavigation
-
 (defun my/swap (l)
   (if (cdr l)
       (cons (cadr l) (cons (car l) (cddr l)))
@@ -290,13 +257,13 @@
 (defun ido-jump-to-window ()
   (interactive)
   (let* ((visible-buffers
-          (my/swap (mapcar '(lambda (window) (buffer-name (window-buffer window))) (window-list))))
+          (my/swap (mapcar #'(lambda (window) (buffer-name (window-buffer window))) (window-list))))
          (buffer-name (ido-completing-read "Window: " visible-buffers))
          window-of-buffer)
     (if (not (member buffer-name visible-buffers))
         (error "'%s' does not have a visible window" buffer-name)
       (setq window-of-buffer
-            (delq nil (mapcar '(lambda (window)
+            (delq nil (mapcar #'(lambda (window)
                                  (if (equal buffer-name (buffer-name (window-buffer window)))
                                      window
                                    nil))
@@ -699,16 +666,9 @@ there's a region, all lines that region covers will be duplicated."
   (interactive)
   (message (buffer-file-name)))
 
-;; dired+
-;;(require-package 'dired+)
-;;(toggle-diredp-find-file-reuse-dir 1)
-;;(setq dired-recursive-deletes 'top)
-;;(define-key dired-mode-map [mouse-2] 'dired-find-file)
-;; so 'a' in dired works
 (put 'dired-find-alternate-file 'disabled nil)
 
 (autoload 'dirtree "dirtree" "Add directory to tree view" t)
-
 
 ;; Git stuff
 (require-package 'magit)
@@ -716,12 +676,6 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; next section from https://github.com/cjohansen/.emacs.d/blob/master/setup-magit.el
 (require-package 'magit-svn)
-
-;; Subtler highlight
-(set-face-background 'magit-item-highlight "#121212")
-(set-face-foreground 'diff-context "#666666")
-(set-face-foreground 'diff-added "#00cc33")
-(set-face-foreground 'diff-removed "#ff0000")
 
 ;; Load git configurations
 ;; For instance, to run magit-svn-mode in a project, do:
@@ -739,7 +693,8 @@ there's a region, all lines that region covers will be duplicated."
   (delete-current-buffer-file)
   (magit-refresh))
 
-(define-key magit-status-mode-map (kbd "C-x C-k") 'magit-kill-file-on-line)
+(eval-after-load "magit"
+  '(define-key magit-status-mode-map (kbd "C-x C-k") 'magit-kill-file-on-line))
 
 ;; full screen magit-status
 
@@ -757,7 +712,8 @@ there's a region, all lines that region covers will be duplicated."
   ;;(kill-buffer)
   (jump-to-register :magit-fullscreen))
 
-(define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
+(eval-after-load "magit"
+  '(define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
 
 ;; full screen vc-annotate
 
@@ -794,22 +750,19 @@ there's a region, all lines that region covers will be duplicated."
   (setq magit-diff-options (remove "-w" magit-diff-options))
   (magit-refresh))
 
-(define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
+(eval-after-load "magit"
+  '(define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace))
 ;; end stuff from https://github.com/cjohansen/.emacs.d/blob/master/setup-magit.el
 
 ;; help me format better commit messages please
 ;; https://github.com/lunaryorn/git-modes
 (require-package 'git-commit-mode)
 
-;; When I used git from the terminal and GIT_EDITOR=et, I need to close
-;; the commit message when I am done.  C-x # is the command, which runs
-;; server-edit.  But I do that so often, I want an easier key combo
-;;(global-set-key "\C-c\C-w" 'server-edit)
-
 ;; load git stuff from git-core contrib/emacs into site-lisp,
 ;; see http://git.kernel.org/?p=git/git.git;a=tree;hb=HEAD;f=contrib/emacs
 ;; vc-git.el included with emacs now
 (require 'git)
+
 (require-package 'mo-git-blame)
 ;;(require 'git-blame)
 
@@ -847,9 +800,6 @@ there's a region, all lines that region covers will be duplicated."
 
 (setq org-plantuml-jar-path
       (expand-file-name (concat user-emacs-directory "/site-lisp/plantuml.jar")))
-
-;; multi-term
-;;(require-package 'multi-term)
 
 (require 'tramp-term)
 
@@ -963,7 +913,7 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; Slime
 ;; -----
-;; slime is in elpa-autoloads.  Using nrepl for clojure
+;; slime is in elpa-noload.  Using nrepl for clojure
 ;;
 ;;(require 'slime)
 ;;(require 'slime-autoloads)
@@ -1165,16 +1115,8 @@ print json.dumps(j, sort_keys=True, indent=2)
 (require 'arduino-mode) ;; in site-lisp
 (add-hook 'arduino-mode-hook 'run-coding-hook)
 
-;; Adoc mode (asciidoc)
+;; Asciidoc stuff
 ;; -------------------
-;;(require-package 'adoc-mode)
-;;(add-to-list 'auto-mode-alist (cons "\\.asc\\'" 'adoc-mode))
-;;(add-to-list 'auto-mode-alist (cons "\\.asciidoc\\'" 'adoc-mode))
-;;(add-to-list 'auto-mode-alist (cons "\\.adoc\\'" 'adoc-mode))
-;; change font face in asciidoc files
-;;(add-hook 'adoc-mode-hook (lambda() (buffer-face-mode t)))
-;; turn on spellcheck
-;;(add-hook 'adoc-mode-hook 'turn-on-flyspell)
 (add-to-list 'load-path (concat site-lisp-dir "/doc-mode-1.1"))
 (autoload 'doc-mode "doc-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.adoc$" . doc-mode))
@@ -1222,12 +1164,7 @@ print json.dumps(j, sort_keys=True, indent=2)
 ;; Markdown mode
 (require-package 'markdown-mode)
 
-;; TODO
-;; autocomplete
 
-
-
-(powerline-default-theme)
 (window-numbering-mode 1)
 
 (custom-set-variables
@@ -1235,7 +1172,7 @@ print json.dumps(j, sort_keys=True, indent=2)
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("364a5e1aecdd0d24b70089050368851ea5ee593dc8cc6fb58cff1b8cfe88a264" "7a2c92b6267b84ae28a396f24dd832e29a164c1942f1f8b3fe500f1c25f8e09d" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default))))
+ '(custom-safe-themes (quote ("94d66281c0398118afd3fdb921d8b813401a36748ce4541e7ad6b1533a557a9f" "364a5e1aecdd0d24b70089050368851ea5ee593dc8cc6fb58cff1b8cfe88a264" "7a2c92b6267b84ae28a396f24dd832e29a164c1942f1f8b3fe500f1c25f8e09d" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
