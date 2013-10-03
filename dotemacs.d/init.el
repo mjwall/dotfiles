@@ -155,7 +155,7 @@ NO-REFRESH optional"
 ;;(load-theme 'solarized-dark t)
 ;;(load-theme 'tomorrow-night-bright t)
 ;;(load-theme 'ample t)
-(add-to-list 'custom-theme-load-path (concat dotfiles-dir "themes/ample-zen"))
+(require-package 'ample-zen-theme)
 (load-theme 'ample-zen t)
 
 ;; fix cursor on some linux,
