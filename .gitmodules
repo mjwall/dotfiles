@@ -1,0 +1,3 @@
+[submodule "themes/ample-zen"]
+	path = themes/ample-zen
+	url = git@github.com:mjwall/ample-zen.git
