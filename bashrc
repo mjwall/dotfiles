@@ -23,7 +23,11 @@ set_if_exists() {
 
 # put computer specific ENV VARS and aliases in here
 # see bashrc-custom.sample for an example
-source ~/.bashrc-custom
+if [ -e ~/.bashrc-custom ]; then
+  source ~/.bashrc-custom
+else
+  echo "You need to copy the bashrc-custom.sample to ~/.bashrc-custom and customize"
+fi
 
 # Java
 set_if_exists "JAVA_HOME" "${JAVA_HOME}"
