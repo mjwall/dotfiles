@@ -8,7 +8,7 @@ is the result of many years of tweaking and changing.  I have at least
 I am mostly an emacs user.  I used vim for many years, and my config is here as well.  Even though have configs for screen and tmux, I don't use them.  This is the config I use on a daily basis on both Mac OSX and GNU Linux.
 
 === Contents
-
+----
 ├── bash_completion.d
 ├── bash_profile
 ├── bashrc
@@ -24,6 +24,7 @@ I am mostly an emacs user.  I used vim for many years, and my config is here as 
 ├── screenrc
 ├── setup.sh
 └── tmux.conf
+----
 
 The `bash_completion.d` directory includes completions scripts.  There is a git completion script, but you should really use the completion scripts included with the version of git you have installed.
 
