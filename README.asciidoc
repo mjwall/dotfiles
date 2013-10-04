@@ -49,13 +49,22 @@ See installation for info on `setup.sh`.
 
 As I mentioned, I am mostly an Emacs user.  My emacs configuration is also here.  It was a seperate repo on github since Sept 2010.  Currently, that repo still exists, but just has a note pointing to here.  Lots and lots of changes in approach and tweaking there.  Kinda a hobby of mine, tweaking .emacs.d.
 
-To install Emacs on MacOSX, you can follow one of 3 approaches
+==== Installing
+
+===== on MacOSX
+
+You can follow one of 3 approaches
 
 * http://emacsformacosx.com/, probably the easiest but misses a couple of useful patches
 * brew install emacs --cocoa --srgb
 * My current method is https://gist.github.com/mjwall/3fe935a8becb60dd3c4c, although the fullscreen patch doesn't work anymore.  It is important to create a new `/usr/bin/emacs` as described in that gist so Emacs works properly. It is also important to change `/usr/bin/emacsclient` to the version compiled with your Emacs.
 
-To install on Linux, use whatever package manager comes with your system
+===== on Linux
+
+* use whatever package manager comes with your system, apt-get, yum etc.
+* Compile it yourself.  Here are my notes on doing so https://gist.github.com/mjwall/6826866
+
+==== Launching
 
 To launch Emacs, I use the `ec` and `et` scripts in the bin directory.  These scripts both ensure the Emacs daemon is running.  I find this useful because I can close Emacs and reopen with all the same buffers.  It is also extremely quick to open a file after the dameon is running.
 
@@ -63,7 +72,7 @@ The `ec` script calls emacsclient and used the GUI version of Emacs.  It also ha
 
 The `et` script also uses emacsclient, but opens Emacs in the Terminal and waits for it to be closed.
 
-The only issue I have run into is that shutting down on a Mac hangs waiting for Emacs.  The `es` script will stop the Emacs daemon, so you can shutdown.  Not really an issue for me, maybe I'll dig into it more one day.
+The only issue I have run into is that shutting down on a Mac sometimes hangs,  waiting for Emacs.  The `es` script will stop the Emacs daemon, so you can shutdown.  I don't mind it, but maybe I'll dig into it more one day.
 
 === Setup
 
