@@ -82,7 +82,7 @@
 ;; no line numbers unless I say so, but set the format for when I do,
 ;; coding-hooks will provide line numbers for all code
 (global-linum-mode 0)
-(eval-after-load "linum-mode"
+(eval-after-load "linum"
   '(setq linum-format "%4d "))
 
 ;; no mail
@@ -110,12 +110,11 @@ NO-REFRESH optional"
         (package-refresh-contents)
         (require-package package min-version t)))))
 
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 ;; not sure about marmalade yet
-;;(add-to-list 'package-archives
-;;  '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
 ;;----------------------------------------------------------------------------
@@ -337,7 +336,8 @@ NO-REFRESH optional"
 
 ;; setup recentf mode
 (recentf-mode 1)
-(setq recentf-max-saved-items 100)
+(eval-after-load "recentf"
+  '(setq recentf-max-saved-items 100))
 
 ;; From http://github.com/superbobry/emacs/blob/master/rc/emacs-rc-defuns.el
 (defun recentf-ido-find-file ()
