@@ -58,23 +58,8 @@ set_if_exists "SCALA_HOME" "${SCALA_HOME}"
 export EDITOR=et # see ~/bin
 export ALTERNATE_EDITOR=vim
 
-# for emacs on MacOS, compile and install 23.4.1 into
-# TODO: move this info to readme or something
-# /Applications/Emacs.app then
-# chown -R root:staff /Applications/Emacs.app
-#
-# Add the following as /usr/bin/emacs (move old emacs if it is there)
-# #!/bin/bash
-# EMACS_PATH=/Applications/Emacs.app/Contents/MacOS/Emacs
-#
-# if [ $(id -u) = "0" ]; then
-#   sudo $EMACS_PATH $*
-# else
-#   $EMACS_PATH $*
-# fi
-#
-# symlink emacsclient
-# sudo ln -s /Applications/Emacs.app/Contents/MacOS/bin/emacsclient /usr/bin/emacsclient
+# for emacs on MacOS, make sure to look at
+# https://gist.github.com/mjwall/3fe935a8becb60dd3c4c
 
 # git
 if [ "${GIT_COMPLETION_DIR}x" == "x" ]; then
