@@ -1,0 +1,42 @@
+# copy this file to ~/.bashrc-custom and modify for environment
+
+# the following are exported in bashrc if they exist
+JAVA_HOME=/Library/Java/Home
+M2_HOME="${HOME}/opt/maven"
+ANT_HOME="${HOME}/opt/ant"
+SCALA_HOME="${HOME}/opt/scala"
+
+# setup servers
+export JETTY_HOME=${HOME}/opt/jetty
+export JBOSS_HOME=${HOME}/opt/jboss
+export APPENGINE_HOME=/Library/GoogleAppEngine/Home
+export MONGO_HOME=${HOME}/opt/mongo
+
+# python from brew
+which brew 1> /dev/null && export PYTHONPATH="$(brew --prefix)/lib/python2.7/site-packages:$PYTHONPATH"
+
+# python on linux
+#export PYTHONPATH="/usr/local/lib/python2.7/site-packages:$PYTHONPATH"
+
+# docbook
+XML_CATALOG_FILES="${XML_CATALOG_FILES:-/usr/local/etc/xml/catalog}"
+if [ -e "${XML_CATALOG_FILES}" ]; then
+  export XML_CATALOG_FILES=${XML_CATALOG_FILES}
+fi
+
+# mactex
+if [ $(uname) == "Darwin" ]; then
+  # install mactex from http://www.tug.org/mactex/ and update accordingly
+  export MACTEXT_HOME="/usr/local/texlive/2012/bin/x86_64-darwin"
+  prepend_path "${MACTEXT_HOME}"
+fi
+
+# rbenv
+RBENV="${HOME}/.rbenv"
+
+# git completion
+GIT_COMPLETION_DIR=/usr/local/etc/bash_completion.d
+
+# aliases
+alias fastant="ant -Dskip.download=true -Divy.has.resolved=true"
+alias fant=fastant
