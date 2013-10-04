@@ -31,6 +31,9 @@ if [ $(uname) == "Darwin" ]; then
   prepend_path "${MACTEXT_HOME}"
 fi
 
+# emacs on MacOSX, seems to be needed by cask
+export EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
+
 # rbenv
 RBENV="${HOME}/.rbenv"
 
