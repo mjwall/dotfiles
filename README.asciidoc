@@ -57,7 +57,7 @@ You can follow one of 3 approaches
 
 * http://emacsformacosx.com/, probably the easiest but misses a couple of useful patches
 * brew install emacs --cocoa --srgb
-* My current method is https://gist.github.com/mjwall/3fe935a8becb60dd3c4c, although the fullscreen patch doesn't work anymore.  It is important to create a new `/usr/bin/emacs` as described in that gist so Emacs works properly. It is also important to change `/usr/bin/emacsclient` to the version compiled with your Emacs.
+* My current method is https://gist.github.com/mjwall/3fe935a8becb60dd3c4c, although the fullscreen patch doesn't work anymore.  It is important to create a new `/usr/bin/emacs` as described in that gist so Emacs works properly. It is also important to change `/usr/bin/emacsclient` to the version compiled with your Emacs.  If you are using Cask, you may need to `export EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs` as well.
 
 ===== on Linux
 
