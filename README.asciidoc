@@ -74,6 +74,8 @@ The `et` script also uses emacsclient, but opens Emacs in the Terminal and waits
 
 The only issue I have run into is that shutting down on a Mac sometimes hangs,  waiting for Emacs.  The `es` script will stop the Emacs daemon, so you can shutdown.  I don't mind it, but maybe I'll dig into it more one day.
 
+I wrote a blog article on this at http://mjwall.com/blog/2013/10/04/how-i-use-emacs/
+
 === Setup
 
 Clone this repo with
