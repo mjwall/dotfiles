@@ -286,21 +286,20 @@ NO-REFRESH optional"
 (when (fboundp 'ibuffer)
   (global-set-key (kbd "C-x C-b") 'ibuffer))
 
-;; ido-mode is like magic pixie dust!
-;; use 'buffer rather than t to use only buffer switching
-(ido-mode t)
-
 ;; Use C-f during file selection to switch to regular find-file
-(ido-everywhere t)
+
 (when (> emacs-major-version 21)
   (ido-mode t)
+  (ido-everywhere t)
   (setq ido-enable-prefix nil
         ido-enable-flex-matching t
 ;        ido-create-new-buffer 'always
         ido-use-filename-at-point 'guess ;nil
         ido-auto-merge-work-directories-length 0
+        ido-default-file-method 'selected-window
         ido-default-buffer-method 'selected-window
         ido-max-prospects 10
+        ido-max-directory-size 100000
         ido-ignore-buffers
         '("\\` " "^\\*ESS\\*" "^\\*Messages\\*" "^\\*Help\\*" "^\\*Buffer"
           "^\\*.*Completions\\*$" "^\\*Ediff" "^\\*tramp" "^\\*cvs-"
@@ -824,25 +823,104 @@ there's a region, all lines that region covers will be duplicated."
 (setq projectile-enable-caching t)
 (diminish 'projectile-mode "proj")
 
-;; Deft, like notational velocity for Emacs
-(require-package 'deft)
-(setq deft-use-filename-as-title t)
-(setq deft-directory "~/.deft") ;default, but here if you need to change it
-(setq deft-auto-save-interval 30) ;defaults to 1 second, I type too slow
-
 ;; install ESS
 (require-package 'ess)
 
 ;; org-mode
-;; active Org-babel languages
+(require 'org)
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+
+(setq org-directory (concat (getenv "HOME") "/.org/"))
+(custom-set-variables
+    ;; org files
+ '(org-agenda-files (list
+                     (concat org-directory "work.org")
+                     (concat org-directory "personal.org")
+                     (concat org-directory "someday.org")
+                     (concat org-directory "inbox.org")
+                     (concat org-directory "journal.org")
+                     (concat org-directory "notes.org")))
+   ;; http://orgmode.org/manual/Closing-items.html
+ '(org-log-done 'time)
+ '(org-log-done 'note)
+   ;; http://orgmode.org/manual/Weekly_002fdaily-agenda.html
+ '(org-agenda-include-diary t)
+ '(org-default-notes-file (concat org-directory "inbox.org"))
+ '(org-capture-templates
+       '(("t" "Todo" entry (file+headline (concat org-directory "inbox.org") "Tasks")
+          "* TODO %?\n  %i\n  %a")
+         ("j" "Journal" entry (file+datetree (concat org-directory "journal.org"))
+          "* %?\nEntered on %U\n  %i\n  %a")
+         ("n" "Note" entry (file (concat org-directory "notes.org"))
+          "* %? :NOTE:\n%U\n%a\n")
+         ("s" "Someday" entry (file (concat org-directory "someday.org"))
+          "* %? :SOMEDAY:\n%U\n%a\n")))
+
+   ;; refiling (see http://doc.norang.ca/org-mode.html#Refiling)
+ '(org-refile-targets (quote ((nil :maxlevel . 9)
+                              (org-agenda-files :maxlevel . 9))))
+ '(org-refile-use-outline-path t)
+ '(org-outline-path-complete-in-steps nil)
+ '(org-refile-allow-creating-parent-nodes (quote confirm))
+ '(org-completion-use-ido t)
+ '(org-indirect-buffer-display 'current-window)
+   ;; agenda variables, see http://newartisans.com/2007/08/using-org-mode-as-a-day-planner/
+ '(org-agenda-ndays 7)
+ '(org-deadline-warning-days 14)
+ '(org-agenda-show-all-dates t)
+ '(org-agenda-skip-deadline-if-done t)
+ '(org-agenda-skip-scheduled-if-done t)
+ '(org-agenda-start-on-weekday nil)
+ '(org-reverse-note-order t)
+ '(org-agenda-custom-commands
+   '(
+     ("1" "Today's agenda" ((agenda "" ((org-agenda-ndays 1)))))
+     ("n" "Week agenda + TODOs" ((agenda "" )
+                                 (todo)))
+     ))
+ )
+
+;;;; Refile settings
+; Exclude DONE state tasks from refile targets
+;; (defun bh/verify-refile-target ()
+;;   "Exclude todo keywords with a done state from refile targets"
+;;   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
+
+;; (setq org-refile-target-verify-function 'bh/verify-refile-target)
+
+;; active Org-babel languages, particularly for PlantUML
 (setq org-support-shift-select t)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(;; other Babel languages
    (plantuml . t)))
-
 (setq org-plantuml-jar-path
       (expand-file-name (concat user-emacs-directory "/site-lisp/plantuml.jar")))
+
+(defun sync-org-files ()
+  "Run a bash script located in org-directory to sync org files via git."
+  (interactive)
+  (org-save-all-org-buffers)
+  (message "Syncing org files")
+  (with-output-to-temp-buffer "*org-git-sync*"
+    (shell-command (concat org-directory "org-git-sync") "*org-git-sync*")
+    (pop-to-buffer "*org-git-sync*"))
+  (message "Done syncing org files"))
+
+
+;; Deft, like notational velocity for Emacs
+;; I prefer more free flowing notes that get into my agenda
+(require-package 'deft)
+(custom-set-variables
+ '(deft-directory (concat org-directory  "deft"))
+ '(deft-use-filename-as-title t)
+ '(deft-extension "org")
+ '(deft-text-mode 'org-mode)
+ ;defaults to 1 second, I type too slow
+ '(deft-auto-save-interval 30))
 
 (require 'tramp-term)
 
@@ -1228,6 +1306,12 @@ print json.dumps(j, sort_keys=True, indent=2)"
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 (window-numbering-mode 1)
+
+;; org file sync stuff
+;; run now on startup
+(sync-org-files)
+;; and on shutdown
+(add-hook 'kill-emacs-hook 'sync-org-files)
 
 (provide 'init)
 ;;; init.el ends here
