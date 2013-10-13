@@ -415,8 +415,13 @@ NO-REFRESH optional"
 (global-set-key (kbd "C-c y") 'bury-buffer)
 (global-set-key (kbd "C-c r") 'revert-buffer)
 
+;; CEDET, looks like 2.0 is included in Emacs 24.3
+;; (global-ede-mode 1)                      ; Enable the Project management system
+;; (semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion
+;; (global-srecode-minor-mode 1)            ; Enable template insertion menu
+
 ;; ECB, not sure how to use it yet
-(require-package 'ecb)
+;; (require-package 'ecb)
 
 (require-package 'window-numbering) ;;enabled at bottom
 ;;----------------------------------------------------------------------------
@@ -600,6 +605,7 @@ there's a region, all lines that region covers will be duplicated."
 ;;autocomplete
 (require-package 'auto-complete)
 (require 'auto-complete-config)
+;;(add-to-list 'ac-dictionary-directories "~ / .emacs.d / ac-dict")
 (ac-config-default)
 
 (define-key ac-complete-mode-map "\C-n" 'ac-next)
@@ -808,11 +814,15 @@ there's a region, all lines that region covers will be duplicated."
 (global-set-key (kbd "C-x C-g") 'git-gutter:toggle)
 (eval-after-load "git-gutter" '(diminish 'git-gutter-mode))
 
+;; eshell
 ;; call magit from eshell
 (defun eshell/magit ()
   "Run magit status here."
   (call-interactively #'magit-status)
   nil)
+(setq eshell-cmpl-cycle-completions nil
+      eshell-save-history-on-exit t
+      eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'")
 
 ;; follow symlinks to real file
 (setq vc-follow-symlinks t)
