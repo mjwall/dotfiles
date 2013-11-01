@@ -37,7 +37,7 @@ set_if_exists "M2_HOME" "${M2_HOME}"
 if [ "${M2_HOME}x" != "x" ]; then
   export MAVEN_OPTS="-Xmx512m -Xms256m -XX:PermSize=128m -XX:MaxPermSize=256m"
   export MAVEN_OPTS_DEBUG="${MAVEN_OPTS} -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8781,server=y,suspend=n"
-  export JAVA_OPTS="${MAVEN_OPTS} -Duser.timezone=UTC -Djava.awt.headless=true -d32"
+  export JAVA_OPTS="${MAVEN_OPTS} -Duser.timezone=UTC -Djava.awt.headless=true"
   export M2="$M2_HOME/bin"
 fi
 
