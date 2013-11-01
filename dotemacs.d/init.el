@@ -1240,6 +1240,7 @@ print json.dumps(j, sort_keys=True, indent=2)"
 ;; in site-lib from https://github.com/aemoncannon/ensime/downloads
 ;;(require 'ensime)
 ;;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+(require-package 'ensime)
 
 (add-to-list 'auto-mode-alist '(".sbt" . scala-mode))
 
