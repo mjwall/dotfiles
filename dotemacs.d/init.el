@@ -1086,7 +1086,8 @@ there's a region, all lines that region covers will be duplicated."
 (add-hook 'clojure-mode-hook (lambda () (paredit-mode +1)))
 (add-hook 'clojure-mode-hook (lambda () (rainbow-delimiters-mode +1)))
 (require-package 'cider)
-;(require-package 'nrepl)
+;;(require-package 'nrepl)
+(require-package 'cider)
 (require 'lein)
 
 ;; Elisp
