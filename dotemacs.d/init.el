@@ -1085,7 +1085,8 @@ there's a region, all lines that region covers will be duplicated."
 (add-hook 'clojure-mode-hook 'run-coding-hook)
 (add-hook 'clojure-mode-hook (lambda () (paredit-mode +1)))
 (add-hook 'clojure-mode-hook (lambda () (rainbow-delimiters-mode +1)))
-(require-package 'nrepl)
+(require-package 'cider)
+;(require-package 'nrepl)
 (require 'lein)
 
 ;; Elisp
@@ -1314,6 +1315,11 @@ print json.dumps(j, sort_keys=True, indent=2)"
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+;; Python
+(require-package 'jedi)
+(autoload 'jedi:setup "jedi" nil t)
+(add-hook 'python-mode-hook 'jedi:setup)
 
 (window-numbering-mode 1)
 

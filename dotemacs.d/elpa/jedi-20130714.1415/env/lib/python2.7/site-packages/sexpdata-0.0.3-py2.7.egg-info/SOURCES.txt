@@ -1,0 +1,5 @@
+sexpdata.py
+sexpdata.egg-info/PKG-INFO
+sexpdata.egg-info/SOURCES.txt
+sexpdata.egg-info/dependency_links.txt
+sexpdata.egg-info/top_level.txt
