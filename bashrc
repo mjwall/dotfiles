@@ -47,6 +47,10 @@ if [ "${ANT_HOME}x" != "x" ]; then
   export ANT_OPTS="-Xms512M -Xmx2048M -Xss1M -XX:MaxPermSize=128M"
 fi
 
+if [ ! -z "$IVY2_REPO_DIR" ]; then
+  export ANT_OPTS="-Divy.default.ivy.user.dir=${IVY2_REPO_DIR} ${ANT_OPTS}"
+fi
+
 # Leiningen, included in dotfiles/bin
 export LEIN_HOME=~/bin/lein-home
 

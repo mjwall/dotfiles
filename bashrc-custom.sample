@@ -6,8 +6,9 @@ M2_HOME="${HOME}/opt/maven"
 ANT_HOME="${HOME}/opt/ant"
 SCALA_HOME="${HOME}/opt/scala"
 
-# override location of ivy2 repo
-export ANT_OPTS="-Divy.default.ivy.user.dir=/some_path ${ANT_OPTS}"
+# override location of ivy2 repo, setup in bashrc
+# remove to use default ~/.ivy2
+IVY2_REPO_DIR=/somepath
 
 # setup servers
 export JETTY_HOME=${HOME}/opt/jetty
