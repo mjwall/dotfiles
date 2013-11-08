@@ -10,6 +10,8 @@ SCALA_HOME="${HOME}/opt/scala"
 # remove to use default ~/.ivy2
 IVY2_REPO_DIR=/somepath
 
+SBT_OPTS="-Dsbt.ivy.home=${IVY2_REPO_DIR} -Divy.home=${IVY2_REPO_DIR} -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
+    
 # setup servers
 export JETTY_HOME=${HOME}/opt/jetty
 export JBOSS_HOME=${HOME}/opt/jboss
