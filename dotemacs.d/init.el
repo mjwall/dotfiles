@@ -1088,7 +1088,7 @@ there's a region, all lines that region covers will be duplicated."
 (require-package 'cider)
 ;;(require-package 'nrepl)
 (require-package 'cider)
-(require 'lein)
+;;(require 'lein)
 
 ;; Elisp
 ;; -----
