@@ -1234,6 +1234,7 @@ print json.dumps(j, sort_keys=True, indent=2)"
 ;; Scala mode
 ;; ----------
 (require-package 'scala-mode2)
+(require-package 'sbt-mode)
 
 ;; awesomeness for scala, but doesn't appear to be updated for emacs 24
 ;;(add-to-list 'load-path (concat site-lisp-dir "/ensime/elisp/"))
