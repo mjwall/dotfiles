@@ -1,5 +1,5 @@
-#SBT_VERSION=0.13.0
-SBT_VERSION=0.12.1
+SBT_VERSION=0.13.0
+#SBT_VERSION=0.12.1
 
 # should be set in .bashrc-custom, but just in case
 if [ -z "${SBT_OPTS}" ]; then  
