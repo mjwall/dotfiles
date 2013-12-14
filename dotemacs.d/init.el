@@ -845,53 +845,51 @@ there's a region, all lines that region covers will be duplicated."
 
 (setq org-directory (concat (getenv "HOME") "/.org/"))
 (custom-set-variables
-    ;; org files
- '(org-agenda-files (list
-                     (concat org-directory "work.org")
-                     (concat org-directory "personal.org")
-                     (concat org-directory "someday.org")
-                     (concat org-directory "inbox.org")
-                     (concat org-directory "journal.org")
-                     (concat org-directory "notes.org")))
-   ;; http://orgmode.org/manual/Closing-items.html
- '(org-log-done 'time)
- '(org-log-done 'note)
-   ;; http://orgmode.org/manual/Weekly_002fdaily-agenda.html
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector ["#212121" "#CC5542" "#6aaf50" "#7d7c61" "#5180b3" "#DC8CC3" "#9b55c3" "#bdbdb3"])
+ '(custom-safe-themes (quote ("5dfacaf380068d9ed06e0872a066a305ab6a1217f25c3457b640e76c98ae20e6" "7df5b36ef661649550614a15e9afb9d3e785706be6a577058f1b440dff1b03e3" default)))
+ '(deft-auto-save-interval 30)
+ '(deft-directory (concat org-directory "deft"))
+ '(deft-extension "org")
+ '(deft-text-mode (quote org-mode))
+ '(deft-use-filename-as-title t)
+ '(fci-rule-color "#2e2e2e")
+ '(org-agenda-custom-commands (quote (("1" "Today's agenda" ((agenda "" ((org-agenda-ndays 1))))) ("n" "Week agenda + TODOs" ((agenda "") (todo))))))
+ '(org-agenda-files (list (concat org-directory "work.org") (concat org-directory "personal.org") (concat org-directory "someday.org") (concat org-directory "inbox.org") (concat org-directory "journal.org") (concat org-directory "notes.org")))
  '(org-agenda-include-diary t)
- '(org-default-notes-file (concat org-directory "inbox.org"))
- '(org-capture-templates
-       '(("t" "Todo" entry (file+headline (concat org-directory "inbox.org") "Tasks")
-          "* TODO %?\n  %i\n  %a")
-         ("j" "Journal" entry (file+datetree (concat org-directory "journal.org"))
-          "* %?\nEntered on %U\n  %i\n  %a")
-         ("n" "Note" entry (file (concat org-directory "notes.org"))
-          "* %? :NOTE:\n%U\n%a\n")
-         ("s" "Someday" entry (file (concat org-directory "someday.org"))
-          "* %? :SOMEDAY:\n%U\n%a\n")))
-
-   ;; refiling (see http://doc.norang.ca/org-mode.html#Refiling)
- '(org-refile-targets (quote ((nil :maxlevel . 9)
-                              (org-agenda-files :maxlevel . 9))))
- '(org-refile-use-outline-path t)
- '(org-outline-path-complete-in-steps nil)
- '(org-refile-allow-creating-parent-nodes (quote confirm))
- '(org-completion-use-ido t)
- '(org-indirect-buffer-display 'current-window)
-   ;; agenda variables, see http://newartisans.com/2007/08/using-org-mode-as-a-day-planner/
  '(org-agenda-ndays 7)
- '(org-deadline-warning-days 14)
  '(org-agenda-show-all-dates t)
  '(org-agenda-skip-deadline-if-done t)
  '(org-agenda-skip-scheduled-if-done t)
  '(org-agenda-start-on-weekday nil)
+ '(org-capture-templates (quote (("t" "Todo" entry (file+headline (concat org-directory "inbox.org") "Tasks") "* TODO %?
+  %i
+  %a") ("j" "Journal" entry (file+datetree (concat org-directory "journal.org")) "* %?
+Entered on %U
+  %i
+  %a") ("n" "Note" entry (file (concat org-directory "notes.org")) "* %? :NOTE:
+%U
+%a
+") ("s" "Someday" entry (file (concat org-directory "someday.org")) "* %? :SOMEDAY:
+%U
+%a
+"))))
+ '(org-completion-use-ido t)
+ '(org-deadline-warning-days 14)
+ '(org-default-notes-file (concat org-directory "inbox.org"))
+ '(org-indirect-buffer-display (quote current-window))
+ '(org-log-done (quote note))
+ '(org-outline-path-complete-in-steps nil)
+ '(org-refile-allow-creating-parent-nodes (quote confirm))
+ '(org-refile-targets (quote ((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))))
+ '(org-refile-use-outline-path t)
  '(org-reverse-note-order t)
- '(org-agenda-custom-commands
-   '(
-     ("1" "Today's agenda" ((agenda "" ((org-agenda-ndays 1)))))
-     ("n" "Week agenda + TODOs" ((agenda "" )
-                                 (todo)))
-     ))
- )
+ '(vc-annotate-background "#3b3b3b")
+ '(vc-annotate-color-map (quote ((20 . "#dd5542") (40 . "#CC5542") (60 . "#fb8512") (80 . "#baba36") (100 . "#bdbc61") (120 . "#7d7c61") (140 . "#6abd50") (160 . "#6aaf50") (180 . "#6aa350") (200 . "#6a9550") (220 . "#6a8550") (240 . "#6a7550") (260 . "#9b55c3") (280 . "#6CA0A3") (300 . "#528fd1") (320 . "#5180b3") (340 . "#6380b3") (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3"))
 
 ;;;; Refile settings
 ; Exclude DONE state tasks from refile targets
@@ -924,13 +922,7 @@ there's a region, all lines that region covers will be duplicated."
 ;; Deft, like notational velocity for Emacs
 ;; I prefer more free flowing notes that get into my agenda
 (require-package 'deft)
-(custom-set-variables
- '(deft-directory (concat org-directory  "deft"))
- '(deft-use-filename-as-title t)
- '(deft-extension "org")
- '(deft-text-mode 'org-mode)
- ;defaults to 1 second, I type too slow
- '(deft-auto-save-interval 30))
+
 
 (require 'tramp-term)
 
@@ -1334,3 +1326,9 @@ print json.dumps(j, sort_keys=True, indent=2)"
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

@@ -149,3 +149,6 @@ fi
 #G  bold cyan
 #H  bold light grey; looks like bright white
 #x  default foreground or background
+
+# accumulo ulimit
+ulimit -S -n 65536
