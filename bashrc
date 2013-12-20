@@ -151,4 +151,4 @@ fi
 #x  default foreground or background
 
 # accumulo ulimit
-ulimit -S -n 65536
+#ulimit -S -n 65536
