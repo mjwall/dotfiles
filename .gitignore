@@ -11,3 +11,4 @@ dotemacs.d/site-lisp/ajc-java-complete-b771dbc7/target
 /bin/target/.history
 /dotemacs.d/session*
 dotemacs.d/abbrev_defs
+/dotemacs.d/eshell/alias
