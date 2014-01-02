@@ -13,6 +13,7 @@
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
   lc = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
   ls = ls-files
+  distclean = clean -dxf
 [pager]
   color = true
 [color]
