@@ -463,6 +463,8 @@ NO-REFRESH optional"
 (global-set-key (kbd "C-c C-j") 'join-line)
 (global-set-key "\r" 'newline-and-indent)
 (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
+;; try to use this instead of M-w, as that closes windows on Mac
+(global-set-key (kbd "s-w") 'kill-ring-save)
 
 ;; set whitespace style, mode turned on later in run-coding-hook
 (setq whitespace-style
