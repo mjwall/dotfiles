@@ -1125,9 +1125,9 @@ Entered on %U
 
 ;; JDEE mode - time to try it
 ;; --------------------------
-;;(add-to-list 'load-path "~/.emacs.d/jdee-2.4.1/lisp")
-;;(load "jde")
-;;(require 'jde-maven)
+(add-to-list 'load-path "~/.emacs.d/jdee-2.4.1/lisp")
+(load "jde")
+(require 'jde-maven)
 
 ;; eclim instead of JDEE
 ;; eclim_2.3.2 and 
@@ -1135,11 +1135,11 @@ Entered on %U
 ;;
 ;; Version: Kepler Service Release 1
 ;; Build id: 20130919-0819
-(require 'eclim)
-(global-eclim-mode)
-(require 'eclimd)
-(require 'ac-emacs-eclim-source)
-(ac-emacs-eclim-config)
+;;(require 'eclim)
+;;(global-eclim-mode)
+;;(require 'eclimd)
+;;(require 'ac-emacs-eclim-source)
+;;(ac-emacs-eclim-config)
 
 ;; Javascript mode
 ;; ---------------
