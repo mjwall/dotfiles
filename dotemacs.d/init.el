@@ -1193,12 +1193,25 @@ Entered on %U
 
 ;; JDEE mode - time to try it
 ;; --------------------------
-(add-to-list 'load-path "~/.emacs.d/jdee-2.4.1/lisp")
-(load "jde")
-(require 'jde-maven)
+;;(add-to-list 'load-path "~/.emacs.d/jdee-2.4.1/lisp")
+;;(load "jde")
+;;(require 'jde-maven)
+
+;; malabar mode
+;;(require 'cedet)
+;;(require 'semantic)
+;;(load "semantic/loaddefs.el")
+;;(semantic-mode 1);;
+;;;(require-package 'malabar-mode)
+;;(require 'malabar-mode)
+;;(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+;;(add-hook 'malabar-mode-hook
+;;     (lambda ()
+;;       (add-hook 'after-save-hook 'malabar-compile-file-silently
+;;                 nil t)))
 
 ;; eclim instead of JDEE
-;; eclim_2.3.2 and 
+;; eclim_2.3.2 and
 ;; Kepler Eclipse Java EE IDE for Web Developers.
 ;;
 ;; Version: Kepler Service Release 1
@@ -1418,3 +1431,4 @@ print json.dumps(j, sort_keys=True, indent=2)"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'downcase-region 'disabled nil)
