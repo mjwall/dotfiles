@@ -260,6 +260,7 @@ NO-REFRESH optional"
   (if (cdr l)
       (cons (cadr l) (cons (car l) (cddr l)))
     l))
+
 (defun ido-jump-to-window ()
   "This ido-jump-to-window function taken from http://www.emacswiki.org/emacs/WindowNavigation."
   (interactive)
@@ -314,6 +315,7 @@ NO-REFRESH optional"
 (setq ido-decorations
       (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]"
               " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
+
 (defun ido-disable-line-trucation ()
   (set (make-local-variable 'truncate-lines) nil))
 (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
@@ -414,6 +416,7 @@ NO-REFRESH optional"
 ;; a few more shortcuts
 (global-set-key (kbd "C-c y") 'bury-buffer)
 (global-set-key (kbd "C-c r") 'revert-buffer)
+(global-set-key (kbd "C-x g") 'goto-line)
 
 ;; CEDET, looks like 2.0 is included in Emacs 24.3
 ;; (global-ede-mode 1)                      ; Enable the Project management system
@@ -711,7 +714,7 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; Git stuff
 (require-package 'magit)
-(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "<f5>") 'magit-status)
 
 ;; next section from https://github.com/cjohansen/.emacs.d/blob/master/setup-magit.el
 (require-package 'magit-svn)
