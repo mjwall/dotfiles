@@ -214,6 +214,8 @@ NO-REFRESH optional"
 
   ;; turn off delete frame, I hit that too much
   (global-unset-key (kbd "s-w"))
+  ;; turn off ns-power-off, that is bad
+  (global-unset-key (kbd "s-q"))
 
   (when *is-cocoa-emacs*
     ;; allows me to drag into the doc icon and open editor: see
@@ -1193,7 +1195,7 @@ Entered on %U
 ;; Java mode
 ;; ---------
 (add-hook 'java-mode-hook 'run-coding-hook)
-(require 'java-imenu)
+;;(require 'java-imenu)
 
 ;; JDEE mode - time to try it
 ;; --------------------------
