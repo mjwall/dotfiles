@@ -1190,6 +1190,7 @@ Entered on %U
 ;; Java mode
 ;; ---------
 (add-hook 'java-mode-hook 'run-coding-hook)
+(require 'java-imenu)
 
 ;; JDEE mode - time to try it
 ;; --------------------------
