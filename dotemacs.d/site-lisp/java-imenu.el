@@ -1,13 +1,10 @@
-;; Complicated regexp to match method declarations in interfaces or classes
-;; A nasty test case is:
-;;    else if(foo instanceof bar) {
-;; To avoid matching this as a method named "if" must check that within
-;; a parameter list there are an even number of symbols, i.e., one type name
-;; paired with one variable name.  The trick there is to use the regexp
-;; patterns \< and \> to match beginning and end of words.
+;; started with http://ftp.gnu.org/pub/old-gnu/emacs/windows/docs/ntemacs/contrib/java-imenu.el
+;; redid regex's based on http://docs.oracle.com/javase/specs/jls/se7/html/jls-18.html
+
 (defvar java-function-regexp
   (concat
    "^[ \t]*"                                   ; leading white space
+                                               ; STOPPED HERE Type
    "\\(public\\|private\\|protected\\|"        ; some of these 8 keywords
    "abstract\\|final\\|static\\|"
    "synchronized\\|native"
@@ -52,5 +49,3 @@
 (add-hook 'java-mode-hook
           (function (lambda ()
                       (setq imenu-generic-expression java-imenu-regexp))))
-
-
