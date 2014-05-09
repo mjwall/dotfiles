@@ -1195,6 +1195,13 @@ Entered on %U
 ;; Java mode
 ;; ---------
 (add-hook 'java-mode-hook 'run-coding-hook)
+(require-package 'javap-mode)
+;; from http://www.emacswiki.org/emacs/DavidBoon#toc11
+(defun archive-javap-handler-hook ()
+  "a hook to use javap-handler when opening a class file from a jar file"
+  (if (string-match "\.class$" buffer-file-name)
+      (javap-buffer)))
+(add-hook 'archive-extract-hooks 'archive-javap-handler-hook)
 ;;(require 'java-imenu)
 
 ;; JDEE mode - time to try it
