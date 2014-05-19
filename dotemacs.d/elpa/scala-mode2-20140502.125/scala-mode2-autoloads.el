@@ -3,9 +3,34 @@
 ;;; Code:
 
 
-;;;### (autoloads (scala-mode scala-mode:set-scala-syntax-mode) "scala-mode2"
-;;;;;;  "scala-mode2.el" (21354 50188 0 0))
+;;;### (autoloads (scala-mode scala-mode:set-scala-syntax-mode) "../../../src/dev/dotfiles/dotemacs.d/elpa/scala-mode2-20140502.125/scala-mode2"
+;;;;;;  "scala-mode2.el" "3128ccb721834c39583f7c693cc06a70")
 ;;; Generated autoloads from scala-mode2.el
+
+(autoload 'scala-mode:set-scala-syntax-mode "../../../src/dev/dotfiles/dotemacs.d/elpa/scala-mode2-20140502.125/scala-mode2" "\
+Sets the syntax-table and other realted variables for the current buffer to those of scala-mode. Can be used to make some other major mode (such as sbt-mode) use scala syntax-table.
+
+\(fn)" nil nil)
+
+(autoload 'scala-mode "../../../src/dev/dotfiles/dotemacs.d/elpa/scala-mode2-20140502.125/scala-mode2" "\
+Major mode for editing scala code.
+
+When started, runs `scala-mode-hook'.
+
+\\{scala-mode-map}
+
+\(fn)" t nil)
+
+(add-to-list 'auto-mode-alist '("\\.\\(scala\\|sbt\\)\\'" . scala-mode))
+
+(modify-coding-system-alist 'file "\\.\\(scala\\|sbt\\)\\'" 'utf-8)
+
+;;;***
+
+;;;### (autoloads (scala-mode scala-mode:set-scala-syntax-mode) "scala-mode2"
+;;;;;;  "../../../../../../.emacs.d/elpa/scala-mode2-20140502.125/scala-mode2.el"
+;;;;;;  "3128ccb721834c39583f7c693cc06a70")
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/scala-mode2-20140502.125/scala-mode2.el
 
 (autoload 'scala-mode:set-scala-syntax-mode "scala-mode2" "\
 Sets the syntax-table and other realted variables for the current buffer to those of scala-mode. Can be used to make some other major mode (such as sbt-mode) use scala syntax-table.
@@ -27,10 +52,17 @@ When started, runs `scala-mode-hook'.
 
 ;;;***
 
-;;;### (autoloads nil nil ("scala-mode2-fontlock.el" "scala-mode2-indent.el"
-;;;;;;  "scala-mode2-lib.el" "scala-mode2-map.el" "scala-mode2-paragraph.el"
-;;;;;;  "scala-mode2-pkg.el" "scala-mode2-sbt.el" "scala-mode2-syntax.el")
-;;;;;;  (21354 50188 771572 0))
+;;;### (autoloads nil nil ("../../../../../../.emacs.d/elpa/scala-mode2-20140502.125/scala-mode2-autoloads.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/scala-mode2-20140502.125/scala-mode2-fontlock.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/scala-mode2-20140502.125/scala-mode2-indent.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/scala-mode2-20140502.125/scala-mode2-lib.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/scala-mode2-20140502.125/scala-mode2-map.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/scala-mode2-20140502.125/scala-mode2-paragraph.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/scala-mode2-20140502.125/scala-mode2-pkg.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/scala-mode2-20140502.125/scala-mode2-sbt.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/scala-mode2-20140502.125/scala-mode2-syntax.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/scala-mode2-20140502.125/scala-mode2.el"
+;;;;;;  "scala-mode2.el") (21364 5673 768100 0))
 
 ;;;***
 

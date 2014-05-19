@@ -1197,18 +1197,44 @@ Entered on %U
 (add-hook 'java-mode-hook 'run-coding-hook)
 (require-package 'javap-mode)
 (require 'javap-mode)
-;; from http://www.emacswiki.org/emacs/DavidBoon#toc11
-(defun archive-javap-handler-hook ()
-  "a hook to use javap-handler when opening a class file from a jar file"
-  (if (string-match "\.class$" buffer-file-name)
-      (javap-buffer)))
-(add-hook 'archive-extract-hooks 'archive-javap-handler-hook)
+(require-package 'javadoc-lookup)
+(require 'javadoc-lookup)
+(global-set-key (kbd "C-h j") 'javadoc-lookup)
+;;wget -erobots=off -r http://docs.oracle.com/javase/6/docs/api/
+(javadoc-add-roots "/opt/javadocs/javase/6/api")
 
-;; javap-mode only sets up a hook with find-file
-;; (add-hook 'archive-extract-hooks
-;;           (lambda (&rest args)
-;;             (if (string= ".class" (substring (buffer-file-name) -6 nil))
-;;                 (javap-buffer))))
+(javadoc-add-artifacts [org.apache.accumulo accumulo-core "1.5.1"]
+                       [org.apache.accumulo accumulo-examples-simple "1.5.1"]
+                       [org.apache.accumulo accumulo-fate "1.5.1"]
+                       [org.apache.accumulo accumulo-minicluster "1.5.1"]
+                       [org.apache.accumulo accumulo-proxy "1.5.1"]
+                       [org.apache.accumulo accumulo-server "1.5.1"]
+                       [org.apache.accumulo accumulo-start "1.5.1"]
+                       [org.apache.accumulo accumulo-test "1.5.1"]
+                       [org.apache.accumulo accumulo-trace "1.5.1"]
+                       [junit junit "4.11"]
+                       [org.apache.hadoop hadoop-client "1.0.4"]
+                       [org.apache.zookeeper zookeeper "3.4.5"])
+
+
+
+;; from http://www.emacswiki.org/emacs/DavidBoon#toc11
+;; (defun archive-javap-handler-hook ()
+;;   "a hook to use javap-handler when opening a class file from a jar file"
+;;   (if (string-match "\.class$" buffer-file-name)
+;;       (javap-buffer)))
+;; (add-hook 'archive-extract-hooks 'archive-javap-handler-hook)
+
+;; javap-mode only sets up a hook with find-file,
+;; lets also use javap when inside a jar
+(autoload 'archive-extract-hook "arc-mode")
+(add-hook 'archive-extract-hook
+          (lambda (&rest args)
+            (message args)))
+(add-hook 'archive-extract-hook
+          (lambda (&rest args)
+            (if (string= ".class" (substring (buffer-file-name) -6 nil))
+                (javap-buffer))))
 
 ;;(require 'java-imenu)
 
