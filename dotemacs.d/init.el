@@ -1195,26 +1195,26 @@ Entered on %U
 ;; Java mode
 ;; ---------
 (add-hook 'java-mode-hook 'run-coding-hook)
-(require-package 'javap-mode)
-(require 'javap-mode)
-(require-package 'javadoc-lookup)
-(require 'javadoc-lookup)
-(global-set-key (kbd "C-h j") 'javadoc-lookup)
+;(require-package 'javap-mode)
+;(require 'javap-mode)
+;(require-package 'javadoc-lookup)
+;(require 'javadoc-lookup)
+;(global-set-key (kbd "C-h j") 'javadoc-lookup)
 ;;wget -erobots=off -r http://docs.oracle.com/javase/6/docs/api/
-(javadoc-add-roots "/opt/javadocs/javase/6/api")
+;(javadoc-add-roots "/opt/javadocs/javase/6/api")
 
-(javadoc-add-artifacts [org.apache.accumulo accumulo-core "1.5.1"]
-                       [org.apache.accumulo accumulo-examples-simple "1.5.1"]
-                       [org.apache.accumulo accumulo-fate "1.5.1"]
-                       [org.apache.accumulo accumulo-minicluster "1.5.1"]
-                       [org.apache.accumulo accumulo-proxy "1.5.1"]
-                       [org.apache.accumulo accumulo-server "1.5.1"]
-                       [org.apache.accumulo accumulo-start "1.5.1"]
-                       [org.apache.accumulo accumulo-test "1.5.1"]
-                       [org.apache.accumulo accumulo-trace "1.5.1"]
-                       [junit junit "4.11"]
-                       [org.apache.hadoop hadoop-client "1.0.4"]
-                       [org.apache.zookeeper zookeeper "3.4.5"])
+;; (javadoc-add-artifacts [org.apache.accumulo accumulo-core "1.5.1"]
+;;                        [org.apache.accumulo accumulo-examples-simple "1.5.1"]
+;;                        [org.apache.accumulo accumulo-fate "1.5.1"]
+;;                        [org.apache.accumulo accumulo-minicluster "1.5.1"]
+;;                        [org.apache.accumulo accumulo-proxy "1.5.1"]
+;;                        [org.apache.accumulo accumulo-server "1.5.1"]
+;;                        [org.apache.accumulo accumulo-start "1.5.1"]
+;;                        [org.apache.accumulo accumulo-test "1.5.1"]
+;;                        [org.apache.accumulo accumulo-trace "1.5.1"]
+;;                        [junit junit "4.11"]
+;;                        [org.apache.hadoop hadoop-client "1.0.4"]
+;;                        [org.apache.zookeeper zookeeper "3.4.5"])
 
 
 
