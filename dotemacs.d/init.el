@@ -210,12 +210,13 @@ NO-REFRESH optional"
 
   ;; make the modifiers work like linux
   (setq mac-command-modifier 'meta)
-  (setq mac-option-modifier 'super)
-
+  ;;(setq mac-option-modifier 'super)
+  (setq mac-option-modifier nil)
+  
   ;; turn off delete frame, I hit that too much
-  (global-unset-key (kbd "s-w"))
+  ;;(global-unset-key (kbd "s-w"))
   ;; turn off ns-power-off, that is bad
-  (global-unset-key (kbd "s-q"))
+  ;;(global-unset-key (kbd "s-q"))
 
   (when *is-cocoa-emacs*
     ;; allows me to drag into the doc icon and open editor: see
@@ -234,7 +235,7 @@ NO-REFRESH optional"
   ;;fonts
   (setq default-frame-alist '((font . "Monospace-12")))
   ;; give me a familiar quit emacs keybinding
-  (global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
+  ;;(global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
   )
 
 ;;----------------------------------------------------------------------------
@@ -469,7 +470,7 @@ NO-REFRESH optional"
 (global-set-key "\r" 'newline-and-indent)
 (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 ;; try to use this instead of M-w, as that closes windows on Mac
-(global-set-key (kbd "s-w") 'kill-ring-save)
+;;(global-set-key (kbd "s-w") 'kill-ring-save)
 
 ;; set whitespace style, mode turned on later in run-coding-hook
 (setq whitespace-style
@@ -579,7 +580,7 @@ there's a region, all lines that region covers will be duplicated."
   (interactive)
   (set-buffer-modified-p t)
   (save-buffer))
-(global-set-key (kbd "s-s") 'save-buffer-always)
+;;(global-set-key (kbd "s-s") 'save-buffer-always)
 
 ;; rebind to undo, stop suspending-frame
 (global-set-key (kbd "C-z") 'undo)
@@ -680,7 +681,7 @@ there's a region, all lines that region covers will be duplicated."
     (kill-this-buffer)))
 
 ;; not sure why this works on Mac but not Linux
-(global-set-key (kbd "s-k") 'kill-this-buffer)
+(global-set-key (kbd "C-x C-k") 'kill-this-buffer)
 
 ;; Rename the current file
 (defun rename-this-file-and-buffer (new-name)
