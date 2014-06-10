@@ -212,7 +212,7 @@ NO-REFRESH optional"
   (setq mac-command-modifier 'meta)
   ;;(setq mac-option-modifier 'super)
   (setq mac-option-modifier nil)
-  
+
   ;; turn off delete frame, I hit that too much
   ;;(global-unset-key (kbd "s-w"))
   ;; turn off ns-power-off, that is bad
@@ -381,12 +381,6 @@ NO-REFRESH optional"
 
 (eval-after-load "isearch"
                  '(diminish 'isearch-mode))
-
-;; show counts of matchs in modeline
-(require-package 'anzu)
-(global-anzu-mode +1)
-(eval-after-load "anzu" '(setq anzu-search-threshold 1000))
-(eval-after-load "anzu" '(diminish 'anzu-mode))
 
 ;; Search back/forth for the symbol at point
 ;; See http://www.emacswiki.org/emacs/SearchAtPoint
@@ -1380,7 +1374,7 @@ print json.dumps(j, sort_keys=True, indent=2)"
 ;; in site-lib from https://github.com/aemoncannon/ensime/downloads
 ;;(require 'ensime)
 ;;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-(require-package 'ensime)
+;;(require-package 'ensime)
 
 (add-to-list 'auto-mode-alist '(".sbt" . scala-mode))
 
