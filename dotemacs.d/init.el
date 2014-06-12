@@ -625,6 +625,7 @@ there's a region, all lines that region covers will be duplicated."
 (global-set-key (kbd "M-?") 'undo-tree-redo)
 ;; no need to see undo-tree in modeline
 (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))
+(global-set-key (kbd "C-_") 'text-scale-decrease) ; was overwritten
 
 (require-package 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
