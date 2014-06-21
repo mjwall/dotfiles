@@ -129,8 +129,8 @@ NO-REFRESH optional"
 (global-font-lock-mode t)
 
 ;; Change Font size, only works in GUI
-(global-set-key (kbd "C-+") 'text-scale-increase)
-(global-set-key (kbd "C-_") 'text-scale-decrease)
+(global-set-key (kbd "M-+") 'text-scale-increase)
+(global-set-key (kbd "C-M-=") 'text-scale-decrease)
 
 ;; bind some window resizing
 (global-set-key (kbd "C-s-<left>") 'shrink-window-horizontally)
