@@ -897,7 +897,7 @@ PWD is not in a git repo (or the git command is not found)."
 (setq vc-follow-symlinks t)
 
 ;; Project package
-(require-package 'ack-and-half)
+(require-package 'ack-and-a-half)
 (require-package 'projectile)
 (projectile-global-mode)
 (setq projectile-enable-caching t)
