@@ -1,32 +1,24 @@
 #! /bin/bash
-#function list_java_versions {
-#    ls -l /System/Library/Frameworks/JavaVM.framework/Versions | egrep "^l" | grep -v Current
-#}
 #
-#VERSION=$1
-#if [[ -z "$@" ]]; then
-#    echo >&2 "You must supply an argument:  Try one of these:"
-#    list_java_versions
-#    exit 1
-#fi
+# change the system symlink so you can swap versions
 #
-#JAVA_ROOT=/System/Library/Frameworks/JavaVM.framework/Versions
+# reinstall java 6 if java 7 wiped it out, got java 6 from http://support.apple.com/kb/dl1572
 #
-#JAVA_VERSION=$JAVA_ROOT/$1
-#if [ -d $GRAILS_VERSION ]; then
-#    echo "Setting Java version to $1 (you may have enter your password for sudo)"
-#    sudo rm $JAVA_ROOT/CurrentJDK
-#    sudo ln -s $JAVA_VERSION $JAVA_ROOT/CurrentJDK
-#    echo "java -version"
-#    java -version
-#    echo "javac -version"
-#    javac -version
-#else
-#    echo "Error: '$JAVA_VERSION' does not exist!!"
-#    echo "Use one of the following:"
-#    list_java_versions
-#    exit 1
-#fi
+# this scripts assumes a directory structure such as the following
+#
+# ls -l /System/Library/Frameworks/JavaVM.framework/Versions/
+# total 80
+# lrwxr-xr-x  1 root  wheel   10 Jun 23 21:33 1.4 -> CurrentJDK
+# lrwxr-xr-x  1 root  wheel   10 Jun 23 21:33 1.4.2 -> CurrentJDK
+# lrwxr-xr-x  1 root  wheel   10 Jun 23 21:33 1.5 -> CurrentJDK
+# lrwxr-xr-x  1 root  wheel   10 Jun 23 21:33 1.5.0 -> CurrentJDK
+# lrwxr-xr-x  1 root  wheel    5 Jun 23 21:37 1.6 -> 1.6.0
+# lrwxr-xr-x  1 root  wheel   59 Jun 23 21:37 1.6.0 -> /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents
+# lrwxr-xr-x  1 root  wheel    5 Jun 17 08:55 1.7 -> 1.7.0
+# lrwxr-xr-x  1 root  wheel   58 Jun 17 09:05 1.7.0 -> /Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents
+# drwxr-xr-x  8 root  wheel  272 Jun 23 21:34 A
+# lrwxr-xr-x  1 root  wheel    1 Jun 23 21:33 Current -> A
+# lrwxr-xr-x  1 root  wheel    3 Jun 23 21:44 CurrentJDK -> 1.6
 
 cd /System/Library/Frameworks/JavaVM.framework/Versions
 
@@ -35,13 +27,11 @@ echo Current JDK version: $CURJDK
 
 if [ "$1" == "" ]; then
 echo Installed versions:
-ls
+echo 1.6, 1.7
 exit
 fi
 
-VERFOUND=`ls | grep $1 | head -n 1`
-
-if [ "$VERFOUND" != "$1" ]; then
+if [ "1.6" != "$1" ] && [ "1.7" != "$1" ]; then
 BASE="`basename $0`"
 echo Error: Could not change JDK-- version $1 not installed!
 echo Run $BASE without arguments to see a list of installed versions.
@@ -50,4 +40,3 @@ fi
 
 echo You must now enter your Mac OS X password to change the JDK.
 sudo ln -fhsv $1 CurrentJDK
-
