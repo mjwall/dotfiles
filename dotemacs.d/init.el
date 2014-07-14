@@ -129,8 +129,8 @@ NO-REFRESH optional"
 (global-font-lock-mode t)
 
 ;; Change Font size, only works in GUI
-(global-set-key (kbd "C-+") 'text-scale-increase)
-(global-set-key (kbd "C-_") 'text-scale-decrease)
+(global-set-key (kbd "M-+") 'text-scale-increase)
+(global-set-key (kbd "C-M-=") 'text-scale-decrease)
 
 ;; bind some window resizing
 (global-set-key (kbd "C-s-<left>") 'shrink-window-horizontally)
@@ -897,6 +897,7 @@ PWD is not in a git repo (or the git command is not found)."
 (setq vc-follow-symlinks t)
 
 ;; Project package
+(require-package 'ack-and-a-half)
 (require-package 'projectile)
 (projectile-global-mode)
 (setq projectile-enable-caching t)
