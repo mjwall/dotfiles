@@ -900,6 +900,7 @@ PWD is not in a git repo (or the git command is not found)."
 (require-package 'projectile)
 (projectile-global-mode)
 (setq projectile-enable-caching t)
+(setq compilation-scroll-output "non-nil") ; so compilation buffer scrolls
 (diminish 'projectile-mode "proj")
 
 ;; install ESS
