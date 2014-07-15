@@ -74,6 +74,9 @@ else
   source "${GIT_COMPLETION_DIR}/git-completion.bash"
   source "${GIT_COMPLETION_DIR}/git-prompt.sh"
   export GIT_PS1_SHOWDIRTYSTATE=true
+  # if __git_ps1 is slow
+  #export GIT_PS1_SHOWDIRTYSTATE=
+  export GIT_PS1_SHOWUNTRACKEDFILES=
   export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
 fi
 
