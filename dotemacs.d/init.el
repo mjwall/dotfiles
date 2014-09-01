@@ -302,6 +302,7 @@ NO-REFRESH optional"
         ido-auto-merge-work-directories-length 0
         ido-default-file-method 'selected-window
         ido-default-buffer-method 'selected-window
+        ffap-machine-p-known 'reject ;find-file-at-point bug
         ido-max-prospects 10
         ido-max-directory-size 100000
         ido-ignore-buffers
