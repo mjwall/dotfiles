@@ -326,7 +326,7 @@ NO-REFRESH optional"
 
 ; imenu with ido
 (require-package 'idomenu)
-(global-set-key (kbd "C-x C-i") 'idomenu)
+(global-set-key (kbd "C-x TAB") 'idomenu) ;; C-x C-i
 
 ;; update keybindings so up and down move next with vertical results
 (add-hook 'ido-setup-hook
