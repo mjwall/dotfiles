@@ -76,7 +76,7 @@ else
   export GIT_PS1_SHOWDIRTYSTATE=true
   # if __git_ps1 is slow
   #export GIT_PS1_SHOWDIRTYSTATE=
-  export GIT_PS1_SHOWUNTRACKEDFILES=
+  #export GIT_PS1_SHOWUNTRACKEDFILES=
   export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
 fi
 

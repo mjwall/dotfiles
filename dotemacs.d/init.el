@@ -203,7 +203,7 @@ NO-REFRESH optional"
   (setq default-input-method "MacOSX")
   ;; fonts
   ;;(setq default-frame-alist '((font . "Monoco-15")))
-  (setq default-frame-alist '((font . "Liberation Mono-15")))
+  (setq default-frame-alist '((font . "Liberation Mono-16")))
 
   ;; Work around a bug on OS X where system-name is FQDN
   (setq system-name (car (split-string system-name "\\.")))
@@ -1215,9 +1215,12 @@ Entered on %U
 ;;                        [org.apache.hadoop hadoop-client "1.0.4"]
 ;;                        [org.apache.zookeeper zookeeper "3.4.5"])
 
+;; JFlex mode - from http://jflex.de/emacs.html
+(autoload 'jflex-mode "jflex-mode" nil t)
+(setq auto-mode-alist (cons '("\\(\\.flex\\|\\.jflex\\)\\'" . jflex-mode) auto-mode-alist))
+(add-hook 'jflex-mode 'run-coding-hook)
 
-
-;; from http://www.emacswiki.org/emacs/DavidBoon#toc11
+;; From http://www.emacswiki.org/emacs/DavidBoon#toc11
 ;; (defun archive-javap-handler-hook ()
 ;;   "a hook to use javap-handler when opening a class file from a jar file"
 ;;   (if (string-match "\.class$" buffer-file-name)

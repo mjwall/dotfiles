@@ -33,6 +33,11 @@ change_focus() {
   emacsclient -n -e "(select-frame-set-input-focus (selected-frame))" > /dev/null
 }
 
+# with macport of emacs, this has issues.
+# https://github.com/railwaycat/emacs-mac-port/issues/49
+#Let's just open one and then start the server
+#open -a Emacs.app
+
 # try switching to the frame incase it is just minimized
 # will start a server if not running
 test "$(visible_frames)" -eq "1" && change_focus
