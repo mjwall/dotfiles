@@ -208,10 +208,14 @@ NO-REFRESH optional"
   ;; Work around a bug on OS X where system-name is FQDN
   (setq system-name (car (split-string system-name "\\.")))
 
-  ;; make the modifiers work like linux
-  (setq mac-command-modifier 'meta)
-  ;;(setq mac-option-modifier 'super)
-  (setq mac-option-modifier nil)
+  ;; set command = option and vice versa in OS preferences
+  (setq mac-command-modifier nil) ;;gets me in trouble
+
+  ;; comment out the rest until I see if I like it
+  ;; ;; make the modifiers work like linux
+  ;; (setq mac-command-modifier 'meta)
+  ;; ;;(setq mac-option-modifier 'super)
+  ;; (setq mac-option-modifier nil)
 
   ;; turn off delete frame, I hit that too much
   ;;(global-unset-key (kbd "s-w"))
