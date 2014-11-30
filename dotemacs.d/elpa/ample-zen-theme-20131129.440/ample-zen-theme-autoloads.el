@@ -1,10 +1,10 @@
 ;;; ample-zen-theme-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "ample-zen-theme" "ample-zen-theme.el" (21164
-;;;;;;  22558 0 0))
+;;;### (autoloads nil "ample-zen-theme" "ample-zen-theme.el" (21625
+;;;;;;  58995 0 0))
 ;;; Generated autoloads from ample-zen-theme.el
 
 (and load-file-name (boundp 'custom-theme-load-path) (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
@@ -13,16 +13,9 @@
 
 ;;;***
 
-;;;### (autoloads nil nil ("ample-zen-theme-pkg.el") (21164 22558
-;;;;;;  274449 0))
-
-;;;***
-
-(provide 'ample-zen-theme-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; ample-zen-theme-autoloads.el ends here

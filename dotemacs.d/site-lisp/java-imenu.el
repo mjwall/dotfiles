@@ -49,3 +49,5 @@
 (add-hook 'java-mode-hook
           (function (lambda ()
                       (setq imenu-generic-expression java-imenu-regexp))))
+
+(provide 'java-imenu)

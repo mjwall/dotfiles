@@ -1,10 +1,9 @@
 ;;; paredit-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (enable-paredit-mode paredit-mode) "paredit" "paredit.el"
-;;;;;;  (21354 50197 0 0))
+;;;### (autoloads nil "paredit" "paredit.el" (21625 59168 0 0))
 ;;; Generated autoloads from paredit.el
 
 (autoload 'paredit-mode "paredit" "\
@@ -25,15 +24,9 @@ Turn on pseudo-structural editing of Lisp code.
 
 ;;;***
 
-;;;### (autoloads nil nil ("paredit-pkg.el") (21354 50197 32897 0))
-
-;;;***
-
-(provide 'paredit-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; paredit-autoloads.el ends here

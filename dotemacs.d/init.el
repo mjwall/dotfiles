@@ -27,8 +27,10 @@
       (expand-file-name "site-lisp" user-emacs-directory))
 
 ;; Set up load path
-(add-to-list 'load-path user-emacs-directory)
 (add-to-list 'load-path site-lisp-dir)
+
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
 
 ;; Use a more interesting startup message
 (defun startup-echo-area-message ()
@@ -141,19 +143,14 @@ NO-REFRESH optional"
 ;; fight modeline clutter, need to eval-after-load for
 ;; whatever you want diminished
 (require-package 'diminish)
-
 ;; themes
 (require-package 'solarized-theme)
 (require-package 'zenburn-theme)
 (require-package 'underwater-theme)
 (require-package 'ample-theme)
-;; https://github.com/chriskempson/tomorrow-theme/tree/master/GNU%20Emacs
-(add-to-list 'custom-theme-load-path (concat dotfiles-dir "themes/tomorrow-theme"))
+(require-package 'color-theme-sanityinc-tomorrow)
+(require-package 'spacegray-theme)
 ;; default theme
-;;(load-theme 'underwater t)
-;;(load-theme 'solarized-dark t)
-;;(load-theme 'tomorrow-night-bright t)
-;;(load-theme 'ample t)
 (require-package 'ample-zen-theme)
 (load-theme 'ample-zen t)
 
@@ -211,16 +208,9 @@ NO-REFRESH optional"
   ;; set command = option and vice versa in OS preferences
   (setq mac-command-modifier nil) ;;gets me in trouble
 
-  ;; comment out the rest until I see if I like it
-  ;; ;; make the modifiers work like linux
+  ;; meta and cmd switched in system preferences, but could do it here
   ;; (setq mac-command-modifier 'meta)
-  ;; ;;(setq mac-option-modifier 'super)
-  ;; (setq mac-option-modifier nil)
-
-  ;; turn off delete frame, I hit that too much
-  ;;(global-unset-key (kbd "s-w"))
-  ;; turn off ns-power-off, that is bad
-  ;;(global-unset-key (kbd "s-q"))
+  ;;(setq mac-option-modifier 'super)
 
   (when *is-cocoa-emacs*
     ;; allows me to drag into the doc icon and open editor: see
@@ -251,16 +241,9 @@ NO-REFRESH optional"
       next-line-add-newlines nil  ;; don't add new lines when scrolling down
       scroll-margin 0                   ;; do smooth scrolling, ...
       scroll-conservatively 100000      ;; ... the defaults ...
-      scroll-up-aggressively 0          ;; ... are very ...
-      scroll-down-aggressively 0        ;; ... annoying
+      scroll-up-aggressively 0.0          ;; ... are very ...
+      scroll-down-aggressively 0.0        ;; ... annoying
 )
-
-
-; movement keys C-<left> etc don't seem to work in terminal and winner-mode
-(global-set-key (kbd "C-x <left>") 'windmove-left)
-(global-set-key (kbd "C-x <right>") 'windmove-right)
-(global-set-key (kbd "C-x <down>") 'windmove-down)
-(global-set-key (kbd "C-x <up>") 'windmove-up)
 
 (defun my/swap (l)
   "Swap function use in ido-jump-to-window.  Take first element of L."
@@ -294,14 +277,12 @@ NO-REFRESH optional"
 (when (fboundp 'ibuffer)
   (global-set-key (kbd "C-x C-b") 'ibuffer))
 
-;; Use C-f during file selection to switch to regular find-file
-
 (when (> emacs-major-version 21)
   (ido-mode t)
   (ido-everywhere t)
   (setq ido-enable-prefix nil
         ido-enable-flex-matching t
-;        ido-create-new-buffer 'always
+        ido-create-new-buffer 'always
         ido-use-filename-at-point 'guess ;nil
         ido-auto-merge-work-directories-length 0
         ido-default-file-method 'selected-window
@@ -317,6 +298,7 @@ NO-REFRESH optional"
         '("\\`auto/" "\\`auto-save-list/" "\\`backups/" "\\`semanticdb/" "\\`target/" "\\`\\.git/" "\\`\\.svn/" "\\`CVS/" "\\`\\.\\./" "\\`\\./")
         ido-ignore-files
         '("\\`auto/" "\\.prv/" "_region_" "\\.class/"  "\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./")))
+;; Use C-f during file selection to switch to regular find-file
 
 ;; Display ido results vertically, rather than horizontally
 ;; from http://www.emacswiki.org/emacs/InteractivelyDoThings#toc17
@@ -328,7 +310,7 @@ NO-REFRESH optional"
   (set (make-local-variable 'truncate-lines) nil))
 (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
 
-; imenu with ido
+;; imenu with ido
 (require-package 'idomenu)
 (global-set-key (kbd "C-x TAB") 'idomenu) ;; C-x C-i
 
@@ -361,11 +343,6 @@ NO-REFRESH optional"
   (global-set-key (kbd "M-<f12>") 'recentf-open-files)
   (global-set-key (kbd "C-x f") 'recentf-ido-find-file))
 
-;; Use regex searching by default
-(global-set-key "\C-s" 'isearch-forward-regexp)
-(global-set-key "\C-r" 'isearch-backward-regexp)
-(global-set-key "\C-\M-s" 'isearch-forward)
-(global-set-key "\C-\M-r" 'isearch-backward)
 
 (defun call-with-current-isearch-string-as-regex (f)
   "Takes current selection as F and then search with isearch string."
@@ -384,8 +361,7 @@ NO-REFRESH optional"
     (interactive)
     (call-with-current-isearch-string-as-regex 'all)))
 
-(eval-after-load "isearch"
-                 '(diminish 'isearch-mode))
+(eval-after-load "isearch"  '(diminish 'isearch-mode))
 
 ;; Search back/forth for the symbol at point
 ;; See http://www.emacswiki.org/emacs/SearchAtPoint
@@ -418,17 +394,11 @@ NO-REFRESH optional"
 ;; a few more shortcuts
 (global-set-key (kbd "C-c y") 'bury-buffer)
 (global-set-key (kbd "C-c r") 'revert-buffer)
-(global-set-key (kbd "C-x g") 'goto-line)
 
-;; CEDET, looks like 2.0 is included in Emacs 24.3
-;; (global-ede-mode 1)                      ; Enable the Project management system
-;; (semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion
-;; (global-srecode-minor-mode 1)            ; Enable template insertion menu
+;; put number in corner of window and allow M-# to change
+;;enabled at bottom
+(require-package 'window-numbering)
 
-;; ECB, not sure how to use it yet
-;; (require-package 'ecb)
-
-(require-package 'window-numbering) ;;enabled at bottom
 ;;----------------------------------------------------------------------------
 ;; - Editing and formatting
 ;;----------------------------------------------------------------------------
@@ -459,7 +429,6 @@ NO-REFRESH optional"
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 (setq indent-line-function 'insert-tab)
-
 
 ;; Highlight matching parentheses when the point is on them.
 (show-paren-mode 1)
@@ -607,22 +576,10 @@ there's a region, all lines that region covers will be duplicated."
   '(progn
     (setq yas/root-directory (concat dotfiles-dir "snippets"))
     (yas/load-directory yas/root-directory)
-    (diminish 'yas-minor-mode)))
-
-;;autocomplete
-(require-package 'auto-complete)
-(require 'auto-complete-config)
-;;(add-to-list 'ac-dictionary-directories "~ / .emacs.d / ac-dict")
-(ac-config-default)
-
-(define-key ac-complete-mode-map "\C-n" 'ac-next)
-(define-key ac-complete-mode-map "\C-p" 'ac-previous)
-(setq ac-auto-start nil)
-(global-set-key "\M-/" 'ac-start)
-(define-key ac-complete-mode-map "\M-/" 'ac-stop)
-(eval-after-load "auto-complete"
-  '(diminish 'auto-complete-mode "ac"))
-
+    (diminish 'yas-minor-mode)
+    ))
+(require-package 'clojure-snippets)
+(require-package 'java-snippets)
 
 ;; supercharge undo/redo
 (require-package 'undo-tree)
@@ -713,11 +670,9 @@ there's a region, all lines that region covers will be duplicated."
 
 (put 'dired-find-alternate-file 'disabled nil)
 
-(autoload 'dirtree "dirtree" "Add directory to tree view" t)
-
 ;; Git stuff
 (require-package 'magit)
-(global-set-key (kbd "<f5>") 'magit-status)
+(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; next section from https://github.com/cjohansen/.emacs.d/blob/master/setup-magit.el
 (require-package 'magit-svn)
@@ -730,7 +685,6 @@ there's a region, all lines that region covers will be duplicated."
 (add-hook 'magit-mode-hook 'magit-load-config-extensions)
 
 ;; C-x C-k to kill file on line
-
 (defun magit-kill-file-on-line ()
   "Show file on current magit line and prompt for deletion."
   (interactive)
@@ -742,7 +696,6 @@ there's a region, all lines that region covers will be duplicated."
   '(define-key magit-status-mode-map (kbd "C-x C-k") 'magit-kill-file-on-line))
 
 ;; full screen magit-status
-
 (defadvice magit-status (around magit-fullscreen activate)
   "Setup advice for magit status iwth AROUND, MAGIT-FULLSCREEN and ACTIVATE so it can be put back on quit."
   (window-configuration-to-register :magit-fullscreen)
@@ -762,7 +715,6 @@ there's a region, all lines that region covers will be duplicated."
   '(define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
 
 ;; full screen vc-annotate
-
 (defun vc-annotate-quit ()
   "Restore the previous window configuration and kill the \"vc-annotate\" buffer."
   (interactive)
@@ -779,7 +731,6 @@ there's a region, all lines that region covers will be duplicated."
      (define-key vc-annotate-mode-map (kbd "q") 'vc-annotate-quit)))
 
 ;; ignore whitespace
-
 (eval-after-load "magit"
   '(defun magit-toggle-whitespace ()
     (interactive)
@@ -803,19 +754,6 @@ there's a region, all lines that region covers will be duplicated."
   '(define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace))
 ;; end stuff from https://github.com/cjohansen/.emacs.d/blob/master/setup-magit.el
 
-;; help me format better commit messages please
-;; https://github.com/lunaryorn/git-modes
-(require-package 'git-commit-mode)
-
-;; load git stuff from git-core contrib/emacs into site-lisp,
-;; see http://git.kernel.org/?p=git/git.git;a=tree;hb=HEAD;f=contrib/emacs
-;; vc-git.el included with emacs now
-(add-to-list 'load-path (concat site-lisp-dir "/git.el"))
-(require 'git)
-
-(require-package 'mo-git-blame)
-;;(require 'git-blame)
-
 ;; git-gutter
 (require-package 'git-gutter)
 (global-git-gutter-mode t)
@@ -823,11 +761,6 @@ there's a region, all lines that region covers will be duplicated."
 (eval-after-load "git-gutter" '(diminish 'git-gutter-mode))
 
 ;; eshell
-;; call magit from eshell
-(defun eshell/magit ()
-  "Run magit status here."
-  (call-interactively #'magit-status)
-  nil)
 (setq eshell-cmpl-cycle-completions nil
       eshell-save-history-on-exit t
       eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'")
@@ -902,15 +835,11 @@ PWD is not in a git repo (or the git command is not found)."
 (setq vc-follow-symlinks t)
 
 ;; Project package
-(require-package 'ack-and-a-half)
 (require-package 'projectile)
 (projectile-global-mode)
 (setq projectile-enable-caching t)
 (setq compilation-scroll-output "non-nil") ; so compilation buffer scrolls
-(diminish 'projectile-mode "proj")
-
-;; install ESS
-(require-package 'ess)
+(diminish 'projectile-mode "prj")
 
 ;; org-mode
 (require 'org)
@@ -919,29 +848,22 @@ PWD is not in a git repo (or the git command is not found)."
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
-(setq org-directory (concat (getenv "HOME") "/.org/"))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector ["#212121" "#CC5542" "#6aaf50" "#7d7c61" "#5180b3" "#DC8CC3" "#9b55c3" "#bdbdb3"])
- '(custom-safe-themes (quote ("5dfacaf380068d9ed06e0872a066a305ab6a1217f25c3457b640e76c98ae20e6" "7df5b36ef661649550614a15e9afb9d3e785706be6a577058f1b440dff1b03e3" default)))
- '(deft-auto-save-interval 30)
- '(deft-directory (concat org-directory "deft"))
- '(deft-extension "org")
- '(deft-text-mode (quote org-mode))
- '(deft-use-filename-as-title t)
- '(fci-rule-color "#2e2e2e")
- '(org-agenda-custom-commands (quote (("1" "Today's agenda" ((agenda "" ((org-agenda-ndays 1))))) ("n" "Week agenda + TODOs" ((agenda "") (todo))))))
- '(org-agenda-files (list (concat org-directory "work.org") (concat org-directory "personal.org") (concat org-directory "someday.org") (concat org-directory "inbox.org") (concat org-directory "journal.org") (concat org-directory "notes.org")))
- '(org-agenda-include-diary t)
- '(org-agenda-ndays 7)
- '(org-agenda-show-all-dates t)
- '(org-agenda-skip-deadline-if-done t)
- '(org-agenda-skip-scheduled-if-done t)
- '(org-agenda-start-on-weekday nil)
- '(org-capture-templates (quote (("t" "Todo" entry (file+headline (concat org-directory "inbox.org") "Tasks") "* TODO %?
+(setq
+ org-directory (concat (getenv "HOME") "/.org/")
+ deft-auto-save-interval 30
+ deft-directory (concat org-directory "deft")
+ deft-extension "org"
+ deft-text-mode (quote org-mode)
+ deft-use-filename-as-title t
+ org-agenda-custom-commands (quote (("1" "Today's agenda" ((agenda "" ((org-agenda-ndays 1))))) ("n" "Week agenda + TODOs" ((agenda "") (todo)))))
+ org-agenda-files (list (concat org-directory "work.org") (concat org-directory "personal.org") (concat org-directory "someday.org") (concat org-directory "inbox.org") (concat org-directory "journal.org") (concat org-directory "notes.org"))
+ org-agenda-include-diary t
+ org-agenda-ndays 7
+ org-agenda-show-all-dates t
+ org-agenda-skip-deadline-if-done t
+ org-agenda-skip-scheduled-if-done t
+ org-agenda-start-on-weekday nil
+ org-capture-templates (quote (("t" "Todo" entry (file+headline (concat org-directory "inbox.org") "Tasks") "* TODO %?
   %i
   %a") ("j" "Journal" entry (file+datetree (concat org-directory "journal.org")) "* %?
 Entered on %U
@@ -952,28 +874,17 @@ Entered on %U
 ") ("s" "Someday" entry (file (concat org-directory "someday.org")) "* %? :SOMEDAY:
 %U
 %a
-"))))
- '(org-completion-use-ido t)
- '(org-deadline-warning-days 14)
- '(org-default-notes-file (concat org-directory "inbox.org"))
- '(org-indirect-buffer-display (quote current-window))
- '(org-log-done (quote note))
- '(org-outline-path-complete-in-steps nil)
- '(org-refile-allow-creating-parent-nodes (quote confirm))
- '(org-refile-targets (quote ((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))))
- '(org-refile-use-outline-path t)
- '(org-reverse-note-order t)
- '(vc-annotate-background "#3b3b3b")
- '(vc-annotate-color-map (quote ((20 . "#dd5542") (40 . "#CC5542") (60 . "#fb8512") (80 . "#baba36") (100 . "#bdbc61") (120 . "#7d7c61") (140 . "#6abd50") (160 . "#6aaf50") (180 . "#6aa350") (200 . "#6a9550") (220 . "#6a8550") (240 . "#6a7550") (260 . "#9b55c3") (280 . "#6CA0A3") (300 . "#528fd1") (320 . "#5180b3") (340 . "#6380b3") (360 . "#DC8CC3"))))
- '(vc-annotate-very-old-color "#DC8CC3"))
-
-;;;; Refile settings
-; Exclude DONE state tasks from refile targets
-;; (defun bh/verify-refile-target ()
-;;   "Exclude todo keywords with a done state from refile targets"
-;;   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
-
-;; (setq org-refile-target-verify-function 'bh/verify-refile-target)
+")))
+ org-completion-use-ido t
+ org-deadline-warning-days 14
+ org-default-notes-file (concat org-directory "inbox.org")
+ org-indirect-buffer-display (quote current-window)
+ org-log-done (quote note)
+ org-outline-path-complete-in-steps nil
+ org-refile-allow-creating-parent-nodes (quote confirm)
+ org-refile-targets (quote ((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
+ org-refile-use-outline-path t
+ org-reverse-note-order t)
 
 ;; active Org-babel languages, particularly for PlantUML
 (setq org-support-shift-select t)
@@ -1000,7 +911,7 @@ Entered on %U
 (require-package 'deft)
 
 
-(require 'tramp-term)
+(require-package 'tramp-term)
 
 ;; just give some indication, maybe this should be in the modeline
 ;; but I don't know how to do that
@@ -1058,7 +969,6 @@ Entered on %U
   (ansi-term "/bin/bash"))
 (global-set-key [f6] 'my-ansi-term)
 
-(require-package 'rainbow-mode)
 ;;----------------------------------------------------------------------------
 ;; - Language specific
 ;;----------------------------------------------------------------------------
@@ -1109,6 +1019,14 @@ Entered on %U
 (require-package 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
+;; set background of strings to their color
+;; enable with M-x rainbow-mode
+(require-package 'rainbow-mode)
+
+;; rainbow delimiters
+(require-package 'rainbow-delimiters)
+;;(add-hook 'prog-mode-hook 'rainbow-delimiters-mode) ;Emacs 24+
+
 ;; All Lisps
 ;; -----
 (require-package 'paredit)
@@ -1121,31 +1039,6 @@ Entered on %U
 (define-key lisp-mode-shared-map (kbd "C-c l") "lambda")
 (define-key emacs-lisp-mode-map (kbd "M-.") 'find-function-at-point)
 
-;; Slime
-;; -----
-;; slime is in elpa-noload.  Using nrepl for clojure
-;;
-;;(require 'slime)
-;;(require 'slime-autoloads)
-;; (setq slime-lisp-implementations
-;;        '((clisp ("clisp") :coding-system utf-8-unix)
-;;          (clojure ,(swank-clojure-cmd) :init swank-clojure-init)
-;;          ;; (scheme ("scheme") :coding-system utf-8-unix)
-;;          ))
-;; (setf slime-default-lisp 'clisp)
-;; (setf slime-default-lisp 'clojure)
-;;(add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
-;;(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
-;;(slime-setup '(slime-repl))
-;;(setq slime-net-coding-system 'utf-8-unix)
-;; add paredit to slime
-;;(defun slimeify ()
-;;  (paredit-mode 1)
-;;  (define-key slime-repl-mode-map ;; stop slime from grabbing del
-;;  (read-kbd-macro paredit-backward-delete-key)
-;;  nil))
-;;(add-hook 'slime-repl-mode-hook 'slimeify)
-
 ;; Clojure mode
 ;; ------------
 (require-package 'clojure-mode)
@@ -1153,8 +1046,6 @@ Entered on %U
 (add-hook 'clojure-mode-hook 'run-coding-hook)
 (add-hook 'clojure-mode-hook (lambda () (paredit-mode +1)))
 (add-hook 'clojure-mode-hook (lambda () (rainbow-delimiters-mode +1)))
-(require-package 'cider)
-;;(require-package 'nrepl)
 (require-package 'cider)
 ;;(require 'lein)
 
@@ -1198,82 +1089,12 @@ Entered on %U
 ;; Java mode
 ;; ---------
 (add-hook 'java-mode-hook 'run-coding-hook)
-;(require-package 'javap-mode)
-;(require 'javap-mode)
-;(require-package 'javadoc-lookup)
-;(require 'javadoc-lookup)
-;(global-set-key (kbd "C-h j") 'javadoc-lookup)
-;;wget -erobots=off -r http://docs.oracle.com/javase/6/docs/api/
-;(javadoc-add-roots "/opt/javadocs/javase/6/api")
-
-;; (javadoc-add-artifacts [org.apache.accumulo accumulo-core "1.5.1"]
-;;                        [org.apache.accumulo accumulo-examples-simple "1.5.1"]
-;;                        [org.apache.accumulo accumulo-fate "1.5.1"]
-;;                        [org.apache.accumulo accumulo-minicluster "1.5.1"]
-;;                        [org.apache.accumulo accumulo-proxy "1.5.1"]
-;;                        [org.apache.accumulo accumulo-server "1.5.1"]
-;;                        [org.apache.accumulo accumulo-start "1.5.1"]
-;;                        [org.apache.accumulo accumulo-test "1.5.1"]
-;;                        [org.apache.accumulo accumulo-trace "1.5.1"]
-;;                        [junit junit "4.11"]
-;;                        [org.apache.hadoop hadoop-client "1.0.4"]
-;;                        [org.apache.zookeeper zookeeper "3.4.5"])
+(require 'java-imenu)
 
 ;; JFlex mode - from http://jflex.de/emacs.html
 (autoload 'jflex-mode "jflex-mode" nil t)
 (setq auto-mode-alist (cons '("\\(\\.flex\\|\\.jflex\\)\\'" . jflex-mode) auto-mode-alist))
 (add-hook 'jflex-mode 'run-coding-hook)
-
-;; From http://www.emacswiki.org/emacs/DavidBoon#toc11
-;; (defun archive-javap-handler-hook ()
-;;   "a hook to use javap-handler when opening a class file from a jar file"
-;;   (if (string-match "\.class$" buffer-file-name)
-;;       (javap-buffer)))
-;; (add-hook 'archive-extract-hooks 'archive-javap-handler-hook)
-
-;; javap-mode only sets up a hook with find-file,
-;; lets also use javap when inside a jar
-(autoload 'archive-extract-hook "arc-mode")
-(add-hook 'archive-extract-hook
-          (lambda (&rest args)
-            (message args)))
-(add-hook 'archive-extract-hook
-          (lambda (&rest args)
-            (if (string= ".class" (substring (buffer-file-name) -6 nil))
-                (javap-buffer))))
-
-;;(require 'java-imenu)
-
-;; JDEE mode - time to try it
-;; --------------------------
-;;(add-to-list 'load-path "~/.emacs.d/jdee-2.4.1/lisp")
-;;(load "jde")
-;;(require 'jde-maven)
-
-;; malabar mode
-;;(require 'cedet)
-;;(require 'semantic)
-;;(load "semantic/loaddefs.el")
-;;(semantic-mode 1);;
-;;;(require-package 'malabar-mode)
-;;(require 'malabar-mode)
-;;(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
-;;(add-hook 'malabar-mode-hook
-;;     (lambda ()
-;;       (add-hook 'after-save-hook 'malabar-compile-file-silently
-;;                 nil t)))
-
-;; eclim instead of JDEE
-;; eclim_2.3.2 and
-;; Kepler Eclipse Java EE IDE for Web Developers.
-;;
-;; Version: Kepler Service Release 1
-;; Build id: 20130919-0819
-;;(require 'eclim)
-;;(global-eclim-mode)
-;;(require 'eclimd)
-;;(require 'ac-emacs-eclim-source)
-;;(ac-emacs-eclim-config)
 
 ;; Javascript mode
 ;; ---------------
@@ -1321,8 +1142,6 @@ print json.dumps(j, sort_keys=True, indent=2)"
 (add-hook 'ruby-mode-hook 'run-coding-hook)
 (add-hook 'ruby-mode-hook 'ruby-end-mode)
 
-;(require-package 'rvm)
-;(rvm-use-default) ;; use rvm's default ruby for the current Emacs session
 (require-package 'rbenv)
 (setq rbenv-installation-dir "~/.rbenv") ;default, but here in case
 (global-rbenv-mode)
@@ -1380,16 +1199,7 @@ print json.dumps(j, sort_keys=True, indent=2)"
 (require-package 'scala-mode2)
 (require-package 'sbt-mode)
 
-;; awesomeness for scala, but doesn't appear to be updated for emacs 24
-;;(add-to-list 'load-path (concat site-lisp-dir "/ensime/elisp/"))
-;; in site-lib from https://github.com/aemoncannon/ensime/downloads
-;;(require 'ensime)
-;;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-;;(require-package 'ensime)
-
 (add-to-list 'auto-mode-alist '(".sbt" . scala-mode))
-
-;;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 (add-hook 'scala-mode-hook 'run-coding-hook)
 
 ;; CC mode
@@ -1417,8 +1227,6 @@ print json.dumps(j, sort_keys=True, indent=2)"
              (turn-on-flyspell)
              (require 'asciidoc)
              ))
-
-
 
 ;; XML mode
 ;; --------
@@ -1478,10 +1286,3 @@ print json.dumps(j, sort_keys=True, indent=2)"
 
 (provide 'init)
 ;;; init.el ends here
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-(put 'downcase-region 'disabled nil)

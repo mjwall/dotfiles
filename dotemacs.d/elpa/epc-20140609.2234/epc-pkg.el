@@ -3,3 +3,6 @@
     (ctable "0.1.2"))
   :url "https://github.com/kiwanami/emacs-epc" :keywords
   '("lisp" "rpc"))
+;; Local Variables:
+;; no-byte-compile: t
+;; End:
