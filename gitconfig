@@ -15,6 +15,7 @@
   graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%aN>%Creset'
   ls = ls-files
   distclean = clean -dxf
+  lf = log --follow
 [pager]
   color = true
 [color]
