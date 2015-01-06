@@ -6,6 +6,10 @@
 #
 # this scripts assumes a directory structure such as the following
 #
+# Use the following to determine the locations
+#
+# /usr/libexec/java_home -v 1.6
+#
 # ls -l /System/Library/Frameworks/JavaVM.framework/Versions/
 # total 80
 # lrwxr-xr-x  1 root  wheel   10 Jun 23 21:33 1.4 -> CurrentJDK
@@ -40,3 +44,5 @@ fi
 
 echo You must now enter your Mac OS X password to change the JDK.
 sudo ln -fhsv $1 CurrentJDK
+
+echo $1 > ~/.java_version

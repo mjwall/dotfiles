@@ -65,6 +65,12 @@ export ALTERNATE_EDITOR=vim
 # for emacs on MacOS, make sure to look at
 # https://gist.github.com/mjwall/3fe935a8becb60dd3c4c
 
+_java_version() {
+  if [ -e "${HOME}/.java_version" ]; then
+    cat "${HOME}/.java_version"
+  fi
+}
+
 # git
 if [ "${GIT_COMPLETION_DIR}x" == "x" ]; then
   echo "No Git completion"
@@ -77,7 +83,8 @@ else
   # if __git_ps1 is slow
   #export GIT_PS1_SHOWDIRTYSTATE=
   #export GIT_PS1_SHOWUNTRACKEDFILES=
-  export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
+  #export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
+  export PS1='\[\e[1;32m\]\u@\h \[\e[1;34m\][Java:$(_java_version)]\[\e[0m\] \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
 fi
 
 # other completion scripts
