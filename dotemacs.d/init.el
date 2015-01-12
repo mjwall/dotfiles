@@ -135,10 +135,10 @@ NO-REFRESH optional"
 (global-set-key (kbd "C-M-=") 'text-scale-decrease)
 
 ;; bind some window resizing
-(global-set-key (kbd "C-s-<left>") 'shrink-window-horizontally)
-(global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "C-s-<down>") 'shrink-window)
-(global-set-key (kbd "C-s-<up>") 'enlarge-window)
+(global-set-key (kbd "C-S-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "C-S-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-S-<down>") 'shrink-window)
+(global-set-key (kbd "C-S-<up>") 'enlarge-window)
 
 ;; fight modeline clutter, need to eval-after-load for
 ;; whatever you want diminished
