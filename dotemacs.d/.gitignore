@@ -1,0 +1,9 @@
+auto-save-list
+backups
+bookmarks
+eshell
+*.elc
+url/
+elpa/archives
+elpa/gnupg
+custom.el
