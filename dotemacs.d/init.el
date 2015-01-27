@@ -827,7 +827,7 @@ my-git-root.  Return empty if not is found"
 ;; Themes
 ;; my theme, tango-dark is nice for a default
 (require 'ample-zen-theme) ;; package-install ample-zen-theme #npoge
-(load-theme 'whiteboard t)
+(load-theme 'dichromacy t)
 
 ;;;- File type specific
 ;; functions for the new prog-mode-hook
