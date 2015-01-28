@@ -14,3 +14,4 @@ dotemacs.d/abbrev_defs
 /dotemacs.d/eshell/alias
 dotemacs.d/javadoc-cache
 bin/mate
+bin/pomo

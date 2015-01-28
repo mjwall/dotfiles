@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "ruby-end" "ruby-end.el" (21625 59173 0 0))
+;;;### (autoloads nil "ruby-end" "ruby-end.el" (21637 2576 0 0))
 ;;; Generated autoloads from ruby-end.el
 
 (autoload 'ruby-end-mode "ruby-end" "\

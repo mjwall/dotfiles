@@ -3,8 +3,8 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "ample-zen-theme" "ample-zen-theme.el" (21625
-;;;;;;  58995 0 0))
+;;;### (autoloads nil "ample-zen-theme" "ample-zen-theme.el" (21636
+;;;;;;  54680 0 0))
 ;;; Generated autoloads from ample-zen-theme.el
 
 (and load-file-name (boundp 'custom-theme-load-path) (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
