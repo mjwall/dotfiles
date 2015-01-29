@@ -522,7 +522,7 @@ http://www.emacswiki.org/emacs/SearchAtPoint"
       eshell-prompt-regexp "^[^#$]*[#$] "
       eshell-highlight-prompt nil
       eshell-visual-commands '("less" "top" "vim")
-      eshell-visual-subcommands '(("git" "log" "diff" "di" "show")))
+      eshell-visual-subcommands '(("git" "log" "diff" "show")))
 ;; eshell prompt
 (setq eshell-prompt-function
       (lambda ()
@@ -1050,4 +1050,3 @@ print json.dumps(j, sort_keys=True, indent=2)"
 ;; does anyone really use this?
 
 (provide 'init)
-
