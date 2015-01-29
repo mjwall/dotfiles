@@ -755,6 +755,7 @@ my-git-root.  Return empty if not is found"
             (locate-dominating-file curr "init.el")
             (my-git-root))
       (message "No file found."))))
+(require 'grep)
 (defun grep-in-project-root ()
   "Run rgrep for the given pattern in (my-project-root)"
   (interactive)
