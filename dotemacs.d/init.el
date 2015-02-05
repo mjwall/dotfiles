@@ -779,6 +779,10 @@ my-git-root.  Return empty if not is found"
   (interactive "sCompile Command: ")
   (let* ((default-directory (my-project-root)))
     (compile command)))
+(defun show-project-root ()
+  "Show `my-project-root' in the message buffer"
+    (interactive)
+  (message (concat "Project Root: " (my-project-root))))
 (defun grep-in-git-root (term)
   "Run rgrep for the given pattern in (my-git-root)"
   (interactive)
@@ -802,16 +806,22 @@ my-git-root.  Return empty if not is found"
   (interactive "sCompile Command: ")
   (let* ((default-directory (my-git-root)))
     (compile command)))
+(defun show-git-root ()
+  "Show `my-git-root' in the message buffer"
+    (interactive)
+  (message (concat "Git Root: " (my-git-root))))
 (global-set-key (kbd "C-c p g") 'grep-in-project-root)
 (global-set-key (kbd "C-c p f") 'find-file-in-project-root)
 (global-set-key (kbd "C-c p e") 'eshell-in-project-root)
 (global-set-key (kbd "C-c p t") 'term-in-project-root)
 (global-set-key (kbd "C-c p c") 'compile-in-project-root)
+(global-set-key (kbd "C-c p s") 'show-project-root)
 (global-set-key (kbd "C-c g g") 'grep-in-git-root)
 (global-set-key (kbd "C-c g f") 'find-file-in-git-root)
 (global-set-key (kbd "C-c g e") 'eshell-in-git-root)
 (global-set-key (kbd "C-c g t") 'term-in-git-root)
 (global-set-key (kbd "C-c g c") 'compile-in-git-root)
+(global-set-key (kbd "C-c g s") 'show-git-root)
 
 ;;;- Packages
 (require 'package)
