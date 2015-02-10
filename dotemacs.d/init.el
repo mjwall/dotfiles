@@ -755,13 +755,14 @@ my-git-root.  Return empty if not is found"
             (locate-dominating-file curr "init.el")
             (my-git-root))
       (message "No file found."))))
-(require 'grep)
 (defun grep-in-project-root ()
   "Run rgrep for the given pattern in (my-project-root)"
   (interactive)
-  (let* ((regexp (grep-read-regexp))
-         (files (grep-read-files regexp)))
-    (rgrep regexp files (my-project-root))))
+  (progn
+    (grep-compute-defaults)
+    (let* ((regexp (grep-read-regexp))
+           (files (grep-read-files regexp)))
+      (rgrep regexp files (my-project-root)))))
 (defun find-file-in-project-root (name)
   "Run find-name-dired in (my-project-root)"
   (interactive "sFilename: ")
@@ -786,9 +787,11 @@ my-git-root.  Return empty if not is found"
 (defun grep-in-git-root (term)
   "Run rgrep for the given pattern in (my-git-root)"
   (interactive)
-  (let* ((regexp (grep-read-regexp))
-         (files (grep-read-files regexp)))
-    (rgrep regexp files (my-project-root))))
+  (progn
+    (grep-compute-defaults)
+    (let* ((regexp (grep-read-regexp))
+           (files (grep-read-files regexp)))
+      (rgrep regexp files (my-project-root)))))
 (defun find-file-in-git-root (name)
   "Run find-name-dired in (my-git-root)"
   (interactive "sFilename: ")
