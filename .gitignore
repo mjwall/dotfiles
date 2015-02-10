@@ -14,4 +14,10 @@ dotemacs.d/abbrev_defs
 /dotemacs.d/eshell/alias
 dotemacs.d/javadoc-cache
 bin/mate
+bin/pomobin/ctags
+bin/ebrowse
+bin/emacsclient
+bin/etags
+bin/grep-changelog
+bin/ctags
 bin/pomo
