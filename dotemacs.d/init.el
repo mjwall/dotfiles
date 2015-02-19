@@ -1062,4 +1062,7 @@ print json.dumps(j, sort_keys=True, indent=2)"
 ;;;- Python
 ;; does anyone really use this?
 
+;;;- Golang
+;; using go-mode
+
 (provide 'init)
