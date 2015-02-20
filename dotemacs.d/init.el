@@ -1063,6 +1063,7 @@ print json.dumps(j, sort_keys=True, indent=2)"
 ;; does anyone really use this?
 
 ;;;- Golang
-;; using go-mode
+;; copied to site-lisp from the go1.3.1/misc/emacs install #npoge
+(require 'go-mode-load)
 
 (provide 'init)
