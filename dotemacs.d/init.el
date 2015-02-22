@@ -296,6 +296,14 @@ there's a region, all lines that region covers will be duplicated."
   (move-text-internal (- arg)))
 (global-set-key [M-up] 'move-text-up)
 (global-set-key [M-down] 'move-text-down)
+(defun end-newline-and-indent ()
+  "Go to the end of the current line, then run
+`newline-and-indent'"
+  (interactive)
+  (progn
+    (move-end-of-line 1)
+    (newline-and-indent)))
+(global-set-key [(control return)] 'end-newline-and-indent)
 
 ;;;- Useful functions
 (defun save-buffer-always ()
@@ -522,7 +530,7 @@ http://www.emacswiki.org/emacs/SearchAtPoint"
       eshell-prompt-regexp "^[^#$]*[#$] "
       eshell-highlight-prompt nil
       eshell-visual-commands '("less" "top" "vim")
-      eshell-visual-subcommands '(("git" "log" "diff" "show")))
+      eshell-visual-subcommands '(("git" "di" "log" "diff" "show")))
 ;; eshell prompt
 (setq eshell-prompt-function
       (lambda ()
@@ -553,7 +561,15 @@ http://www.emacswiki.org/emacs/SearchAtPoint"
              (eshell/export (concat
                              "JAVA_HOME="
                              (shell-command-to-string
-                              ". ~/.bashrc && echo $JAVA_HOME")))))
+                              ". ~/.bashrc && echo $JAVA_HOME")))
+             (eshell/export (concat
+                             "GOROOT="
+                             (shell-command-to-string
+                              ". ~/.bashrc && echo $GOROOT")))
+             (eshell/export (concat
+                             "GOPATH="
+                             (shell-command-to-string
+                              ". ~/.bashrc && echo $GOPATH")))))
 
 ;;;- Term
 ;; Give some indication which mode; mapped to keys below
@@ -692,21 +708,28 @@ http://www.emacswiki.org/emacs/SearchAtPoint"
 (setq org-plantuml-jar-path ;; in site-lisp, #npoge
       (expand-file-name
        (concat user-emacs-directory "/site-lisp/plantuml.jar")))
+(defun ask-to-sync-org-files ()
+  "Prompt and ask whether to sync org files or not.  If 'y', then setup a shutdown hook to sync to as well"
+  ;; TODO: only fix script to have lock file and only prompt if not there
+  (interactive)
+  (if (y-or-n-p "Sync org files?")
+      (progn
+        (sync-org-files)
+        (add-hook 'kill-emacs-hook 'sync-org-files))))
 (defun sync-org-files ()
   "Run a bash script located in org-directory to sync org files via
 git."
   (interactive)
-  (org-save-all-org-buffers)
-  (message "Syncing org files")
-  (with-output-to-temp-buffer "*org-git-sync*"
-    (shell-command
-     (concat org-directory "org-git-sync") "*org-git-sync*")
-    (pop-to-buffer "*org-git-sync*"))
-  (message "Done syncing org files"))
+  (progn
+    (org-save-all-org-buffers)
+    (message "Syncing org files")
+    (with-output-to-temp-buffer "*org-git-sync*"
+      (shell-command
+       (concat org-directory "org-git-sync") "*org-git-sync*")
+      (pop-to-buffer "*org-git-sync*"))
+    (message "Done syncing org files")))
 ;; run sync when starting emacs
-(sync-org-files)
-;; and again on shutodwn
-(add-hook 'kill-emacs-hook 'sync-org-files)
+(ask-to-sync-org-files)
 
 ;;;- Pomodoro
 ;; my own pomodoro script #npoge
