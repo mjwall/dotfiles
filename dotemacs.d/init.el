@@ -90,6 +90,11 @@
 (winner-mode 1)
 ;; S-left, etc; disables Shift select
 (windmove-default-keybindings)
+;; keybindings to keep hands off arrow
+(global-set-key (kbd "C-c p") 'windmove-up)
+(global-set-key (kbd "C-c n") 'windmove-down)
+(global-set-key (kbd "C-c b") 'windmove-left)
+(global-set-key (kbd "C-c f") 'windmove-right)
 ;; use custom move buffer functions, in site-lisp #npoge
 (require 'move-my-buffer)
 (move-my-buffer-default-keybindings)
