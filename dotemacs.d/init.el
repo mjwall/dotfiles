@@ -110,8 +110,6 @@
 (global-set-key (kbd "C-x C-m") 'execute-extended-command)
 (global-set-key (kbd "C-c y") 'bury-buffer)
 (global-set-key (kbd "C-c r") 'revert-buffer)
-;; some more familiar keybindings for default functions
-(global-set-key (kbd "C-c C-j") 'join-line)
 (global-set-key "\r" 'newline-and-indent)
 (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 ;; rebind to undo, stop suspending-frame
@@ -1095,3 +1093,4 @@ print json.dumps(j, sort_keys=True, indent=2)"
 (require 'go-mode-load)
 
 (provide 'init)
+(put 'dired-find-alternate-file 'disabled nil)
