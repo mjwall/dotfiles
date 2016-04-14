@@ -873,7 +873,7 @@ it."
 (require 'ample-zen-theme) ;; package-install ample-zen-theme #npoge
 (require 'atom-one-dark-theme) ;; package-install atom-one-dark-theme, #npoge
 (require 'gotham-theme);; package-install gotham-theme, #npoge
-(load-theme 'ample-zen t)
+(load-theme 'atom-one-dark t)
 
 ;;;- File type specific
 ;; functions for the new prog-mode-hook
@@ -1110,6 +1110,12 @@ print json.dumps(j, sort_keys=True, indent=2)"
 
 ;;; - NeoTree
 ;; package-install neotree, #npoge
+
+;;; Fill Column Indicator
+;; package-install fill-column-indicator, #npoge
+(require 'fill-column-indicator)
+(setq fci-rule-column 120)
+(add-hook 'prog-mode-hook 'fci-mode)
 
 (provide 'init)
 (put 'dired-find-alternate-file 'disabled nil)
