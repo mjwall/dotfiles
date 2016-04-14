@@ -35,7 +35,8 @@ set_if_exists "JAVA_HOME" "${JAVA_HOME}"
 # Maven
 set_if_exists "M2_HOME" "${M2_HOME}"
 if [ "${M2_HOME}x" != "x" ]; then
-  export MAVEN_OPTS="-Xmx512m -Xms256m -XX:PermSize=128m -XX:MaxPermSize=256m"
+  export MAVEN_OPTS="-Xms512M -Xmx1024M -Xss1M -XX:MaxPermSize=128M -Djava.awt.headless=true"
+  #export MAVEN_OPTS="-Xmx512m -Xms256m -XX:PermSize=128m -XX:MaxPermSize=256m"
   export MAVEN_OPTS_DEBUG="${MAVEN_OPTS} -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8781,server=y,suspend=n"
   export JAVA_OPTS="${MAVEN_OPTS} -Duser.timezone=UTC -Djava.awt.headless=true"
   export M2="$M2_HOME/bin"
@@ -43,20 +44,20 @@ fi
 
 # Ant
 set_if_exists "ANT_HOME" "${ANT_HOME}"
-if [ "${ANT_HOME}x" != "x" ]; then
-  export ANT_OPTS="-Xms512M -Xmx2048M -Xss1M -XX:MaxPermSize=128M"
-fi
+#if [ "${ANT_HOME}x" != "x" ]; then
+#   export ANT_OPTS="-Xms512M -Xmx2048M -Xss1M -XX:MaxPermSize=128M"
+#fi
 
-if [ ! -z "$IVY2_REPO_DIR" ]; then
-  export ANT_OPTS="-Divy.default.ivy.user.dir=${IVY2_REPO_DIR} ${ANT_OPTS}"
-fi
+# if [ ! -z "$IVY2_REPO_DIR" ]; then
+#   export ANT_OPTS="-Divy.default.ivy.user.dir=${IVY2_REPO_DIR} ${ANT_OPTS}"
+# fi
 
 # Leiningen, included in dotfiles/bin
-export LEIN_HOME=~/bin/lein-home
+# export LEIN_HOME=~/bin/lein-home
 
-# Scala, not sure what to do with this yet
-set_if_exists "SCALA_HOME" "${SCALA_HOME}"
-# sbt is in dotfiles/bin and should be setup
+# # Scala, not sure what to do with this yet
+# set_if_exists "SCALA_HOME" "${SCALA_HOME}"
+# # sbt is in dotfiles/bin and should be setup
 
 # editors
 export EDITOR=et # see ~/bin
@@ -66,9 +67,7 @@ export ALTERNATE_EDITOR=vim
 # https://gist.github.com/mjwall/3fe935a8becb60dd3c4c
 
 _java_version() {
-  if [ -e "${HOME}/.java_version" ]; then
-    cat "${HOME}/.java_version"
-  fi
+  echo $JAVA_VERSION
 }
 
 # git
@@ -84,7 +83,8 @@ else
   #export GIT_PS1_SHOWDIRTYSTATE=
   #export GIT_PS1_SHOWUNTRACKEDFILES=
   #export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
-  export PS1='\[\e[1;32m\]\u@\h \[\e[1;34m\][Java:$(_java_version)]\[\e[0m\] \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
+  #export PS1='\[\e[1;32m\]\u@\h \[\e[1;34m\][Java:$(_java_version)]\[\e[0m\] \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
+  export PS1='\[\e[1;32m\]\u@\h \[\e[1;34m\] \[\e[0m\]\[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
 fi
 
 # other completion scripts

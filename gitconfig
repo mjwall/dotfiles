@@ -1,6 +1,6 @@
 [user]
-  name = Michael Wall
-  email = mjwall@gmail.com
+	name = Michael Wall
+	email = mjwall@gmail.com
 [alias]
   st = status -sb
   ci = commit
@@ -29,3 +29,15 @@
   default = tracking
 #[credential]
 #  helper = osxkeychain
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[core]
+	excludesfile = /Users/mjwall/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

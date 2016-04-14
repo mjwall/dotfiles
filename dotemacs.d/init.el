@@ -126,7 +126,8 @@
 (global-set-key (kbd "C-S-<down>") 'shrink-window)
 (global-set-key (kbd "C-S-<up>") 'enlarge-window)
 ;; vc-git
-(require 'vc-git)
+;;(require 'vc-git)
+;;(require 'magit)
 
 ;; Platform specific settings
 (defvar *is-a-mac*)
@@ -143,7 +144,8 @@
    ;; for multilingual environments
    default-input-method "MacOSX"
    ;; font
-   default-frame-alist '((font . "Menlo-13"))
+   default-frame-alist '((font . "SourceCodePro-12"))
+   ;;default-frame-alist '((font . "Menlo-13"))
    ;; Work around a bug on OS X where system-name is FQDN
    system-name (car (split-string system-name "\\."))
    ;; make emacs open in existing frames
@@ -757,100 +759,102 @@ it."
 (global-set-key (kbd "<f6>") 'pomo)
 
 ;;;- Project mode
-(defun my-git-root ()
-  "Find the root of a project based on the presence of a .git directory.
- Return empty if not is found"
-  (interactive)
-  (let ((curr (current-location)))
-    (if (not (string= "" curr))
-        (or (locate-dominating-file curr ".project-root")
-            (locate-dominating-file curr ".git"))
-      (message "No current file found"))))
-(defun my-project-root ()
-  "Find the root of a project based on the presence of .project-root
-file or some other file defined below.  As a last resort, look for
-my-git-root.  Return empty if not is found"
-  (interactive)
-  (let ((curr (current-location)))
-    (if (not (string= "" curr))
-        (or (locate-dominating-file curr ".project-root")
-            (locate-dominating-file curr "pom.xml")
-            (locate-dominating-file curr "build.xml")
-            (locate-dominating-file curr "project.clj")
-            (locate-dominating-file curr "Rakefile")
-            (locate-dominating-file curr "init.el")
-            (my-git-root))
-      (message "No file found."))))
-(defun grep-in-project-root ()
-  "Run rgrep for the given pattern in (my-project-root)"
-  (interactive)
-  (progn
-    (grep-compute-defaults)
-    (let* ((regexp (grep-read-regexp))
-           (files (grep-read-files regexp)))
-      (rgrep regexp files (my-project-root)))))
-(defun find-file-in-project-root (name)
-  "Run find-name-dired in (my-project-root)"
-  (interactive "sFilename: ")
-  (find-name-dired (my-project-root) name))
-(defun eshell-in-project-root ()
-  "Launch `open-eshell-at' in `(my-project-root)'."
-  (interactive)
-  (open-eshell-at (my-project-root)))
-(defun term-in-project-root ()
-  "Launch `open-terminal-at' in `(my-project-root)'."
-  (interactive)
-  (open-terminal-at (my-project-root)))
-(defun compile-in-project-root (command)
-  "Launch `compile' in the `(my-project-root)' with the input command"
-  (interactive "sCompile Command: ")
-  (let* ((default-directory (my-project-root)))
-    (compile command)))
-(defun show-project-root ()
-  "Show `my-project-root' in the message buffer"
-    (interactive)
-  (message (concat "Project Root: " (my-project-root))))
-(defun grep-in-git-root (term)
-  "Run rgrep for the given pattern in (my-git-root)"
-  (interactive)
-  (progn
-    (grep-compute-defaults)
-    (let* ((regexp (grep-read-regexp))
-           (files (grep-read-files regexp)))
-      (rgrep regexp files (my-project-root)))))
-(defun find-file-in-git-root (name)
-  "Run find-name-dired in (my-git-root)"
-  (interactive "sFilename: ")
-  (find-name-dired (my-git-root) name))
-(defun eshell-in-git-root ()
-  "Launch `open-eshell-at' in `(my-git-root)'."
-  (interactive)
-  (open-eshell-at (my-git-root)))
-(defun term-in-git-root ()
-  "Launch `open-terminal-at' in `(my-git-root)'."
-  (interactive)
-  (open-terminal-at (my-git-root)))
-(defun compile-in-git-root (command)
-  "Launch `compile' in the `(my-git-root)' with the input command"
-  (interactive "sCompile Command: ")
-  (let* ((default-directory (my-git-root)))
-    (compile command)))
-(defun show-git-root ()
-  "Show `my-git-root' in the message buffer"
-    (interactive)
-  (message (concat "Git Root: " (my-git-root))))
-(global-set-key (kbd "C-c m g") 'grep-in-project-root)
-(global-set-key (kbd "C-c m f") 'find-file-in-project-root)
-(global-set-key (kbd "C-c m e") 'eshell-in-project-root)
-(global-set-key (kbd "C-c m t") 'term-in-project-root)
-(global-set-key (kbd "C-c m c") 'compile-in-project-root)
-(global-set-key (kbd "C-c m s") 'show-project-root)
-(global-set-key (kbd "C-c g g") 'grep-in-git-root)
-(global-set-key (kbd "C-c g f") 'find-file-in-git-root)
-(global-set-key (kbd "C-c g e") 'eshell-in-git-root)
-(global-set-key (kbd "C-c g t") 'term-in-git-root)
-(global-set-key (kbd "C-c g c") 'compile-in-git-root)
-(global-set-key (kbd "C-c g s") 'show-git-root)
+;; (defun my-git-root ()
+;;   "Find the root of a project based on the presence of a .git directory.
+;;  Return empty if not is found"
+;;   (interactive)
+;;   (let ((curr (current-location)))
+;;     (if (not (string= "" curr))
+;;         (or (locate-dominating-file curr ".project-root")
+;;             (locate-dominating-file curr ".git"))
+;;       (message "No current file found"))))
+;; (defun my-project-root ()
+;;   "Find the root of a project based on the presence of .project-root
+;; file or some other file defined below.  As a last resort, look for
+;; my-git-root.  Return empty if not is found"
+;;   (interactive)
+;;   (let ((curr (current-location)))
+;;     (if (not (string= "" curr))
+;;         (or (locate-dominating-file curr ".project-root")
+;;             (locate-dominating-file curr "pom.xml")
+;;             (locate-dominating-file curr "build.xml")
+;;             (locate-dominating-file curr "project.clj")
+;;             (locate-dominating-file curr "Rakefile")
+;;             (locate-dominating-file curr "init.el")
+;;             (my-git-root))
+;;       (message "No file found."))))
+;; (defun grep-in-project-root ()
+;;   "Run rgrep for the given pattern in (my-project-root)"
+;;   (interactive)
+;;   (progn
+;;     (grep-compute-defaults)
+;;     (let* ((regexp (grep-read-regexp))
+;;            (files (grep-read-files regexp)))
+;;       (rgrep regexp files (my-project-root)))))
+;; (defun find-file-in-project-root (name)
+;;   "Run find-name-dired in (my-project-root)"
+;;   (interactive "sFilename: ")
+;;   (find-name-dired (my-project-root) name))
+;; (defun eshell-in-project-root ()
+;;   "Launch `open-eshell-at' in `(my-project-root)'."
+;;   (interactive)
+;;   (open-eshell-at (my-project-root)))
+;; (defun term-in-project-root ()
+;;   "Launch `open-terminal-at' in `(my-project-root)'."
+;;   (interactive)
+;;   (open-terminal-at (my-project-root)))
+;; (defun compile-in-project-root (command)
+;;   "Launch `compile' in the `(my-project-root)' with the input command"
+;;   (interactive "sCompile Command: ")
+;;   (let* ((default-directory (my-project-root)))
+;;     (compile command)))
+;; (defun show-project-root ()
+;;   "Show `my-project-root' in the message buffer"
+;;     (interactive)
+;;   (message (concat "Project Root: " (my-project-root))))
+;; (defun grep-in-git-root (term)
+;;   "Run rgrep for the given pattern in (my-git-root)"
+;;   (interactive)
+;;   (progn
+;;     (grep-compute-defaults)
+;;     (let* ((regexp (grep-read-regexp))
+;;            (files (grep-read-files regexp)))
+;;       (rgrep regexp files (my-project-root)))))
+;; (defun find-file-in-git-root (name)
+;;   "Run find-name-dired in (my-git-root)"
+;;   (interactive "sFilename: ")
+;;   (find-name-dired (my-git-root) name))
+;; (defun eshell-in-git-root ()
+;;   "Launch `open-eshell-at' in `(my-git-root)'."
+;;   (interactive)
+;;   (open-eshell-at (my-git-root)))
+;; (defun term-in-git-root ()
+;;   "Launch `open-terminal-at' in `(my-git-root)'."
+;;   (interactive)
+;;   (open-terminal-at (my-git-root)))
+;; (defun compile-in-git-root (command)
+;;   "Launch `compile' in the `(my-git-root)' with the input command"
+;;   (interactive "sCompile Command: ")
+;;   (let* ((default-directory (my-git-root)))
+;;     (compile command)))
+;; (defun show-git-root ()
+;;   "Show `my-git-root' in the message buffer"
+;;     (interactive)
+;;   (message (concat "Git Root: " (my-git-root))))
+;; (global-set-key (kbd "C-c m g") 'grep-in-project-root)
+;; (global-set-key (kbd "C-c m f") 'find-file-in-project-root)
+;; (global-set-key (kbd "C-c m e") 'eshell-in-project-root)
+;; (global-set-key (kbd "C-c m t") 'term-in-project-root)
+;; (global-set-key (kbd "C-c m c") 'compile-in-project-root)
+;; (global-set-key (kbd "C-c m s") 'show-project-root)
+;; (global-set-key (kbd "C-c g g") 'grep-in-git-root)
+;; (global-set-key (kbd "C-c g f") 'find-file-in-git-root)
+;; (global-set-key (kbd "C-c g e") 'eshell-in-git-root)
+;; (global-set-key (kbd "C-c g t") 'term-in-git-root)
+;; (global-set-key (kbd "C-c g c") 'compile-in-git-root)
+;; (global-set-key (kbd "C-c g s") 'show-git-root)
+;;(require 'projectile)
+;;(require 'neotree)
 
 ;;;- Packages
 (require 'package)
@@ -867,7 +871,9 @@ my-git-root.  Return empty if not is found"
 ;; Themes
 ;; my theme, tango-dark is nice for a default
 (require 'ample-zen-theme) ;; package-install ample-zen-theme #npoge
-(load-theme 'dichromacy t)
+(require 'atom-one-dark-theme) ;; package-install atom-one-dark-theme, #npoge
+(require 'gotham-theme);; package-install gotham-theme, #npoge
+(load-theme 'ample-zen t)
 
 ;;;- File type specific
 ;; functions for the new prog-mode-hook
@@ -923,6 +929,8 @@ my-git-root.  Return empty if not is found"
 ;;;- Java mode
 ;; change the way imenu shows stuff, in site-lisp
 (require 'java-imenu) ;; in site-lisp #npoge
+(require 'jdee) ;; package-install jdee #npoge
+(require 'maven-test-mode) ;; package-install maven-test-mode #npoge
 
 ;;;- Clojure mode
 (require 'clojure-mode) ;; package-install clojure-mode #npoge
@@ -1091,6 +1099,17 @@ print json.dumps(j, sort_keys=True, indent=2)"
 ;;;- Golang
 ;; copied to site-lisp from the go1.3.1/misc/emacs install #npoge
 (require 'go-mode-load)
+
+;;; - Projectile
+;; package-install projectile, #npoge
+(projectile-global-mode)
+;; package-install flx-ido, #npoge
+
+;;; - Magit
+;; package-install magit, #npoge
+
+;;; - NeoTree
+;; package-install neotree, #npoge
 
 (provide 'init)
 (put 'dired-find-alternate-file 'disabled nil)
