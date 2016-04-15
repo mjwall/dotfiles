@@ -126,8 +126,7 @@
 (global-set-key (kbd "C-S-<down>") 'shrink-window)
 (global-set-key (kbd "C-S-<up>") 'enlarge-window)
 ;; vc-git
-;;(require 'vc-git)
-;;(require 'magit)
+(require 'vc-git)
 
 ;; Platform specific settings
 (defvar *is-a-mac*)
@@ -437,8 +436,13 @@ current location."
   (lambda () (interactive) (open-terminal-at dired-directory)))
 (define-key dired-mode-map (kbd "'")
   (lambda () (interactive) (open-eshell-at dired-directory)))
+(define-key dired-mode-map [mouse-2] 'dired-find-file)
+(when (fboundp 'global-dired-hide-details-mode)
+  (global-dired-hide-details-mode -1))
+(setq dired-recursive-deletes 'top)
+(define-key dired-mode-map (kbd ".") 'dired-up-directory)
 
-;;;- Ido Interactively Do Things
+;;; - Ido Interactively Do Things
 (when (> emacs-major-version 21)
   (ido-mode t)
   (ido-everywhere t)
@@ -459,6 +463,8 @@ readable]" " [Too big]" " [Confirm]"))
   ;; imenu with ido, from http://www.emacswiki.org/emacs/idomenu.el #npoge
   (require 'idomenu)
   (global-set-key (kbd "C-x TAB") 'idomenu) ;; C-x C-i
+
+
   ;; add keybindings so C-p and C-n move next with vertical results
   ;; and C-up and C-down do the same even if the current string
   ;; doesn't match
@@ -758,7 +764,7 @@ it."
   (switch-to-buffer "*pomo*"))
 (global-set-key (kbd "<f6>") 'pomo)
 
-;;;- Project mode
+;;;;- Project mode
 ;; (defun my-git-root ()
 ;;   "Find the root of a project based on the presence of a .git directory.
 ;;  Return empty if not is found"
@@ -1111,11 +1117,40 @@ print json.dumps(j, sort_keys=True, indent=2)"
 ;;; - NeoTree
 ;; package-install neotree, #npoge
 
-;;; Fill Column Indicator
+;;; - Fill Column Indicator
 ;; package-install fill-column-indicator, #npoge
 (require 'fill-column-indicator)
 (setq fci-rule-column 120)
 (add-hook 'prog-mode-hook 'fci-mode)
+
+;;; - Flx-Ido
+;;(require 'flx-ido) ;;package-install flx-ido, #npoge
+(flx-ido-mode 1)
+;; disable ido faces to see flx highlights.
+(setq ido-enable-flex-matching t)
+(setq ido-use-faces nil)
+
+;;; - Dired-Hacks
+;; package-install dired-hacks-util, #npoge
+(require 'dired-hacks-utils)
+(require 'dired-subtree)
+(require 'dired-filter)
+(add-hook
+   'dired-mode-hook
+   (lambda ()
+     (define-key dired-mode-map (kbd "M-o") 'dired-subtree-insert)
+     (define-key dired-mode-map (kbd "M-c") 'dired-subtree-remove)
+     (define-key dired-mode-map (kbd "M-u") 'dired-subtree-up)
+     (define-key dired-mode-map (kbd "M-d") 'dired-subtree-down)
+     (define-key dired-mode-map (kbd "M-p") 'dired-subtree-previous-sibling)
+     (define-key dired-mode-map (kbd "M-n") 'dired-subtree-next-sibling)
+     (define-key dired-mode-map (kbd "M->") 'dired-subtree-end)
+     (define-key dired-mode-map (kbd "M-<") 'dired-subtree-beginning)
+     (define-key dired-mode-map (kbd "C-c d") 'dired-filter-by-directory)
+     (define-key dired-mode-map (kbd "C-c f") 'dired-filter-by-file)))
+;; part of dired-hacks-utils, but not in elpa, #npgoe
+;; in site-lisp from https://raw.githubusercontent.com/Fuco1/dired-hacks/master/dired-list.el
+(require 'dired-list)
 
 (provide 'init)
 (put 'dired-find-alternate-file 'disabled nil)
