@@ -57,6 +57,8 @@
  vc-follow-symlinks t
  ;; have compile buffers scroll, use first-error to stop there
  compilation-scroll-output t
+ ;; scroll goes up one line
+ scroll-conservatively 1000
  )
 
 ;;;- Other setting
@@ -541,7 +543,7 @@ http://www.emacswiki.org/emacs/SearchAtPoint"
       eshell-prompt-regexp "^[^#$]*[#$] "
       eshell-highlight-prompt nil
       eshell-visual-commands '("less" "top" "vim")
-      eshell-visual-subcommands '(("git" "di" "log" "diff" "show")))
+      eshell-visual-subcommands '(("git" "log" "diff" "di" "show")))
 ;; eshell prompt
 (setq eshell-prompt-function
       (lambda ()
