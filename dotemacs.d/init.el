@@ -129,6 +129,8 @@
 (global-set-key (kbd "C-S-<up>") 'enlarge-window)
 ;; vc-git
 (require 'vc-git)
+(require 'git-blame)
+(require 'git)
 
 ;; Platform specific settings
 (defvar *is-a-mac*)
