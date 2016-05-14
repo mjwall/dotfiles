@@ -434,17 +434,8 @@ current location."
 (defalias 'tt 'terminal-here)
 
 ;;;- Dired
-(require 'dired-x) ;; provided dired-jump bound to C-x C-j
-(defun open-term-from-dired ())
-(define-key dired-mode-map (kbd "`")
-  (lambda () (interactive) (open-terminal-at dired-directory)))
-(define-key dired-mode-map (kbd "'")
-  (lambda () (interactive) (open-eshell-at dired-directory)))
-(define-key dired-mode-map [mouse-2] 'dired-find-file)
-(when (fboundp 'global-dired-hide-details-mode)
-  (global-dired-hide-details-mode -1))
+;; package-install direx #npoge
 (setq dired-recursive-deletes 'top)
-(define-key dired-mode-map (kbd ".") 'dired-up-directory)
 
 ;;; - Ido Interactively Do Things
 (when (> emacs-major-version 21)
@@ -768,104 +759,6 @@ it."
   (switch-to-buffer "*pomo*"))
 (global-set-key (kbd "<f6>") 'pomo)
 
-;;;;- Project mode
-;; (defun my-git-root ()
-;;   "Find the root of a project based on the presence of a .git directory.
-;;  Return empty if not is found"
-;;   (interactive)
-;;   (let ((curr (current-location)))
-;;     (if (not (string= "" curr))
-;;         (or (locate-dominating-file curr ".project-root")
-;;             (locate-dominating-file curr ".git"))
-;;       (message "No current file found"))))
-;; (defun my-project-root ()
-;;   "Find the root of a project based on the presence of .project-root
-;; file or some other file defined below.  As a last resort, look for
-;; my-git-root.  Return empty if not is found"
-;;   (interactive)
-;;   (let ((curr (current-location)))
-;;     (if (not (string= "" curr))
-;;         (or (locate-dominating-file curr ".project-root")
-;;             (locate-dominating-file curr "pom.xml")
-;;             (locate-dominating-file curr "build.xml")
-;;             (locate-dominating-file curr "project.clj")
-;;             (locate-dominating-file curr "Rakefile")
-;;             (locate-dominating-file curr "init.el")
-;;             (my-git-root))
-;;       (message "No file found."))))
-;; (defun grep-in-project-root ()
-;;   "Run rgrep for the given pattern in (my-project-root)"
-;;   (interactive)
-;;   (progn
-;;     (grep-compute-defaults)
-;;     (let* ((regexp (grep-read-regexp))
-;;            (files (grep-read-files regexp)))
-;;       (rgrep regexp files (my-project-root)))))
-;; (defun find-file-in-project-root (name)
-;;   "Run find-name-dired in (my-project-root)"
-;;   (interactive "sFilename: ")
-;;   (find-name-dired (my-project-root) name))
-;; (defun eshell-in-project-root ()
-;;   "Launch `open-eshell-at' in `(my-project-root)'."
-;;   (interactive)
-;;   (open-eshell-at (my-project-root)))
-;; (defun term-in-project-root ()
-;;   "Launch `open-terminal-at' in `(my-project-root)'."
-;;   (interactive)
-;;   (open-terminal-at (my-project-root)))
-;; (defun compile-in-project-root (command)
-;;   "Launch `compile' in the `(my-project-root)' with the input command"
-;;   (interactive "sCompile Command: ")
-;;   (let* ((default-directory (my-project-root)))
-;;     (compile command)))
-;; (defun show-project-root ()
-;;   "Show `my-project-root' in the message buffer"
-;;     (interactive)
-;;   (message (concat "Project Root: " (my-project-root))))
-;; (defun grep-in-git-root (term)
-;;   "Run rgrep for the given pattern in (my-git-root)"
-;;   (interactive)
-;;   (progn
-;;     (grep-compute-defaults)
-;;     (let* ((regexp (grep-read-regexp))
-;;            (files (grep-read-files regexp)))
-;;       (rgrep regexp files (my-project-root)))))
-;; (defun find-file-in-git-root (name)
-;;   "Run find-name-dired in (my-git-root)"
-;;   (interactive "sFilename: ")
-;;   (find-name-dired (my-git-root) name))
-;; (defun eshell-in-git-root ()
-;;   "Launch `open-eshell-at' in `(my-git-root)'."
-;;   (interactive)
-;;   (open-eshell-at (my-git-root)))
-;; (defun term-in-git-root ()
-;;   "Launch `open-terminal-at' in `(my-git-root)'."
-;;   (interactive)
-;;   (open-terminal-at (my-git-root)))
-;; (defun compile-in-git-root (command)
-;;   "Launch `compile' in the `(my-git-root)' with the input command"
-;;   (interactive "sCompile Command: ")
-;;   (let* ((default-directory (my-git-root)))
-;;     (compile command)))
-;; (defun show-git-root ()
-;;   "Show `my-git-root' in the message buffer"
-;;     (interactive)
-;;   (message (concat "Git Root: " (my-git-root))))
-;; (global-set-key (kbd "C-c m g") 'grep-in-project-root)
-;; (global-set-key (kbd "C-c m f") 'find-file-in-project-root)
-;; (global-set-key (kbd "C-c m e") 'eshell-in-project-root)
-;; (global-set-key (kbd "C-c m t") 'term-in-project-root)
-;; (global-set-key (kbd "C-c m c") 'compile-in-project-root)
-;; (global-set-key (kbd "C-c m s") 'show-project-root)
-;; (global-set-key (kbd "C-c g g") 'grep-in-git-root)
-;; (global-set-key (kbd "C-c g f") 'find-file-in-git-root)
-;; (global-set-key (kbd "C-c g e") 'eshell-in-git-root)
-;; (global-set-key (kbd "C-c g t") 'term-in-git-root)
-;; (global-set-key (kbd "C-c g c") 'compile-in-git-root)
-;; (global-set-key (kbd "C-c g s") 'show-git-root)
-;;(require 'projectile)
-;;(require 'neotree)
-
 ;;;- Packages
 (require 'package)
 (add-to-list 'package-archives
@@ -880,10 +773,10 @@ it."
 
 ;; Themes
 ;; my theme, tango-dark is nice for a default
-(require 'ample-zen-theme) ;; package-install ample-zen-theme #npoge
-(require 'atom-one-dark-theme) ;; package-install atom-one-dark-theme, #npoge
-(require 'gotham-theme);; package-install gotham-theme, #npoge
-(load-theme 'atom-one-dark t)
+;(require 'ample-zen-theme) ;; package-install ample-zen-theme #npoge
+;(require 'atom-one-dark-theme) ;; package-install atom-one-dark-theme, #npoge
+;(require 'gotham-theme);; package-install gotham-theme, #npoge
+(load-theme 'material t)
 
 ;;;- File type specific
 ;; functions for the new prog-mode-hook
@@ -1104,7 +997,10 @@ print json.dumps(j, sort_keys=True, indent=2)"
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 ;;;- Python
-;; does anyone really use this?
+(elpy-enable) ;; package-install elpy #npoge
+(setq elpy-rpc-python-command "python3")
+(elpy-use-ipython)
+(setq elpy-rpc-backend "jedi")
 
 ;;;- Golang
 ;; copied to site-lisp from the go1.3.1/misc/emacs install #npoge
@@ -1114,18 +1010,13 @@ print json.dumps(j, sort_keys=True, indent=2)"
 ;; package-install projectile, #npoge
 (projectile-global-mode)
 ;; package-install flx-ido, #npoge
+;; package-install project-explore #npoge
 
 ;;; - Magit
 ;; package-install magit, #npoge
 
-;;; - NeoTree
-;; package-install neotree, #npoge
-
-;;; - Fill Column Indicator
-;; package-install fill-column-indicator, #npoge
-(require 'fill-column-indicator)
-(setq fci-rule-column 120)
-(add-hook 'prog-mode-hook 'fci-mode)
+;;; - Ztree
+;; package-install ztree, #npoge
 
 ;;; - Flx-Ido
 ;;(require 'flx-ido) ;;package-install flx-ido, #npoge
@@ -1134,27 +1025,4 @@ print json.dumps(j, sort_keys=True, indent=2)"
 (setq ido-enable-flex-matching t)
 (setq ido-use-faces nil)
 
-;;; - Dired-Hacks
-;; package-install dired-hacks-util, #npoge
-(require 'dired-hacks-utils)
-(require 'dired-subtree)
-(require 'dired-filter)
-(add-hook
-   'dired-mode-hook
-   (lambda ()
-     (define-key dired-mode-map (kbd "M-o") 'dired-subtree-insert)
-     (define-key dired-mode-map (kbd "M-c") 'dired-subtree-remove)
-     (define-key dired-mode-map (kbd "M-u") 'dired-subtree-up)
-     (define-key dired-mode-map (kbd "M-d") 'dired-subtree-down)
-     (define-key dired-mode-map (kbd "M-p") 'dired-subtree-previous-sibling)
-     (define-key dired-mode-map (kbd "M-n") 'dired-subtree-next-sibling)
-     (define-key dired-mode-map (kbd "M->") 'dired-subtree-end)
-     (define-key dired-mode-map (kbd "M-<") 'dired-subtree-beginning)
-     (define-key dired-mode-map (kbd "C-c d") 'dired-filter-by-directory)
-     (define-key dired-mode-map (kbd "C-c f") 'dired-filter-by-file)))
-;; part of dired-hacks-utils, but not in elpa, #npgoe
-;; in site-lisp from https://raw.githubusercontent.com/Fuco1/dired-hacks/master/dired-list.el
-(require 'dired-list)
-
 (provide 'init)
-(put 'dired-find-alternate-file 'disabled nil)
