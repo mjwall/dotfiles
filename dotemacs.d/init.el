@@ -834,6 +834,10 @@ it."
 (require 'java-imenu) ;; in site-lisp #npoge
 (require 'jdee) ;; package-install jdee #npoge
 (require 'maven-test-mode) ;; package-install maven-test-mode #npoge
+(add-hook 'java-mode-hook (lambda ()
+                            (setq c-basic-offset 2
+                                  tab-width t
+                                  indent-tabs-mode nil)))
 
 ;;;- Clojure mode
 (require 'clojure-mode) ;; package-install clojure-mode #npoge
@@ -998,8 +1002,8 @@ print json.dumps(j, sort_keys=True, indent=2)"
 
 ;;;- Python
 (elpy-enable) ;; package-install elpy #npoge
-(setq elpy-rpc-python-command "python3")
-(elpy-use-ipython)
+;(setq elpy-rpc-python-command "python3")
+;(elpy-use-ipython)
 (setq elpy-rpc-backend "jedi")
 
 ;;;- Golang
