@@ -1020,25 +1020,17 @@ print json.dumps(j, sort_keys=True, indent=2)"
 ;;; - Magit
 ;; package-install magit, #npoge
 ;; full window
-(defun display-buffer-full-screen (buffer alist)
-  (delete-other-windows)
-  ;; make sure the window isn't dedicated, otherwise
-  ;; `set-window-buffer' throws an error
-  (set-window-dedicated-p nil nil)
-  (set-window-buffer nil buffer)
-  ;; return buffer's window
-  (get-buffer-window buffer))
+(defun my-magit-display-buffer-fullframe-status-v1 (buffer)
+  "Display BUFFER, filling entire frame if BUFFER is a status buffer.
+Otherwise, behave like `magit-display-buffer-traditional'.
 
-(setq magit-display-buffer-function
-      (lambda (buffer)
-        (if magit-display-buffer-noselect
-            ;; the code that called `magit-display-buffer-function'
-            ;; expects the original window to stay alive, we can't go
-            ;; fullscreen
-            (magit-display-buffer-traditional buffer)
-          (display-buffer buffer '(display-buffer-full-screen)))))
+In 2.7 master"
+  (if (eq (with-current-buffer buffer major-mode)
+          'magit-status-mode)
+      (display-buffer buffer '(magit--display-buffer-fullframe))
+    (magit-display-buffer-traditional buffer)))
 
-
+(setq magit-display-buffer-function #'my-magit-display-buffer-fullframe-status-v1)
 
 ;;; - Ztree
 ;; package-install ztree, #npoge
