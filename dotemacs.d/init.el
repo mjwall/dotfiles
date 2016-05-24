@@ -1011,31 +1011,33 @@ print json.dumps(j, sort_keys=True, indent=2)"
 ;; copied to site-lisp from the go1.3.1/misc/emacs install #npoge
 (require 'go-mode-load)
 
-;;; - Projectile
+;;;- Projectile
 ;; package-install projectile, #npoge
 (projectile-global-mode)
 ;; package-install flx-ido, #npoge
 ;; package-install project-explore #npoge
 
-;;; - Magit
+;;;- Magit
 ;; package-install magit, #npoge
 ;; full window
-(defun my-magit-display-buffer-fullframe-status-v1 (buffer)
-  "Display BUFFER, filling entire frame if BUFFER is a status buffer.
-Otherwise, behave like `magit-display-buffer-traditional'.
+;; (defun my-magit-display-buffer-fullframe-status-v1 (buffer)
+;;   "Display BUFFER, filling entire frame if BUFFER is a status buffer.
+;; Otherwise, behave like `magit-display-buffer-traditional'.
 
-In 2.7 master"
-  (if (eq (with-current-buffer buffer major-mode)
-          'magit-status-mode)
-      (display-buffer buffer '(magit--display-buffer-fullframe))
-    (magit-display-buffer-traditional buffer)))
+;; In 2.7 master"
+;;   (if (eq (with-current-buffer buffer major-mode)
+;;           'magit-status-mode)
+;;       (display-buffer buffer '(magit--display-buffer-fullframe))
+;;     (magit-display-buffer-traditional buffer)))
 
-(setq magit-display-buffer-function #'my-magit-display-buffer-fullframe-status-v1)
+;; (setq magit-display-buffer-function #'my-magit-display-buffer-fullframe-status-v1)
+(global-set-key (kbd "<f8>") 'magit-status)
 
-;;; - Ztree
+
+;;;- Ztree
 ;; package-install ztree, #npoge
 
-;;; - Flx-Ido
+;;;- Flx-Ido
 ;;(require 'flx-ido) ;;package-install flx-ido, #npoge
 (flx-ido-mode 1)
 ;; disable ido faces to see flx highlights.
