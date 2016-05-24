@@ -941,6 +941,7 @@ print json.dumps(j, sort_keys=True, indent=2)"
 ;;;- CC mode
 ;; use c-initialization-hook for keybindings see
 ;; http://www.gnu.org/software/emacs/manual/html_node/ccmode/CC-Hooks.html
+(require 'cmake-mode) ;; in site-lisp from cmake 3.5.2 source #npoge
 
 ;;;- Arduino mode
 ;;https://raw.github.com/bookest/arduino-mode/master/arduino-mode.el
