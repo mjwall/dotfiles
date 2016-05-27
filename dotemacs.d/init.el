@@ -814,7 +814,7 @@ it."
 (add-hook 'text-mode-hook (lambda () (setq truncate-lines nil)))
 
 ;;;- Org files
-;;(add-hook 'org-mode-hook 'turn-on-auto-fill)
+(add-hook 'org-mode-hook 'turn-off-auto-fill)
 (add-hook 'org-mode-hook 'turn-on-flyspell)
 (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
 
@@ -833,17 +833,16 @@ it."
 ;; change the way imenu shows stuff, in site-lisp
 (require 'java-imenu) ;; in site-lisp #npoge
 (require 'jdee) ;; package-install jdee #npoge
-(require 'maven-test-mode) ;; package-install maven-test-mode #npoge
 (add-hook 'java-mode-hook (lambda ()
                             (setq c-basic-offset 2
-                                  tab-width t
+                                  tab-width 2
                                   indent-tabs-mode nil)))
 
 ;;;- Clojure mode
 (require 'clojure-mode) ;; package-install clojure-mode #npoge
 
 ;;;- Scala mode
-(require 'scala-mode2) ;; package-install scala-mode2 #npoge
+;; ensime - package-install ensime #npoge
 (add-to-list 'auto-mode-alist '(".sbt" . scala-mode))
 
 ;;;- Sh mode (bash)
@@ -963,6 +962,7 @@ print json.dumps(j, sort_keys=True, indent=2)"
              (require 'asciidoc) ;; in site-lisp #npoge
              ))
 
+
 ;;;- XML mode
 ;; Use nxml-mode instead of sgml, xml or html mode.
 (mapc
@@ -1003,7 +1003,7 @@ print json.dumps(j, sort_keys=True, indent=2)"
 
 ;;;- Python
 (elpy-enable) ;; package-install elpy #npoge
-;(setq elpy-rpc-python-command "python3")
+(setq elpy-rpc-python-command "python3")
 ;(elpy-use-ipython)
 (setq elpy-rpc-backend "jedi")
 
@@ -1014,32 +1014,15 @@ print json.dumps(j, sort_keys=True, indent=2)"
 ;;;- Projectile
 ;; package-install projectile, #npoge
 (projectile-global-mode)
-;; package-install flx-ido, #npoge
-;; package-install project-explore #npoge
 
 ;;;- Magit
 ;; package-install magit, #npoge
-;; full window
-;; (defun my-magit-display-buffer-fullframe-status-v1 (buffer)
-;;   "Display BUFFER, filling entire frame if BUFFER is a status buffer.
-;; Otherwise, behave like `magit-display-buffer-traditional'.
-
-;; In 2.7 master"
-;;   (if (eq (with-current-buffer buffer major-mode)
-;;           'magit-status-mode)
-;;       (display-buffer buffer '(magit--display-buffer-fullframe))
-;;     (magit-display-buffer-traditional buffer)))
-
-;; (setq magit-display-buffer-function #'my-magit-display-buffer-fullframe-status-v1)
 (global-set-key (kbd "<f8>") 'magit-status)
-
-
-;;;- Ztree
-;; package-install ztree, #npoge
 
 ;;;- Flx-Ido
 ;;(require 'flx-ido) ;;package-install flx-ido, #npoge
 (flx-ido-mode 1)
+
 ;; disable ido faces to see flx highlights.
 (setq ido-enable-flex-matching t)
 (setq ido-use-faces nil)
