@@ -35,7 +35,7 @@ echo 1.7, 1.8
 exit
 fi
 
-if [ "1.7" != "$1" ] && [ "1.8" != "$1" ]; then
+if [ "1.6" != "$1" ] && [ "1.7" != "$1" ] && [ "1.8" != "$1" ]; then
 BASE="`basename $0`"
 echo Error: Could not change JDK-- version $1 not installed!
 echo Run $BASE without arguments to see a list of installed versions.
