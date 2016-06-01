@@ -1,0 +1,34 @@
+#/bin/bash
+
+# update all branches of accumulo and sync my fork
+
+CUR_ORIGIN=$(git config --get remote.origin.url)
+MY_FORK="git@github.com:mjwall/accumulo.git"
+
+# ensure is is my fork
+if [ "$CUR_ORIGIN" != "$MY_FORK" ]; then
+  echo Expected to be in the mjwall fork at $MY_FORK
+  echo instead was in $CUR_ORIGIN
+  exit 1
+fi
+
+# exit if there are uncommitted changes
+CHANGES=$(git status --porcelain)
+if [ "${CHANGES}x" != "x" ]; then
+  echo You have uncommitted changes
+  echo ${CHANGES}
+  exit 1
+fi
+
+CUR_BR=$(git rev-parse --abbrev-ref HEAD)
+
+for b in 1.6 1.7 1.8 master; do
+  echo Syncing $b
+  git checkout $b
+  git pull
+  git pull upstream $b
+  git push
+done
+
+echo Checking out original branch
+git co $CUR_BR
