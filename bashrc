@@ -122,10 +122,12 @@ shopt -s cmdhist
 prepend_path "${HOME}/bin"
 
 #PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-if [ "${RBENV}x" != "x" ]; then
-  prepend_path "${RBENV}/bin"
-  eval "$(rbenv init -)"
-fi
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+#source $(rvm 2.3.0 do rvm env --path)
+#if [ "${RBENV}x" != "x" ]; then
+#  prepend_path "${RBENV}/bin"
+#  eval "$(rbenv init -)"
+#fi
 
 # Below is for reference only on the color codes
 # original colors with ls -G or CLICOLORS = ExFxCxDxBxegedabagacad
