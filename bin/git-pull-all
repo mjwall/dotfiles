@@ -1,0 +1,35 @@
+#/bin/bash
+
+echo Updating all branches with origin
+
+# ensure it a git repo
+git rev-parse 2>&1 > /dev/null
+
+if [ "$?" -ne 0 ]; then
+  echo Not a git repo; exit 1
+else
+  echo It is a git repo, continuing
+fi
+
+# exit if there are uncommitted changes
+CHANGES=$(git status --porcelain)
+if [ "${CHANGES}x" != "x" ]; then
+  echo You have uncommitted changes
+  echo ${CHANGES}
+  exit 1
+else
+  echo No uncommitted changes, continuing
+fi
+
+# fetch all remotes
+git remote update origin
+
+CUR_BR=$(git rev-parse --abbrev-ref HEAD)
+
+for b in ` git branch | cut -c3- `; do
+  echo Syncing $b
+  git checkout $b && git pull
+done
+
+echo Checking out original branch
+git co $CUR_BR
