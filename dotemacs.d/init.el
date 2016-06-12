@@ -729,7 +729,8 @@ git."
   (progn
     (org-save-all-org-buffers)
     (message "Syncing org files")
-    (start-process "org-sync" "*org-git-sync*" (concat org-directory "org-git-sync"))))
+    (start-process "org-sync" "*org-git-sync*" (concat org-directory "org-git-sync"))
+    (pop-to-buffer "*org-git-sync*")))
 ;; run sync when starting emacs
 (ask-to-sync-org-files)
 
