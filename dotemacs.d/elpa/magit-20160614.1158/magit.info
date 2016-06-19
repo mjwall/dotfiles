@@ -1,0 +1,175 @@
+This is magit.info, produced by makeinfo version 5.2 from magit.texi.
+
+Magit is an interface to the version control system Git, implemented as
+an Emacs package.  Magit aspires to be a complete Git porcelain.  While
+we cannot (yet) claim that Magit wraps and improves upon each and every
+Git command, it is complete enough to allow even experienced Git users
+to perform almost all of their daily version control tasks directly from
+within Emacs.  While many fine Git clients exist, only Magit and Git
+itself deserve to be called porcelains.
+
+     Copyright (C) 2015-2016 Jonas Bernoulli <jonas@bernoul.li>
+
+     You can redistribute this document and/or modify it under the terms
+     of the GNU General Public License as published by the Free Software
+     Foundation, either version 3 of the License, or (at your option)
+     any later version.
+
+     This document is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+     General Public License for more details.
+INFO-DIR-SECTION Emacs
+START-INFO-DIR-ENTRY
+* Magit: (magit).       Using Git from Emacs with Magit.
+END-INFO-DIR-ENTRY
+
+
+Indirect:
+magit.info-1: 1222
+magit.info-2: 312587
+
+Tag Table:
+(Indirect)
+Node: Top1222
+Node: Introduction6389
+Node: Installation11082
+Node: Updating from an older release11457
+Node: Installing from an Elpa archive13052
+Node: Installing from the Git repository14391
+Node: Post-installation tasks17187
+Node: Getting started18576
+Node: Interface concepts24311
+Node: Modes and Buffers24585
+Node: Switching Buffers26331
+Node: Naming Buffers30989
+Node: Quitting Windows33824
+Node: Automatic Refreshing of Magit Buffers35456
+Node: Automatic Saving of File-Visiting Buffers38224
+Node: Automatic Reverting of File-Visiting Buffers39409
+Node: Risk of Reverting Automatically44405
+Node: Sections46788
+Node: Section movement47729
+Node: Section visibility51656
+Node: Section hooks55247
+Node: Section types and values57528
+Node: Section options58798
+Node: Popup buffers and prefix commands59270
+Node: Completion and confirmation60584
+Node: Running Git63490
+Node: Viewing Git output63726
+Node: Running Git manually64726
+Node: Git executable66852
+Node: Global Git arguments68859
+Node: Inspecting69666
+Node: Status buffer70813
+Node: Status sections73678
+Node: Status header sections79087
+Node: Status options81644
+Node: Repository list82368
+Node: Logging84505
+Node: Refreshing logs87243
+Node: Log Buffer88628
+Node: Select from log91717
+Node: Reflog92657
+Node: Diffing93135
+Node: Refreshing diffs96155
+Node: Diff buffer99136
+Node: Diff options101038
+Node: Revision buffer102794
+Node: Ediffing103749
+Node: References buffer107339
+Node: References sections112049
+Node: Bisecting112924
+Node: Visiting blobs114420
+Node: Blaming114929
+Node: Manipulating118249
+Node: Repository setup118565
+Node: Staging and unstaging119605
+Node: Staging from file-visiting buffers123694
+Node: Applying124862
+Node: Committing126755
+Node: Initiating a commit127338
+Node: Editing commit messages130650
+Node: Branching141046
+Node: The two remotes141246
+Node: The branch popup143790
+Node: The branch config popup149879
+Node: Merging155785
+Node: Resolving conflicts157953
+Ref: orgradiotarget1159038
+Node: Rebasing162910
+Node: Editing rebase sequences166551
+Node: Information about in-progress rebase169581
+Ref: Information about in-progress rebase-Footnote-1176417
+Node: Cherry picking177003
+Node: Reverting178609
+Node: Resetting179972
+Node: Stashing181484
+Node: Transferring184658
+Node: Remotes184896
+Node: Fetching186182
+Node: Pulling187548
+Node: Pushing188394
+Node: Creating and sending patches193138
+Node: Applying patches193833
+Node: Miscellaneous194831
+Node: Tagging195134
+Node: Notes195919
+Node: Submodules198444
+Node: Subtree199756
+Node: Common commands201004
+Node: Wip modes202749
+Node: Minor mode for buffers visiting files209485
+Node: Minor mode for buffers visiting blobs212959
+Node: Customizing213764
+Node: Per-repository configuration215436
+Node: Essential settings217070
+Node: Safety217394
+Node: Performance219227
+Node: Plumbing227186
+Node: Calling Git227814
+Node: Getting a value from Git229337
+Node: Calling Git for effect232441
+Node: Section plumbing238945
+Node: Creating sections239173
+Node: Section selection243072
+Node: Matching sections244752
+Node: Refreshing buffers249961
+Node: Conventions253096
+Node: Confirmation and completion253273
+Node: Theming Faces254171
+Node: FAQ262322
+Node: Magit is slow263935
+Node: I changed several thousand files at once and now Magit is unusable264136
+Node: I am having problems committing264852
+Node: Diffs are collapsed after un-/staging265298
+Node: I don't understand how branching and pushing work266776
+Node: I don't like the key binding in v24267151
+Node: I cannot install the pre-requisites for Magit v2267490
+Node: I am using an Emacs release older than v244267955
+Node: I am using a Git release older than v194269568
+Node: I am using MS Windows and cannot push with Magit270555
+Node: I am using OS X and SOMETHING works in shell but not in Magit271159
+Node: How to install the gitman info manual?271950
+Node: How can I show Git's output?274491
+Node: Diffs contain control sequences275278
+Node: Expanding a file to show the diff causes it to disappear276283
+Node: Point is wrong in the ‘COMMIT_EDITMSG’ buffer276818
+Node: The mode-line information isn't always up-to-date277848
+Node: Can Magit be used as ‘ediff-version-control-package’?278916
+Node: How to show diffs for gpg-encrypted files?280960
+Node: Emacs 245 hangs when loading Magit281557
+Node: Symbol's value as function is void ‘--some’282132
+Node: Where is the branch manager282466
+Node: Keystroke Index282757
+Node: Command Index312587
+Node: Function Index342377
+Node: Variable Index356052
+
+End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:

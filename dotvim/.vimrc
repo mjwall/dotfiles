@@ -15,8 +15,8 @@ set clipboard=unnamed
 " set paste "causes issues with vim-endwise in the terminal
 set ttymouse=xterm
 
-"set background=dark
-"colors vividchalk
+set background=dark
+colors vividchalk
 
 set tabstop=2
 set shiftwidth=2
