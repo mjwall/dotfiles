@@ -656,6 +656,7 @@ http://www.emacswiki.org/emacs/SearchAtPoint"
 (ad-activate 'term-sentinel)
 
 ;;;- Org-mode
+;; installed updated org from gnu, not using the built in org mode
 (require 'org)
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
@@ -705,7 +706,7 @@ http://www.emacswiki.org/emacs/SearchAtPoint"
  org-reverse-note-order t
  org-support-shift-select nil)
 
-;; turn on languages
+;;turn on languages
 (org-babel-do-load-languages
  'org-babel-load-languages
  ;; add plantuml, requires plantuml.jar
@@ -714,6 +715,12 @@ http://www.emacswiki.org/emacs/SearchAtPoint"
 (setq org-plantuml-jar-path ;; in site-lisp, #npoge
       (expand-file-name
        (concat user-emacs-directory "/site-lisp/plantuml.jar")))
+
+;; org-confluence #npoge in site-lisp from
+;; http://orgmode.org/w/?p=org-mode.git;a=blob_plain;f=contrib/lisp/ox-confluence.el;hb=HEAD
+(require 'ox-confluence)
+
+;; run sync when starting emacs
 (defun ask-to-sync-org-files ()
   "Prompt and ask whether to sync org files or not.  If 'y', then setup a shutdown hook to sync to as well"
   ;; TODO: only fix script to have lock file and only prompt if not there
