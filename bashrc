@@ -98,6 +98,8 @@ if [ $(uname) == "Darwin" ]; then
 fi
 # magit alias uses the ec script, see ~/bin
 alias magit='ec -e "(magit-status \"$(pwd)\")"'
+alias teebag="tee bag"
+
 
 #history stuff
 shopt -s histappend
