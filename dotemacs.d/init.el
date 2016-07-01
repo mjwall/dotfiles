@@ -131,6 +131,8 @@
 (require 'vc-git)
 (require 'git-blame)
 (require 'git)
+;; fix delete in terminal, from https://www.emacswiki.org/emacs/BackspaceKey
+(define-key key-translation-map [?\C-h] [?\C-?])
 
 ;; Platform specific settings
 (defvar *is-a-mac*)
@@ -780,7 +782,8 @@ it."
 ;(require 'ample-zen-theme) ;; package-install ample-zen-theme #npoge
 ;(require 'atom-one-dark-theme) ;; package-install atom-one-dark-theme, #npoge
 ;(require 'gotham-theme);; package-install gotham-theme, #npoge
-(load-theme 'material t)
+;(load-theme 'material t)
+(load-theme 'atom-dark t)
 
 ;;;- File type specific
 ;; functions for the new prog-mode-hook
