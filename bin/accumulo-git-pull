@@ -3,7 +3,8 @@
 # update all branches of accumulo and sync my fork
 
 CUR_ORIGIN=$(git config --get remote.origin.url)
-MY_FORK="git@github.com:mjwall/accumulo.git"
+#MY_FORK="git@github.com:mjwall/accumulo.git"
+MY_FORK="ssh://git@github.com/mjwall/accumulo.git"
 
 # ensure is is my fork
 if [ "$CUR_ORIGIN" != "$MY_FORK" ]; then
@@ -25,7 +26,8 @@ git remote update
 
 CUR_BR=$(git rev-parse --abbrev-ref HEAD)
 
-for b in 1.6 1.7 1.8 master; do
+#for b in 1.6 1.7 1.8 master; do
+for b in 1.7 1.8 master; do
   echo Syncing $b
   git checkout $b
   git pull

@@ -70,7 +70,7 @@
 ;; no line numbers by default
 (global-linum-mode 0)
 ;; make backspace work as expected
-(normal-erase-is-backspace-mode t)
+;;(normal-erase-is-backspace-mode t)
 ;; delete selected on keypress
 (delete-selection-mode 1)
 ;; highlight matching parentheses when the point is on them.
@@ -783,7 +783,8 @@ it."
 ;(require 'atom-one-dark-theme) ;; package-install atom-one-dark-theme, #npoge
 ;(require 'gotham-theme);; package-install gotham-theme, #npoge
 ;(load-theme 'material t)
-(load-theme 'atom-dark t)
+;(load-theme 'atom-dark t)
+(load-theme 'adwaita t)
 
 ;;;- File type specific
 ;; functions for the new prog-mode-hook
@@ -1035,3 +1036,4 @@ print json.dumps(j, sort_keys=True, indent=2)"
 (setq ido-use-faces nil)
 
 (provide 'init)
+(put 'dired-find-alternate-file 'disabled nil)
