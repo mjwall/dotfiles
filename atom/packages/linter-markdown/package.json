@@ -1,0 +1,143 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116915-17025-gh41y3/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116915-17025-gh41y3/package.tgz",
+        "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116915-17025-gh41y3/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-116915-17025-1iubowa"
+    ]
+  ],
+  "_from": "../d-116915-17025-gh41y3/package.tgz",
+  "_id": "linter-markdown@3.0.2",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/linter-markdown",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116915-17025-gh41y3/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116915-17025-gh41y3/package.tgz",
+    "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116915-17025-gh41y3/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-116915-17025-gh41y3/package.tgz",
+  "_shasum": "ab05504fa56f1347e0145da92cc3b1bff8f5e5a3",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116915-17025-gh41y3/package.tgz",
+  "_where": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-116915-17025-1iubowa",
+  "bugs": {
+    "url": "https://github.com/AtomLinter/linter-markdown/issues"
+  },
+  "configSchema": {
+    "detectIgnore": {
+      "title": "Ignore files",
+      "description": "Use `.remarkignore` files.",
+      "type": "boolean",
+      "default": true
+    },
+    "presetRecommendedWithoutConfig": {
+      "title": "Bug-free by default",
+      "description": "Use [remark-preset-lint-recommended](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended) if no **remark-lint** config is found.",
+      "type": "boolean",
+      "default": true
+    },
+    "presetConsistentWithoutConfig": {
+      "title": "Consistency by default",
+      "description": "Use [remark-preset-lint-consistent](https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent) if no **remark-lint** config is found.",
+      "type": "boolean",
+      "default": true
+    },
+    "scopes": {
+      "title": "Scopes",
+      "description": "List of scopes for languages which will be checked (run `Editor: Log Cursor Scope` to determine the scopes for a file).",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "source.gfm",
+        "source.pfm",
+        "text.md"
+      ]
+    }
+  },
+  "dependencies": {
+    "atom-package-deps": "^4.0.1",
+    "remark": "6.0.1",
+    "remark-preset-lint-consistent": "^1.0.0",
+    "remark-preset-lint-recommended": "^1.0.0",
+    "unified-engine-atom": "^2.0.0"
+  },
+  "description": "Lint markdown on the fly, using remark-lint",
+  "devDependencies": {
+    "eslint": "^3.5.0",
+    "eslint-config-airbnb-base": "^7.1.0",
+    "eslint-plugin-import": "^1.14.0",
+    "remark-cli": "^2.0.0"
+  },
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "eslintConfig": {
+    "rules": {
+      "comma-dangle": [
+        2,
+        "never"
+      ],
+      "global-require": 0,
+      "no-console": 0
+    },
+    "extends": "airbnb-base",
+    "globals": {
+      "atom": true
+    },
+    "env": {
+      "es6": true,
+      "node": true
+    }
+  },
+  "homepage": "https://github.com/AtomLinter/linter-markdown#readme",
+  "keywords": [
+    "lint",
+    "linter",
+    "remark",
+    "remark-lint",
+    "markdown"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "name": "linter-markdown",
+  "optionalDependencies": {},
+  "package-deps": [
+    "linter"
+  ],
+  "providedServices": {
+    "linter": {
+      "versions": {
+        "1.0.0": "provideLinter"
+      }
+    }
+  },
+  "readme": "# linter-markdown\n\n[![Build Status](https://travis-ci.org/AtomLinter/linter-markdown.svg?branch=master)](https://travis-ci.org/AtomLinter/linter-markdown)\n[![Circle CI](https://circleci.com/gh/AtomLinter/linter-markdown/tree/master.svg?style=shield)](https://circleci.com/gh/AtomLinter/linter-markdown/tree/master)\n[![Build status](https://ci.appveyor.com/api/projects/status/owck145l404p4f7k/branch/master?svg=true)](https://ci.appveyor.com/project/SpainTrain/linter-markdown/branch/master)\n\n[![bitHound Overalll Score](https://www.bithound.io/github/AtomLinter/linter-markdown/badges/score.svg)](https://www.bithound.io/github/AtomLinter/linter-markdown)\n[![bitHound Dependencies](https://www.bithound.io/github/AtomLinter/linter-markdown/badges/dependencies.svg)](https://www.bithound.io/github/AtomLinter/linter-markdown/master/dependencies/npm)\n[![Plugin installs!](https://img.shields.io/apm/dm/linter-markdown.svg)](https://atom.io/packages/linter-markdown)\n[![Package version!](https://img.shields.io/apm/v/linter-markdown.svg?style=flat)](https://atom.io/packages/linter-markdown)\n\nLint markdown files using [remark-lint][remark-lint] and the\n[linter][linter] package for atom.\n\nIf there is no configuration found for **remark-lint**, this linter runs [remark-preset-lint-consistent][consistent] and\n[remark-preset-lint-recommended][recommended] (both can be turned off).\n\nIf there *is* configuration for **remark-lint**, through `.remarkrc` files\nor `remarkConfig` in `package.json`s, this linter works just like\n[remark-cli][cli] but only uses the **remark-lint** plugin. Make sure\n**remark-lint** is installed in this case (optionally globally).\n\nRead more about configuring [remark-lint][configuration] on its README.\n\nA similar linter, [linter-remark][], runs all remark plugins, but only\nwhen they are configured to run.\n\nWe also maintain a [changelog][changelog] containing recent changes.\n\n![Screenshot of linter-markdown in action][screenshot]\n\n[remark-lint]: https://github.com/wooorm/remark-lint\n[changelog]: https://github.com/AtomLinter/linter-markdown/blob/master/CHANGELOG.md\n[configuration]: https://github.com/wooorm/remark-lint#configuring-remark-lint\n[linter]: https://atom.io/packages/linter\n[screenshot]: https://raw.githubusercontent.com/AtomLinter/linter-markdown/master/assets/screenshot.png\n[cli]: https://github.com/wooorm/remark/tree/master/packages/remark-cli\n[consistent]: https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-consistent\n[recommended]: https://github.com/wooorm/remark-lint/tree/master/packages/remark-preset-lint-recommended\n[linter-remark]: https://github.com/wooorm/linter-remark\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AtomLinter/linter-markdown.git"
+  },
+  "scripts": {
+    "lint": "remark README.md LICENSE.md && eslint lib spec",
+    "test": "apm test"
+  },
+  "version": "3.0.2"
+}

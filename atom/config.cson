@@ -1,0 +1,42 @@
+"*":
+  "advanced-open-file": {}
+  "adwaita-pro-ui":
+    fontFamily: "Oxygen-Sans"
+    theme: "light"
+  "atom-gpg":
+    gpgExecutable: "/usr/local/bin/gpg"
+    gpgRecipients: "mjwall@gmail.com"
+  autosave:
+    enabled: true
+  core:
+    allowPendingPaneItems: false
+    telemetryConsent: "no"
+    themes: [
+      "unity-ui"
+      "github-atom-light-syntax"
+    ]
+  editor:
+    invisibles: {}
+    showInvisibles: true
+    softWrap: true
+    tabType: "soft"
+  "exception-reporting":
+    userId: "37f273b5-452a-53e1-a3b5-ecd94847b9ab"
+  "highlight-selected":
+    lightTheme: true
+  organized:
+    enableToolbarSupport: false
+  "platformio-ide-terminal":
+    core:
+      scrollback: 10000
+    style:
+      fontFamily: "monaco"
+      fontSize: "12"
+    toggles:
+      autoClose: true
+      cursorBlink: false
+  "unity-ui":
+    colorStatusIndicatorsInTreeView: true
+    showIcons: true
+  welcome:
+    showOnStartup: false

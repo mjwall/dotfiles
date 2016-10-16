@@ -1,0 +1,9 @@
+{
+  "presets": [
+    "lint-recommended",
+    "lint-consistent"
+  ],
+  "settings": {
+    "commonmark": true
+  }
+}
