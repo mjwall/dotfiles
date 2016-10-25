@@ -2,40 +2,40 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4511-1ommw93/package.tgz",
+        "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116924-15792-1c7kl6u/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4511-1ommw93/package.tgz",
-        "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4511-1ommw93/package.tgz",
+        "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116924-15792-1c7kl6u/package.tgz",
+        "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116924-15792-1c7kl6u/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-11698-4511-141x9yb"
+      "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-116924-15792-s3eqho"
     ]
   ],
-  "_from": "../d-11698-4511-1ommw93/package.tgz",
-  "_id": "minimap@4.25.0",
+  "_from": "../d-116924-15792-1c7kl6u/package.tgz",
+  "_id": "minimap@4.25.6",
   "_inCache": true,
   "_installable": true,
   "_location": "/minimap",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4511-1ommw93/package.tgz",
+    "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116924-15792-1c7kl6u/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4511-1ommw93/package.tgz",
-    "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4511-1ommw93/package.tgz",
+    "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116924-15792-1c7kl6u/package.tgz",
+    "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116924-15792-1c7kl6u/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-11698-4511-1ommw93/package.tgz",
-  "_shasum": "be84b09e474576cdebe9e5eb6d8b7acf6b019784",
+  "_resolved": "file:../d-116924-15792-1c7kl6u/package.tgz",
+  "_shasum": "57019a8114f46004373fecdf8b00ddb4fb8e39ca",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4511-1ommw93/package.tgz",
-  "_where": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-11698-4511-141x9yb",
+  "_spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116924-15792-1c7kl6u/package.tgz",
+  "_where": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-116924-15792-s3eqho",
   "author": {
     "name": "Fangdun Cai",
     "email": "cfddream@gmail.com"
@@ -250,7 +250,7 @@
       "MouseEvent"
     ]
   },
-  "version": "4.25.0",
+  "version": "4.25.6",
   "viewProviders": [
     "minimapViewProvider"
   ]

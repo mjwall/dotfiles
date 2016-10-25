@@ -6,7 +6,33 @@ import CanvasDrawer from './mixins/canvas-drawer'
 import include from './decorators/include'
 import element from './decorators/element'
 
-let Main, MinimapQuickSettingsElement, CompositeDisposable, Disposable
+let Main, MinimapQuickSettingsElement, CompositeDisposable, Disposable, overlayStyle
+
+const ensureOverlayStyle = () => {
+  if (!overlayStyle) {
+    overlayStyle = document.createElement('style')
+    overlayStyle.setAttribute('context', 'atom-text-editor-minimap')
+    document.head.appendChild(overlayStyle)
+  }
+}
+
+const removeOverlayStyle = () => {
+  if (overlayStyle) {
+    overlayStyle.parentNode.removeChild(overlayStyle)
+    overlayStyle = null
+  }
+}
+
+const updateOverlayStyle = (basis) => {
+  if (overlayStyle) {
+    overlayStyle.textContent = `
+    atom-text-editor[with-minimap]::shadow atom-overlay,
+    atom-text-editor[with-minimap] atom-overlay {
+      margin-left: ${basis}px;
+    }
+    `
+  }
+}
 
 const SPEC_MODE = atom.inSpecMode()
 
@@ -198,6 +224,9 @@ export default class MinimapElement {
       'minimap.displayMinimapOnLeft': (displayMinimapOnLeft) => {
         this.displayMinimapOnLeft = displayMinimapOnLeft
 
+        displayMinimapOnLeft
+          ? ensureOverlayStyle()
+          : removeOverlayStyle()
         this.updateMinimapFlexPosition()
       },
 
@@ -963,10 +992,13 @@ export default class MinimapElement {
         if (softWrap && softWrapAtPreferredLineLength && lineLength && (width <= this.width || !this.adjustOnlyIfSmaller)) {
           this.flexBasis = width
           canvasWidth = width
+          updateOverlayStyle(width)
         } else {
+          updateOverlayStyle(canvasWidth)
           delete this.flexBasis
         }
       } else {
+        updateOverlayStyle(canvasWidth)
         delete this.flexBasis
       }
 

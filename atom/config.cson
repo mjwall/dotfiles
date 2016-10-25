@@ -10,10 +10,13 @@
     enabled: true
   core:
     allowPendingPaneItems: false
+    automaticallyUpdate: false
+    destroyEmptyPanes: false
+    projectHome: "/Users/mjwall/git"
     telemetryConsent: "no"
     themes: [
       "unity-ui"
-      "github-atom-light-syntax"
+      "atom-material-syntax"
     ]
   editor:
     invisibles: {}
@@ -24,17 +27,23 @@
     userId: "37f273b5-452a-53e1-a3b5-ecd94847b9ab"
   "highlight-selected":
     lightTheme: true
+  minimap:
+    plugins:
+      "highlight-selected": true
+      "highlight-selectedDecorationsZIndex": 0
   organized:
     enableToolbarSupport: false
   "platformio-ide-terminal":
     core:
       scrollback: 10000
     style:
-      fontFamily: "monaco"
-      fontSize: "12"
+      fontFamily: "Source Code Pro"
+      fontSize: "13"
+      theme: "solarized-dark"
     toggles:
       autoClose: true
       cursorBlink: false
+  "run-command2": {}
   "unity-ui":
     colorStatusIndicatorsInTreeView: true
     showIcons: true

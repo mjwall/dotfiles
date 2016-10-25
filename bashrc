@@ -165,3 +165,6 @@ prepend_path "${HOME}/bin"
 
 # accumulo ulimit
 #ulimit -S -n 65536
+
+export NVM_DIR="/Users/mjwall/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

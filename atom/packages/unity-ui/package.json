@@ -2,40 +2,40 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4007-1urhcvp/package.tgz",
+        "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-4533-1izkvk5/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4007-1urhcvp/package.tgz",
-        "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4007-1urhcvp/package.tgz",
+        "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-4533-1izkvk5/package.tgz",
+        "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-4533-1izkvk5/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-11698-4007-18aqr5b"
+      "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-116922-4533-1y32sod"
     ]
   ],
-  "_from": "../d-11698-4007-1urhcvp/package.tgz",
-  "_id": "unity-ui@2.1.5",
+  "_from": "../d-116922-4533-1izkvk5/package.tgz",
+  "_id": "unity-ui@2.1.6",
   "_inCache": true,
   "_installable": true,
   "_location": "/unity-ui",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4007-1urhcvp/package.tgz",
+    "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-4533-1izkvk5/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4007-1urhcvp/package.tgz",
-    "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4007-1urhcvp/package.tgz",
+    "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-4533-1izkvk5/package.tgz",
+    "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-4533-1izkvk5/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-11698-4007-1urhcvp/package.tgz",
-  "_shasum": "604d0e8fa5ba5d0f57d0d61d804241c49ba3c657",
+  "_resolved": "file:../d-116922-4533-1izkvk5/package.tgz",
+  "_shasum": "d275d0b37eae276b4138a9275c5a4c071febd705",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-11698-4007-1urhcvp/package.tgz",
-  "_where": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-11698-4007-18aqr5b",
+  "_spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-4533-1izkvk5/package.tgz",
+  "_where": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-116922-4533-1y32sod",
   "bugs": {
     "url": "https://github.com/orderedlist/unity-ui/issues"
   },
@@ -58,5 +58,5 @@
     "url": "git+https://github.com/orderedlist/unity-ui.git"
   },
   "theme": "ui",
-  "version": "2.1.5"
+  "version": "2.1.6"
 }

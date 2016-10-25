@@ -627,9 +627,11 @@ export default class Minimap {
    * @param {number} width the new width of the Minimap
    */
   setScreenHeightAndWidth (height, width) {
-    this.height = height
-    this.width = width
-    this.updateScrollTop()
+    if (this.width !== width || this.height !== height) {
+      this.height = height
+      this.width = width
+      this.updateScrollTop()
+    }
   }
 
   /**
@@ -947,5 +949,7 @@ export default class Minimap {
    * @access private
    */
   clearCache () { this.adapter.clearCache() }
+
+  editorDestroyed () { this.adapter.editorDestroyed() }
 
 }

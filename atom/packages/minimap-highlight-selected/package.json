@@ -1,0 +1,71 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-5167-14hjtp4/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-5167-14hjtp4/package.tgz",
+        "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-5167-14hjtp4/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-116922-5167-e028h0"
+    ]
+  ],
+  "_from": "../d-116922-5167-14hjtp4/package.tgz",
+  "_id": "minimap-highlight-selected@4.4.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/minimap-highlight-selected",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-5167-14hjtp4/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-5167-14hjtp4/package.tgz",
+    "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-5167-14hjtp4/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-116922-5167-14hjtp4/package.tgz",
+  "_shasum": "431224ac6cbe9db91f34c713f1c4bedd424fdfe6",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116922-5167-14hjtp4/package.tgz",
+  "_where": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-116922-5167-e028h0",
+  "bugs": {
+    "url": "https://github.com/atom-minimap/minimap-highlight-selected/issues"
+  },
+  "consumedServices": {
+    "minimap": {
+      "versions": {
+        "1.0.0": "consumeMinimapServiceV1"
+      }
+    }
+  },
+  "dependencies": {
+    "atom-utils": ">=0.6.3",
+    "event-kit": ">= 0.7.2",
+    "underscore-plus": "1.x"
+  },
+  "description": "A minimap binding for the highlight-selected package",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "homepage": "https://github.com/atom-minimap/minimap-highlight-selected#readme",
+  "license": "MIT",
+  "main": "./lib/minimap-highlight-selected",
+  "name": "minimap-highlight-selected",
+  "optionalDependencies": {},
+  "readme": "# minimap-highlight-selected package\n\nA minimap binding for the [highlight-selected package](https://github.com/richrace/highlight-selected).\n\n![Screenshot](https://github.com/atom-minimap/minimap-highlight-selected/blob/master/screenshot.png?raw=true)\n\n### Customization\n\nIf you want to change the color of the minimap highlights use the following CSS rules in your user stylesheet:\n\n```css\n/* The rule for normal highlights */\n.minimap .highlight-selected {\n  background: blue;\n}\n\n/* The rule for selected highlights */\n.minimap .highlight-selected.selected {\n  background: red;\n}\n```\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atom-minimap/minimap-highlight-selected.git"
+  },
+  "version": "4.4.0"
+}

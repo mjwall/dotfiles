@@ -1,0 +1,447 @@
+* Angular course
+
+From Johns Hopkins on coursera
+
+Instructor - Yaakov Chaikin
+
+5 weeks to get a better undestanding of AngularJS 1
+
+** Site
+https://www.coursera.org/learn/single-page-web-apps-with-angularjs
+
+** Source
+https://github.com/jhu-ep-coursera/fullstack-course5
+
+** Assignments are graded by posting your github.io url.  Need to make
+a new github account to do this.
+
+mw-coursera mjwall+coursera@gmail.com 8*
+
+
+** Week 1
+
+*** Environment
+github account
+browser - chrome
+editor
+git
+browser sync - a nodejs module
+
+    browser-sync start --server --directory --files "**/*"
+
+Using github pages for publishing
+
+*** Why AngularJS
+
+Good code characteristics
+- ability to find code quickly
+- update some functionality without large rewrite
+- no duplication
+
+code complexity - lack of these 2 things
+
+high cohesion - when smaller pieces of functionality are strongly related to
+each other within some code boundary. How well does that one thing stick to
+doing just the one thing (level of abstraction for a function)
+
+loose coupling - least possible dependency of one component on another
+component - if you change one and you don not have to change the other
+
+Model-View-ViewModel - approach to achieve high cohesion and loose coupling
+- Model - represents and holds raw data, can also contain logic to retrieve
+data (js)
+- View - user interface - never changes that data, declares events but doesn't
+handle them (html/css)
+- ViewModel - representation of state of the view, presentation logic, calls
+other functions for business logic, never directly asks the view to display
+anything (js)
+- Declarative Binder - binds the model of the ViewModel to the View
+
+Angular also called Model-View-Whatever or MV*
+Can bind view and model with whatever
+
+Angular is a design pattern designed to achieve high cohesion and loose
+coupling
+
+*** AngularJS installation & basics
+
+Download 1.5 latest
+
+Using immediately-invoked function expression(IIFE) to avoid leaking variables
+into the global scope
+
+Lecture 04 from github
+
+()();
+(function () {})();
+
+Also use "use strict;" in the javascript to avoid accidentally declaring
+variables in the global scope by forgetting to use 'var'
+
+In angular, the controller serves the function of the ViewModel.
+
+Lecture 05
+
+ng-model - bind data between controller and view
+
+$WHATEVER is an angular variable
+
+Lecture 06
+
+ng-keyup - bind keyup event to function
+
+
+Lecture 07
+
+Getting at the elements with pure javascript
+
+Also, HTML 5 introduces data-* attributes
+
+*** Dependency Injection, Interpolation
+
+Lecture 08
+
+Pass in dependency - Design pattern is DI, implements IoC
+
+Lecture 09
+
+$scope is the scope service, as it anything with a $
+
+Angular parses the arguments of the function and uses the
+$injector service's annotate function to figure out what has been
+passed in
+
+function DIController ($scope,
+                       $filter,
+                       $injector) {
+  $scope.name = "Yaakov";
+
+  $scope.upper = function () {
+    var upCase = $filter('uppercase');
+    $scope.name = upCase($scope.name);
+  };
+
+  console.log($injector.annotate(DIController));
+}
+
+returns the array ["$scope", "$filter", "$injector"] in the console
+
+See Lecture 09 in the examples
+
+Also shows how to filter in the function instead of the html
+
+Lecture 10
+
+Minification
+
+(function () {
+'use strict';
+
+angular.module('DIApp', [])
+.controller('DIController', DIController);
+
+function DIController ($scope, $filter) {
+  $scope.name = "Yaakov";
+
+  $scope.upper = function () {
+    var upCase = $filter('uppercase');
+    $scope.name = upCase($scope.name);
+  };
+}
+
+})();
+
+Can protect with inline array with function as last element
+
+.controller('DIController', ['$scope', '$filter', DIController]);
+
+or more elegantly
+
+DIController.$inject = ['$scope', '$filter'];
+
+Lecture 11 - expression
+
+Something that evaluates to a value
+
+interpolation - eval string literal containing one more placeholders
+
+tied to scope they are in
+
+don't display typeerror or referencerror
+
+interpolation is dual bound
+
+use ng-src in image with blah_{{something}} so html doesn't parse it before angular
+has had a chance to get through it
+
+** Week 2
+
+*** Filters
+
+This is the filter service
+
+var output = $filter('uppercase')(value);
+
+Using the filter service, $filter('uppercase') returns a function
+
+{{ "Hello" | uppercase }}
+
+Some have custom arguments
+
+**** Custom filters
+
+function CustomFilterFactory() {
+  return function (input) {
+    return changedOutput
+  };
+}
+
+.filter('custom', CustomFilterFactory)
+
+Ctrl.$inject = [ '$scope', 'customFilter' ];
+function Ctrl($scope, customFilter) {
+  var msg = "Some input";
+  customFilter(msg);
+}
+
+Note registered 'custom' but used 'customFilter'
+
+Custom filters with arguments, just add args to filter factory and pass in arguments when you call it
+
+Using a custom filter in html, use the registered name, in the above example
+
+{{ "string" | custom }} not {{ "string" | customFilter }}
+
+Can chain filters together
+
+If only used in html, don't need to inject into controller
+
+
+*** Digest cycle
+
+Event queue
+ngclick etc
+handle click / call $digest
+Angular context($scope)
+Watchers (prop_1, prop_2, etc)
+Digest loop, loops over watchers once, then again until nothing has changed (dirty checking)
+
+console.log($scope) has $$watchers and
+
+Add watchers manually with $scope.watch() (not recommended in controller)
+
+Better way to setup watchers is use interpolation with {{ }}
+
+Another way is to use ng-model
+
+Catch digest loop with something like
+
+$scope.$watch(function () {
+  console.log("Digest loop fired")
+})
+
+Only applies to things done inside the Angular context, ie ng-click
+
+$digest and $apply
+
+Use apply to setup non angular event to run digest loop
+
+timeout or onclick, but more typically a library like jquery or something
+
+example
+
+function CounterController($scope) {
+  $scope.counter = 0;
+
+  $scope.upCounter = function() {
+    setTimeout(function () {
+      $scope.counter++;
+      console.log("counter incremented");
+      $scope.digest // doesn't repaint wihtout this
+    }, 2000);
+  }
+}
+
+But there is a better way, because exceptions will not be visible to angular
+
+function CounterController($scope) {
+  $scope.counter = 0;
+
+  $scope.upCounter = function() {
+    setTimeout(function () {
+      $scope.apply(function() {
+        $scope.counter++;
+        console.log("counter incremented");
+      });
+    }, 2000);
+  }
+}
+
+Actually, there is a angular timeout service, so inject $timeout - Lecture 15
+
+2-way, 1-way and one time binding
+
+ng-model - 2 way binding
+
+{{ var }} - 1 way binding
+
+lots of these mean lots of watchers - can affect performance
+no more than 2000 watchers per page - rule of thumb
+
+1 time binding
+
+{{ :: var }} - sets up and interpolates, then removes the watcher
+good for something like a last name variable
+don't initialize this value
+
+
+*** Looping, controller as syntax
+
+ng-repeat
+
+Can access $index variable in the body of an ng-repeat
+
+ng-repeat also watches the entire collection
+
+filtering arrays in javascript
+
+Lecture 18 shows ng filter function to filter a list
+
+*** Prototypical inheritance (Lecture 19)
+
+inheritance is when an object or class is based on another object or class,
+using the same implemenetation and/or the same values
+
+javascript is prototypal inheritance
+
+child masks inherited or calls up the chain
+ [TODO] figure out toolbar on organized
+
+ Functional constructors
+
+*** Scope inheritance
+controller as syntax
+Scope on nested controllers are Prototypical
+
+ng-controller="Controller1 as ctrl1"
+
+Then in JS, we can reference this.prop without injecting $Scope
+
+helps avoid masking of nested controller properties
+
+$scope is based on prototypal inheritance
+
+ControllerName as label
+label is a reference to 'this'
+don't have to deal with prototypal inheritance, which makes
+it simplier
+
+*** Services
+**** Custom Services
+Controllers -
+  - setup initial state of $scope
+  - add behavior to $scope
+NOT to
+  - among other things
+  - handle business logic directly
+  - shard code or state across controllers
+
+Use a service for that
+
+use .service method on angular.module
+
+.service('CustomService', CustomService)
+first arg is name to inject into other services, controllers, etc
+second arg is treated as a function constructors
+
+Service is guaranteed to be a singleton when using .service method
+
+Can share data that where
+
+Services are also lazily instantiated, only if an application
+component declares it as a dependency
+
+**** custom services with factory
+
+factory is a central place that produces new objects
+factory is sometimes called a factory service
+
+.factory() is NOT just another way of creating the same service you can create with .service() but it CAN BE
+
+.service() is also a factory, but a much more limited on compared to .factory().  It's a factory that always produces the same type of service - a singleton, without an easy way to configure its behavior
+
+.factory('CustomService', CustomService)
+first arg is name to inject into other services, controllers etc
+second arg is a function that expected to produce a service, not a function constructor
+
+Couple of ways to make a factory
+
+return a function, ala
+function CustomService() {
+  var factory = function() {
+    return new SomeService();
+  }
+  return factory;
+}
+
+return an object literal
+function CustomService() {
+  var factory = {
+    getSomeService: function () {
+      return new SomeService();
+    }
+  }
+  return factory;
+}
+
+either way, we are in control of calling new
+
+usage is different
+
+**** Custom services with .provider()
+
+provider function uses provider.$get = function (this is factory function)
+
+can provide a config option, usually defaults
+
+function ServiceProvider() {
+  var provider = this;
+  provider.config = {...};
+
+  provider.$get = function() {
+    var service = new Service(provider.config.prop);
+    return service;
+  }
+}
+
+register with module().provider('Service', ServiceProvider)
+
+inject as usual
+
+optional step 4a
+
+module().config(Config) // guaranteed to run before any services, factories or
+                           controllers are created
+
+optional setp 4b - inject provider into Config
+
+.provider('Service', ServiceProvider);
+Config.$inject = ['ServiceProvider'];
+
+function Config(ServiceProvider) {
+  ServiceProvider.config.prop = 'value';
+}
+
+Lecture 22
+
+.provider - most verbose, but most flexible
+.provider('name', function)
+  - whatever the 'name' is - that's what get injected into other components
+.config() functions gets called before any service, factory or controller is instantiated
+  - therefore, we can't inject any regular components into .config
+  - we CAN inject the provider of server with nameProvider
+
+**** ng-if, ng-show, ng-hide
+ ng-if removes element from DOM
+
+ ng-show and ng-hide leave in DOM but with ng-hide ng-show class respectively if attribute evals to true
