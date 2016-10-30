@@ -12,6 +12,9 @@
     allowPendingPaneItems: false
     automaticallyUpdate: false
     destroyEmptyPanes: false
+    disabledPackages: [
+      "tool-bar"
+    ]
     projectHome: "/Users/mjwall/git"
     telemetryConsent: "no"
     themes: [
