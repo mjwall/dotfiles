@@ -15,6 +15,7 @@
     disabledPackages: [
       "tool-bar"
     ]
+    openEmptyEditorOnStart: false
     projectHome: "/Users/mjwall/git"
     telemetryConsent: "no"
     themes: [
