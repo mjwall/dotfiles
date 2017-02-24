@@ -1,3 +1,5 @@
+# -*- mode: sh -*-
+
 # Here is my bashrc.
 
 export TERM=xterm-256color
@@ -84,7 +86,7 @@ else
   #export GIT_PS1_SHOWUNTRACKEDFILES=
   #export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
   #export PS1='\[\e[1;32m\]\u@\h \[\e[1;34m\][Java:$(_java_version)]\[\e[0m\] \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
-  export PS1='\[\e[1;32m\]\u@\h \[\e[1;34m\] \[\e[0m\]\[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
+  export PS1='\[\e[1;32m\]\u@\h \[\e[1;34m\][Java $(cat ~/.java_version)] \[\e[0m\]\[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
 fi
 
 # other completion scripts
