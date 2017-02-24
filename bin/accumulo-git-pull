@@ -4,7 +4,8 @@
 
 CUR_ORIGIN=$(git config --get remote.origin.url)
 #MY_FORK="git@github.com:mjwall/accumulo.git"
-MY_FORK="ssh://git@github.com/mjwall/accumulo.git"
+#MY_FORK="ssh://git@github.com/mjwall/accumulo.git"
+MY_FORK="https://mjwall@github.com/mjwall/accumulo.git"
 
 # ensure is is my fork
 if [ "$CUR_ORIGIN" != "$MY_FORK" ]; then
