@@ -1,48 +1,104 @@
 #! /bin/bash
 #
-# change the system symlink so you can swap versions
+# A script for easily swapping your Java version.
 #
-# reinstall java 6 if java 7 wiped it out, got java 6 from http://support.apple.com/kb/dl1572
+# This is useful if you are working on different projects that use
+# different version of Java.  Currently only works on Mac OSX, because it
+# uses /usr/libexec/java_home to find the Java paths, but that could easily
+# be changed
 #
-# this scripts assumes a directory structure such as the following
+# This script expects that ${HOME}/.java_home/bin is on your $PATH before
+# any other version of java.  Typically, something like this in your ~/.bashrc
 #
-# Use the following to determine the locations
+# export JAVA_HOME=${HOME}/.java_home
+# export PATH=${JAVA_HOME}bin:$PATH
 #
-# /usr/libexec/java_home -v 1.6
+# ~/.java_home is a symlink to an installed version of java.  The code below
+# does some checks to make sure things are correct, provides some guidance
+# if they are not, and changes the ~/.java_home symlink when they are.
 #
-# ls -l /System/Library/Frameworks/JavaVM.framework/Versions/
-# total 80
-# lrwxr-xr-x  1 root  wheel   10 Jun 23 21:33 1.4 -> CurrentJDK
-# lrwxr-xr-x  1 root  wheel   10 Jun 23 21:33 1.4.2 -> CurrentJDK
-# lrwxr-xr-x  1 root  wheel   10 Jun 23 21:33 1.5 -> CurrentJDK
-# lrwxr-xr-x  1 root  wheel   10 Jun 23 21:33 1.5.0 -> CurrentJDK
-# lrwxr-xr-x  1 root  wheel    5 Jun 23 21:37 1.6 -> 1.6.0
-# lrwxr-xr-x  1 root  wheel   59 Jun 23 21:37 1.6.0 -> /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents
-# lrwxr-xr-x  1 root  wheel    5 Jun 17 08:55 1.7 -> 1.7.0
-# lrwxr-xr-x  1 root  wheel   58 Jun 17 09:05 1.7.0 -> /Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents
-# drwxr-xr-x  8 root  wheel  272 Jun 23 21:34 A
-# lrwxr-xr-x  1 root  wheel    1 Jun 23 21:33 Current -> A
-# lrwxr-xr-x  1 root  wheel    3 Jun 23 21:44 CurrentJDK -> 1.6
+# The script also writes out a ${HOME}/.java_version file which can be used
+# in your PS1 to show what version you are current using.  Something like
+#
+# export PS1='\u@\h [java$(cat ~/.java_version)] \w $ '
+#
+# If you need Java 6 on the Mac, try http://support.apple.com/kb/dl1572
 
-cd /System/Library/Frameworks/JavaVM.framework/Versions
+HOMEFILE=${HOME}/.java_home
+VERFILE=${HOME}/.java_version
 
-CURJDK="`readlink CurrentJDK`"
-echo Current JDK version: $CURJDK
+currently_installed() {
+    /usr/libexec/java_home -V 2>&1 | grep \"Java | awk '{print $1}' | cut -c 1-3 | uniq
+}
 
+usage() {
+    echo Usage: 'setjh <version>', where version is one of:
+    currently_installed
+}
+
+# check arg passed in
 if [ "$1" == "" ]; then
-echo Installed versions:
-echo 1.7, 1.8
-exit
+    echo ERROR: arg was not provied
+    usage
+    exit 127
 fi
 
-if [ "1.6" != "$1" ] && [ "1.7" != "$1" ] && [ "1.8" != "$1" ]; then
-BASE="`basename $0`"
-echo Error: Could not change JDK-- version $1 not installed!
-echo Run $BASE without arguments to see a list of installed versions.
-exit 127
+# check requested version is installed
+for v in $(currently_installed); do
+    if [ "$1" == "${v}" ]; then
+        NEWVER=$1
+    fi 
+done
+if [ "${NEWVER}x" == "x" ]; then
+    echo ERROR: request version $1 not installed:
+    usage
+    exit 128
+else
+    echo Trying to set JAVA_HOME to $NEWVER
 fi
 
-echo You must now enter your Mac OS X password to change the JDK.
-sudo ln -fhsv $1 CurrentJDK
+# check ~/.java_home is setup
+if [ ! -e "${HOMEFILE}" ]; then
+    echo ERROR: $HOMEFILE did not exist, try
+    JH=$(/usr/libexec/java_home -v $NEWVER)
+    echo "ln -s $JH $HOMEFILE"
+    exit 129
+fi
 
-echo $1 > ~/.java_version
+# check ~/.java_version is setup
+if [ ! -e "${VERFILE}" ]; then
+    echo ERROR: $VERFILE did not exist, try
+    echo "echo $NEWVER > ${HOME}/.java_version"
+    exit 130
+fi
+
+# current version of java in $PATH
+CURPATHVER=$(java -version 2>&1 | head -1 | awk '{print $NF}' | cut -c 2-4)
+# current version of java in ~/.java_home
+CURHOMEVER=$(${HOMEFILE}/bin/java -version 2>&1 | head -1 | awk '{print $NF}' | cut -c 2-4)
+# current version in ~/.java_version
+CURVERFILE=$(cat "${VERFILE}")
+
+# check ~/.java_home and ~/.java_version match
+if [ "${CURHOMEVER}" != "${CURVERFILE}" ]; then
+   echo ERROR: ~/.java_home and ~/.java_version do not match
+   echo        Probably easiest to run:
+   echo        "echo ${CURHOMEVER} > ${VERFILE}"
+   exit 131
+fi
+
+# check java on PATH matches ~/.java_version
+if [ "${CURPATHVER}" != "${CURVERFILE}" ]; then
+    echo ERROR: version mismatch.
+    echo        ~/.java_version says ${CURVERFILE} but running java -version says ${CURPATHVER}
+    echo        You must fix this manually, maybe by putting ${HOMEFILE}/bin on your PATH env
+    exit 132
+fi
+
+# check if trying to set current version
+if [ "${CURVERFILE}" == "${NEWVER}" ]; then
+    echo WARN: Version ${NEWVER} already set, nothing to do
+else
+    rm $HOMEFILE && ln -s $(/usr/libexec/java_home -v $NEWVER) $HOMEFILE && echo $NEWVER > $VERFILE
+    echo Set JDK version: $(java -version 2>&1 | head -1)
+fi

@@ -1,3 +1,5 @@
+# -*- mode: sh -*-
+
 # Here is my bashrc.
 
 export TERM=xterm-256color
@@ -36,7 +38,8 @@ set_if_exists "JAVA_HOME" "${JAVA_HOME}"
 set_if_exists "M2_HOME" "${M2_HOME}"
 if [ "${M2_HOME}x" != "x" ]; then
   export JAVA_OPTS="-Duser.timezone=GMT -Djava.awt.headless=true"
-  export MAVEN_OPTS="${JAVA_OPTS} -Xms512M -Xmx1024M -Xss1M -XX:MaxPermSize=128M"
+  #export MAVEN_OPTS="${JAVA_OPTS} -Xms512M -Xmx1024M -Xss1M -XX:MaxPermSize=128M"
+  export MAVEN_OPTS="${JAVA_OPTS} -Xms512M -Xmx1024M"
   export MAVEN_OPTS_DEBUG="${MAVEN_OPTS} -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8781,server=y,suspend=n"
   export M2="$M2_HOME/bin"
 fi
@@ -83,7 +86,7 @@ else
   #export GIT_PS1_SHOWUNTRACKEDFILES=
   #export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
   #export PS1='\[\e[1;32m\]\u@\h \[\e[1;34m\][Java:$(_java_version)]\[\e[0m\] \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
-  export PS1='\[\e[1;32m\]\u@\h \[\e[1;34m\] \[\e[0m\]\[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
+  export PS1='\[\e[1;32m\]\u@\h \[\e[1;34m\][Java $(cat ~/.java_version)] \[\e[0m\]\[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
 fi
 
 # other completion scripts
