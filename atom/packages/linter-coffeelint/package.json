@@ -2,40 +2,43 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-39773-oijkcy/package.tgz",
+        "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1230-12z6ps1/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-39773-oijkcy/package.tgz",
-        "spec": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-39773-oijkcy/package.tgz",
+        "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1230-12z6ps1/package.tgz",
+        "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1230-12z6ps1/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/apm-install-dir-116108-39773-1j04c2g"
+      "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-116112-1230-1t9pl72"
     ]
   ],
-  "_from": "../d-116108-39773-oijkcy/package.tgz",
-  "_id": "linter-coffeelint@1.2.0",
+  "_from": "../d-116112-1230-12z6ps1/package.tgz",
+  "_id": "linter-coffeelint@1.2.1",
   "_inCache": true,
   "_installable": true,
   "_location": "/linter-coffeelint",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-39773-oijkcy/package.tgz",
+    "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1230-12z6ps1/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-39773-oijkcy/package.tgz",
-    "spec": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-39773-oijkcy/package.tgz",
+    "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1230-12z6ps1/package.tgz",
+    "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1230-12z6ps1/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-116108-39773-oijkcy/package.tgz",
-  "_shasum": "5770c90b5fb745931434a2da6bc0819a97bb48e2",
+  "_resolved": "file:../d-116112-1230-12z6ps1/package.tgz",
+  "_shasum": "017de540424eff8bae7a8be63066cbe080f89d6b",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-39773-oijkcy/package.tgz",
-  "_where": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/apm-install-dir-116108-39773-1j04c2g",
+  "_spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1230-12z6ps1/package.tgz",
+  "_where": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-116112-1230-1t9pl72",
+  "activationHooks": [
+    "language-coffee-script:grammar-used"
+  ],
   "bugs": {
     "url": "https://github.com/AtomLinter/linter-coffeelint/issues"
   },
@@ -45,9 +48,34 @@
     "resolve": "^1.1.7"
   },
   "description": "Lint CoffeeScript on the fly, using coffeelint",
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^3.8.1",
+    "eslint-config-airbnb-base": "^9.0.0",
+    "eslint-plugin-import": "^2.0.1"
+  },
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "rules": {
+      "global-require": "off",
+      "import/no-unresolved": [
+        "error",
+        {
+          "ignore": [
+            "atom"
+          ]
+        }
+      ]
+    },
+    "globals": {
+      "atom": true
+    },
+    "env": {
+      "node": true,
+      "browser": true
+    }
   },
   "homepage": "https://github.com/AtomLinter/linter-coffeelint#readme",
   "license": "MIT",
@@ -71,5 +99,5 @@
     "type": "git",
     "url": "git+https://github.com/AtomLinter/linter-coffeelint.git"
   },
-  "version": "1.2.0"
+  "version": "1.2.1"
 }

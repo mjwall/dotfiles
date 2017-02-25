@@ -257,11 +257,13 @@
 	<key>NSWindow Frame Preferences</key>
 	<string>446 -505 606 456 169 -800 1280 777 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>330 289 620 392 0 0 1280 777 </string>
+	<string>490 364 620 392 0 0 1600 877 </string>
+	<key>NSWindow Frame SharedPreferences</key>
+	<string>269 65 1016 502 0 0 1600 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 25 1274 752 0 0 1280 777 </string>
+	<string>16 30 1338 838 0 0 1600 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>3 324 650 427 0 0 1280 777 </string>
+	<string>244 297 650 427 0 0 1600 877 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>474 18 1039 689 0 0 1600 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -1890,7 +1892,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string></string>
+			<string>/usr/bin/login -pfq mjwall</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -2008,6 +2010,13 @@
 					<integer>11</integer>
 					<key>Text</key>
 					<string>0x7f</string>
+				</dict>
+				<key>0x7f-0x0</key>
+				<dict>
+					<key>Action</key>
+					<integer>16</integer>
+					<key>Text</key>
+					<string></string>
 				</dict>
 				<key>0xf700-0x220000</key>
 				<dict>
@@ -2402,6 +2411,8 @@
 	<integer>0</integer>
 	<key>NoSyncHaveShownPromoWithId_4</key>
 	<true/>
+	<key>NoSyncHaveWarnedAboutIncompatibleSoftware</key>
+	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>4C1418CF-887E-44BB-A753-BAD3027BFA8D</string>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
@@ -2484,7 +2495,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-06-30T13:35:39Z</date>
+	<date>2017-01-22T16:59:21Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -4836,6 +4847,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.2</string>
+	<string>3.0.13</string>
 </dict>
 </plist>

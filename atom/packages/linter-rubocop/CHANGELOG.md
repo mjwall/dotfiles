@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.5.2
+
+*   Add Ruby-on-Rails and Chef to the activation grammar list
+
+## v0.5.1
+
+*   Only load the package when a Ruby file is opened
+
 ## 0.5.0
 
 *   Note the minimum `rubocop` version of v0.37.0

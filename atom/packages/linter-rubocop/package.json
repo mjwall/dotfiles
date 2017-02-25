@@ -2,40 +2,45 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-40496-papl0l/package.tgz",
+        "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1233-5sm7o9/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-40496-papl0l/package.tgz",
-        "spec": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-40496-papl0l/package.tgz",
+        "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1233-5sm7o9/package.tgz",
+        "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1233-5sm7o9/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/apm-install-dir-116108-40496-wtl4nq"
+      "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-116112-1233-1w5xp1c"
     ]
   ],
-  "_from": "../d-116108-40496-papl0l/package.tgz",
-  "_id": "linter-rubocop@0.5.0",
+  "_from": "../d-116112-1233-5sm7o9/package.tgz",
+  "_id": "linter-rubocop@0.5.2",
   "_inCache": true,
   "_installable": true,
   "_location": "/linter-rubocop",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-40496-papl0l/package.tgz",
+    "raw": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1233-5sm7o9/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-40496-papl0l/package.tgz",
-    "spec": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-40496-papl0l/package.tgz",
+    "rawSpec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1233-5sm7o9/package.tgz",
+    "spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1233-5sm7o9/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-116108-40496-papl0l/package.tgz",
-  "_shasum": "bc1ca03ab2177e110d7cb15c667f1b2142cf72c4",
+  "_resolved": "file:../d-116112-1233-5sm7o9/package.tgz",
+  "_shasum": "223340a7fa060414f2d43a4a730e7cb7ab1f2ed5",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/d-116108-40496-papl0l/package.tgz",
-  "_where": "/private/var/folders/cd/l8dpphgn3j1gfpr2gs6yb9vjjpd1pt/T/apm-install-dir-116108-40496-wtl4nq",
+  "_spec": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/d-116112-1233-5sm7o9/package.tgz",
+  "_where": "/private/var/folders/2y/n9lzqm2x10lfxqm9n40xvfvw0000gn/T/apm-install-dir-116112-1233-1w5xp1c",
+  "activationHooks": [
+    "language-ruby:grammar-used",
+    "language-ruby-on-rails:grammar-used",
+    "language-chec:grammar-used"
+  ],
   "bugs": {
     "url": "https://github.com/AtomLinter/linter-rubocop/issues"
   },
@@ -178,12 +183,12 @@
     "atom-linter": "~8.0.0",
     "escape-html": "^1.0.3"
   },
-  "description": "Lint `Ruby` on the fly, using rubocop",
+  "description": "Lint Ruby on the fly, using rubocop",
   "devDependencies": {
     "coffeelint": "^1.15.0",
-    "eslint": "^3.6.0",
-    "eslint-config-airbnb-base": "^8.0.0",
-    "eslint-plugin-import": "^1.16.0"
+    "eslint": "^3.9.1",
+    "eslint-config-airbnb-base": "^10.0.1",
+    "eslint-plugin-import": "^2.1.0"
   },
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
@@ -194,11 +199,10 @@
       "atom": true
     },
     "env": {
-      "es6": true,
       "node": true
     },
     "rules": {
-      "global-require": 0
+      "global-require": "off"
     }
   },
   "homepage": "https://github.com/AtomLinter/linter-rubocop#readme",
@@ -220,8 +224,8 @@
     "url": "git+https://github.com/AtomLinter/linter-rubocop.git"
   },
   "scripts": {
-    "lint": "coffeelint lib && eslint spec",
+    "lint": "coffeelint lib && eslint .",
     "test": "apm test"
   },
-  "version": "0.5.0"
+  "version": "0.5.2"
 }
