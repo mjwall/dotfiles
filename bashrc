@@ -62,6 +62,8 @@ set_if_exists "ANT_HOME" "${ANT_HOME}"
 # # sbt is in dotfiles/bin and should be setup
 
 # editors
+set_if_exists "EMACS_HOME" ${EMACS_HOME}
+prepend_path ${HOME}/.emacs.d/bin
 export EDITOR=et # see ~/bin
 export ALTERNATE_EDITOR=vim
 
@@ -73,20 +75,39 @@ _java_version() {
 }
 
 # git
+GIT_COMPLETE=1
 if [ "${GIT_COMPLETION_DIR}x" == "x" ]; then
-  echo "No Git completion"
+  if [ `grep ^ID= /etc/os-release` == "ID=ubuntu" ]; then
+    # https://askubuntu.com/questions/32507/how-do-i-get-a-list-of-installed-files-from-a-package
+    # assuming apt install git
+    if [ -e /etc/bash_completion.d/git-prompt ]; then
+      source /etc/bash_completion.d/git-prompt
+    fi
+    if [ -e /usr/share/bash-completion/completions/git ]; then
+      source /usr/share/bash-completion/completions/git
+    fi
+  else
+    echo "No Git completion"
+    GIT_COMPLETE=0
+  fi
 elif [ ! -e "${GIT_COMPLETION_DIR}/git-prompt.sh" ]; then
   echo "Git completion expecting git-prompt.sh"
 else
   source "${GIT_COMPLETION_DIR}/git-completion.bash"
   source "${GIT_COMPLETION_DIR}/git-prompt.sh"
+fi
+
+if [ $GIT_COMPLETE -eq 1 ]; then
   export GIT_PS1_SHOWDIRTYSTATE=true
   # if __git_ps1 is slow
   #export GIT_PS1_SHOWDIRTYSTATE=
   #export GIT_PS1_SHOWUNTRACKEDFILES=
   #export PS1='\[\e[1;32m\]\u@\h \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
   #export PS1='\[\e[1;32m\]\u@\h \[\e[1;34m\][Java:$(_java_version)]\[\e[0m\] \[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
-  export PS1='\[\e[1;32m\]\u@\h \[\e[1;34m\][Java $(cat ~/.java_version)] \[\e[0m\]\[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
+  #export PS1='\[\e[1;32m\]\u@\h \[\e[1;34m\][Java $(cat ~/.java_version)] \[\e[0m\]\[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
+  export PS1='\[\e[1;32m\]\u@\h\[\e[1;34m\] \[\e[0m\]\[\e[1;33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
+else
+  PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 fi
 
 # other completion scripts
