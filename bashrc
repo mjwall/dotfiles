@@ -121,8 +121,6 @@ if [ $(uname) == "Darwin" ]; then
   alias tar="COPYFILE_DISABLE=true tar"
 fi
 # magit alias uses the ec script, see ~/bin
-alias magit='ec -e "(magit-status \"$(pwd)\")"'
-alias teebag="tee bag"
 alias chrome_no_ocsp="google-chrome --ignore-certificate-errors"
 
 
@@ -147,13 +145,6 @@ shopt -s cmdhist
 # setup ~/bin
 prepend_path "${HOME}/bin"
 
-#PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-#source $(rvm 2.3.0 do rvm env --path)
-#if [ "${RBENV}x" != "x" ]; then
-#  prepend_path "${RBENV}/bin"
-#  eval "$(rbenv init -)"
-#fi
 
 # Below is for reference only on the color codes
 # original colors with ls -G or CLICOLORS = ExFxCxDxBxegedabagacad
@@ -191,5 +182,3 @@ prepend_path "${HOME}/bin"
 # accumulo ulimit
 #ulimit -S -n 65536
 
-export NVM_DIR="/Users/mjwall/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
