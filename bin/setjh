@@ -28,7 +28,7 @@ HOMEFILE=${HOME}/.java_home
 VERFILE=${HOME}/.java_version
 
 currently_installed() {
-    /usr/libexec/java_home -V 2>&1 | grep \"Java | awk '{print $1}' | cut -c 1-3 | uniq
+    /usr/libexec/java_home -V 2>&1 | grep \"Java | awk '{print $1}' | cut -c 1-3 | set 's/\.$//' | uniq
 }
 
 usage() {

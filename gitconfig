@@ -36,6 +36,8 @@
 [core]
 	excludesfile = /Users/mjwall/.gitignore_global
   editor = emacs
+[difftool "diffpdf"]
+  cmd = diff-pdf --view \"$LOCAL\" \"$REMOTE\"
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
