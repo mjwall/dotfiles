@@ -26,9 +26,44 @@
 
 HOMEFILE=${HOME}/.java_home
 VERFILE=${HOME}/.java_version
+UNAME=$(uname)
+
+currently_installed_mac() {
+    /usr/libexec/java_home -V 2>&1 | grep \"Java | awk '{print $1}' | cut -c 1-3 | set 's/\.$//' | uniq
+}
+
+currently_installed_linux() {
+   find /usr/lib/jvm/ -maxdepth 1 -type d | grep -v /usr/lib/jvm/$ | sed 's/\/usr\/lib\/jvm\///;s/-amd64$//'
+}
 
 currently_installed() {
-    /usr/libexec/java_home -V 2>&1 | grep \"Java | awk '{print $1}' | cut -c 1-3 | set 's/\.$//' | uniq
+  if [ "${UNAME}" == "Linux" ]; then
+    currently_installed_linux
+  elif [ "${UNAME}" == "Darwin" ]; then
+    currently_installed_mac
+  else
+    echo "Unknown OS ${UNAME}"
+  fi
+}
+
+dir_for_version() {
+  local ver=$1
+  if [ "${ver}x" == "x" ]; then
+    echo dir_for_version called without arg
+    exit 1
+  fi
+  if [ "${UNAME}" == "Linux" ]; then
+    local dir=/usr/lib/jvm/${ver}-amd64
+    if [ ! -e ${dir} ]; then
+      echo $dir does not exist
+      exit 1
+    fi
+    echo $dir
+  elif [ "${UNAME}" == "Darwin" ]; then
+    echo $(/usr/libexec/java_home -v ${ver})
+  else
+    echo "Unknown OS ${UNAME}"
+  fi
 }
 
 usage() {
@@ -60,7 +95,7 @@ fi
 # check ~/.java_home is setup
 if [ ! -e "${HOMEFILE}" ]; then
     echo ERROR: $HOMEFILE did not exist, try
-    JH=$(/usr/libexec/java_home -v $NEWVER)
+    JH=$(dir_for_version $NEWVER)
     echo "ln -s $JH $HOMEFILE"
     exit 129
 fi
@@ -72,10 +107,20 @@ if [ ! -e "${VERFILE}" ]; then
     exit 130
 fi
 
+munge_version() {
+  java=$1
+  if [ "${java}x" == "x" ]; then
+    echo No java executable passed into munge_version
+    exit 1
+  fi
+  $java -version 2>&1 | head -1 | awk '{print $1 "-" $3}' | sed 's/\"//g;s/java/oracle/;s/_.*//'
+}
+
 # current version of java in $PATH
-CURPATHVER=$(java -version 2>&1 | head -1 | awk '{print $NF}' | cut -c 2-4)
+CURJAVA=$(which java)
+CURPATHVER=$(munge_version $CURJAVA)
 # current version of java in ~/.java_home
-CURHOMEVER=$(${HOMEFILE}/bin/java -version 2>&1 | head -1 | awk '{print $NF}' | cut -c 2-4)
+CURHOMEVER=$(munge_version ${HOMEFILE}/bin/java)
 # current version in ~/.java_version
 CURVERFILE=$(cat "${VERFILE}")
 
@@ -96,9 +141,11 @@ if [ "${CURPATHVER}" != "${CURVERFILE}" ]; then
 fi
 
 # check if trying to set current version
-if [ "${CURVERFILE}" == "${NEWVER}" ]; then
+NEWDIR=$(dir_for_version $NEWVER)
+NEWVER_NUM=$(munge_version ${NEWDIR}/bin/java)
+if [ "${CURVERFILE}" == "${NEWVER_NUM}" ]; then
     echo WARN: Version ${NEWVER} already set, nothing to do
 else
-    rm $HOMEFILE && ln -s $(/usr/libexec/java_home -v $NEWVER) $HOMEFILE && echo $NEWVER > $VERFILE
+    rm $HOMEFILE && ln -s ${NEWDIR} $HOMEFILE && echo $NEWVER_NUM > $VERFILE
     echo Set JDK version: $(java -version 2>&1 | head -1)
 fi
