@@ -102,6 +102,7 @@ fi
 # magit alias uses the ec script, see ~/bin
 alias magit='ec -e "(magit-status \"$(pwd)\")"'
 alias teebag="tee bag"
+alias chrome_no_ocsp="google-chrome --ignore-certificate-errors"
 
 
 #history stuff
