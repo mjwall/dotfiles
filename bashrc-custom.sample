@@ -1,3 +1,4 @@
+# -*- mode: sh -*-
 # copy this file to ~/.bashrc-custom and modify for environment
 
 # the following are exported in bashrc if they exist
