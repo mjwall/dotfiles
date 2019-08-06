@@ -63,9 +63,14 @@ set_if_exists "ANT_HOME" "${ANT_HOME}"
 
 # editors
 set_if_exists "EMACS_HOME" ${EMACS_HOME}
-prepend_path ${HOME}/.emacs.d/bin
-export EDITOR=et # see ~/bin
-export ALTERNATE_EDITOR=vim
+prepend_path "${EMACS_HOME}/bin"
+prepend_path "${HOME}/.emacs.d/bin"
+# setup alias so calling emacs from command line stays in terminal and skips org-sync
+# can still run emacs windows mode by opening the app
+alias emacs="emacs -Q -nw --eval '(defvar no-org-sync t)' --load ~/.emacs.d/init.el"
+# now setup GIT_EDITOR
+export GIT_EDITOR='emacs -nw -Q -l ${HOME}/.emacs.d/init-git-editor.el'
+
 
 # for emacs on MacOS, make sure to look at
 # https://gist.github.com/mjwall/3fe935a8becb60dd3c4c
@@ -179,4 +184,3 @@ prepend_path "${HOME}/bin"
 
 # accumulo ulimit
 #ulimit -S -n 65536
-
