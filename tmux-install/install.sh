@@ -8,8 +8,10 @@
 
 # define versions
 
-tmux_version="2.9"
-tmux_patch_version="a" # leave empty for stable releases
+tmux_version="2.7"
+# leave empty for stable releases
+#tmux_patch_version="a"
+tmux_patch_version=""
 
 # yum list installed | grep libevent
 libevent_version="2.0.21"
@@ -25,10 +27,11 @@ libevent_src_file="$libevent_name.tar.gz"
 ncurses_src_file="$ncurses_name.tar.gz"
 # set the installation directory
 
-target_dir="./tmux_install"
-target_dir=$(realpath $target_dir)
-test -d $target_dir || mkdir -p $target_dir
 #target_dir="/usr/local"
+target_dir="/local/mjwall/opt/tmux_install"
+test -d $target_dir || mkdir -p $target_dir
+#target_dir=$(realpath $target_dir)
+
 
 #work_dir="/tmp"
 work_dir="."
