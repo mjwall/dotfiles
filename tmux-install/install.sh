@@ -28,10 +28,8 @@ ncurses_src_file="$ncurses_name.tar.gz"
 # set the installation directory
 
 #target_dir="/usr/local"
-target_dir="/local/mjwall/opt/tmux_install"
+target_dir="${HOME}/opt/tmux-${tmux_version}"
 test -d $target_dir || mkdir -p $target_dir
-#target_dir=$(realpath $target_dir)
-
 
 #work_dir="/tmp"
 work_dir="."
@@ -64,9 +62,10 @@ cd -
 # tmux installation
 tar xvzf $tmux_src_file
 cd ${tmux_name}*/
-./configure CFLAGS="-I$target_dir/include -I$target_dir/include/ncurses" LDFLAGS="-L$target_dir/lib -L$target_dir/include/ncurses -L$target_dir/include"
-CPPFLAGS="-I$target_dir/include -I$target_dir/include/ncurses" LDFLAGS="-static -L$target_dir/include -L$target_dir/include/ncurses -L$target_dir/lib"
-make
+cflags="-I$target_dir/include -I$target_dir/include/ncurses"
+ldflags="-L$target_dir/lib -L$target_dir/include/ncurses -L$target_dir/include"
+./configure CFLAGS="${cflags}" LDFLAGS="${ldflags}"
+CPPFLAGS="${cflags}" LDFLAGS="-static ${ldflags}" make
 cp tmux $target_dir/bin
 cd -
 
@@ -75,6 +74,8 @@ if [ -z "$version" ]; then
   echo 
   echo "[error] failed to install tmux - check for errors in the above output"
   exit 1
+else
+  echo add $target_dir/bin to your PATH
 fi
 
 popd
