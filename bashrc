@@ -67,9 +67,14 @@ prepend_path "${EMACS_HOME}/bin"
 prepend_path "${HOME}/.emacs.d/bin"
 # setup alias so calling emacs from command line stays in terminal and skips org-sync
 # can still run emacs windows mode by opening the app
-alias emacs="emacs -Q -nw --eval '(defvar no-org-sync t)' --load ~/.emacs.d/init.el"
+#alias emacs="emacs -Q -nw --eval '(defvar no-org-sync t)' --load ~/.emacs.d/init.el"
+alias emacs="${EMACS_HOME}/bin/emacs -nw"
+alias gemacs="${EMACS_HOME}/bin/emacs"
+alias femacs="${EMACS_HOME}/bin/emacs -Q --eval '(setq user-emacs-directory "~/.emacs.d/full")' --load ~/.emacs.d/full/init.el"
 # now setup GIT_EDITOR
 export GIT_EDITOR='emacs -nw -Q -l ${HOME}/.emacs.d/init-git-editor.el'
+
+
 
 
 # for emacs on MacOS, make sure to look at
