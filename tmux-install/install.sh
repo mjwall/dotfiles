@@ -17,14 +17,18 @@ tmux_patch_version=""
 libevent_version="2.0.21"
 # yum list installed | grep ncurses
 ncurses_version="5.9"
+#
+xclip_version="0.12"
 
 tmux_name="tmux-$tmux_version$tmux_patch_version"
 libevent_name="libevent-$libevent_version-stable"
 ncurses_name="ncurses-$ncurses_version"
+xclip_name="xclip-$xclip_version"
 
 tmux_src_file="$tmux_name.tar.gz"
 libevent_src_file="$libevent_name.tar.gz"
 ncurses_src_file="$ncurses_name.tar.gz"
+xclip_src_file="${xclip_name}.tar.gz"
 # set the installation directory
 
 #target_dir="/usr/local"
@@ -41,7 +45,7 @@ pushd $work_dir
 test -e $tmux_src_file || curl -L https://github.com/tmux/tmux/releases/download/$tmux_version$tmux_patch_version/$tmux_src_file -o $tmux_src_file
 test -e $libevent_src_file || curl -L https://github.com/downloads/libevent/libevent/$libevent_src_file -o $libevent_src_file
 test -e $ncurses_src_file || curl -L https://ftp.gnu.org/pub/gnu/ncurses/$ncurses_src_file -o $ncurses_src_file
-# extract files, configure, and compile
+test -e $xclip_src_file || curl -L http://kent.dl.sourceforge.net/project/xclip/xclip/${xclip_version}/$xclip_src_file -o $xclip_src_file
 
 # libevent installation
 tar xvzf $libevent_src_file
@@ -55,6 +59,14 @@ cd -
 tar xvzf $ncurses_src_file
 cd $ncurses_name
 ./configure --prefix=$target_dir
+make
+make install
+cd -
+
+# xclip installation
+tar xvzf $xclip_src_file
+cd $xclip_name
+./configure --prefix=$target_dir 
 make
 make install
 cd -

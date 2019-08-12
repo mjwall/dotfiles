@@ -1,4 +1,5 @@
 libevent-*
 ncurses-*
 tmux-*
+xclip-*
 tmux_install/
