@@ -70,12 +70,8 @@ prepend_path "${HOME}/.emacs.d/bin"
 #alias emacs="emacs -Q -nw --eval '(defvar no-org-sync t)' --load ~/.emacs.d/init.el"
 alias emacs="${EMACS_HOME}/bin/emacs -nw"
 alias gemacs="${EMACS_HOME}/bin/emacs"
-alias femacs="${EMACS_HOME}/bin/emacs -Q --eval '(setq user-emacs-directory "~/.emacs.d/full")' --load ~/.emacs.d/full/init.el"
 # now setup GIT_EDITOR
 export GIT_EDITOR='emacs -nw -Q -l ${HOME}/.emacs.d/init-git-editor.el'
-
-
-
 
 # for emacs on MacOS, make sure to look at
 # https://gist.github.com/mjwall/3fe935a8becb60dd3c4c
