@@ -126,7 +126,8 @@ if [ $(uname) == "Darwin" ]; then
 fi
 # magit alias uses the ec script, see ~/bin
 alias chrome_no_ocsp="google-chrome --ignore-certificate-errors"
-
+# tmux alias
+alias nw='tmux new-window'
 
 #history stuff
 shopt -s histappend

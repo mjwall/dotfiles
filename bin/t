@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# script based on http://www.howardism.org/Technical/Linux/tmux.html
+# to setup work in tmux
+
+# get the directory
+test -d "$1" && cd "$1"
+working_dir=$(pwd)
+
+if [ "$TERM" != "screen" ];
+then
+  if type tmux >/dev/null 2>&1
+  then
+    tmux new -A -s Mike -n shell -c ${working_dir} \; \
+    neww -n emacs -c ${working_dir} ${EMACS_HOME}/bin/emacs -nw .
+  fi
+fi
