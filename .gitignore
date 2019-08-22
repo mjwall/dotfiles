@@ -21,3 +21,4 @@ bin/etags
 bin/grep-changelog
 bin/ctags
 bin/pomo
+bin/mg
