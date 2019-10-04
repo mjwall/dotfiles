@@ -65,14 +65,16 @@ set_if_exists "ANT_HOME" "${ANT_HOME}"
 set_if_exists "EMACS_HOME" ${EMACS_HOME}
 prepend_path "${EMACS_HOME}/bin"
 prepend_path "${HOME}/.emacs.d/bin"
-alias e="${EMACS_HOME}/bin/emacs -Q -nw -l ${HOME}/.emacs.d/init-min.el"
-alias emacs="${EMACS_HOME}/bin/emacs -nw"
-alias gemacs="${EMACS_HOME}/bin/emacs"
+#alias e="${EMACS_HOME}/bin/emacs -Q -nw -l ${HOME}/.emacs.d/init-min.el"
+#alias emacs="${EMACS_HOME}/bin/emacs -nw"
+#alias gemacs="${EMACS_HOME}/bin/emacs"
 # Leaving here for refrence, this is an example of how to set a var that can
 # be checked while the config is loaded
 # emacs -Q -nw --eval '(defvar some-var t)' --load ~/.emacs.d/init.el"
 # now setup GIT_EDITOR
-export GIT_EDITOR='emacs -nw -Q -l ${HOME}/.emacs.d/init-git-editor.el'
+#export GIT_EDITOR='emacs -nw -Q -l ${HOME}/.emacs.d/init-git-editor.el'
+alias e="${EMACS_HOME}/bin/emacs -nw"
+export GIT_EDITOR="${EMACS_HOME}/bin/emacs -nw"
 
 # for emacs on MacOS, make sure to look at
 # https://gist.github.com/mjwall/3fe935a8becb60dd3c4c

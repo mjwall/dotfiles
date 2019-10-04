@@ -33,7 +33,8 @@ currently_installed_mac() {
 }
 
 currently_installed_linux() {
-   find /usr/lib/jvm/ -maxdepth 1 -type d | grep -v /usr/lib/jvm/$ | sed 's/\/usr\/lib\/jvm\///;s/-amd64$//'
+   # /usr/lib/jvm/openjdk-11 only has src.zip, so remove it
+   find /usr/lib/jvm/ -maxdepth 1 -type d | grep -v /usr/lib/jvm/$ | grep -v /usr/lib/jvm/openjdk-11$ | sed 's/\/usr\/lib\/jvm\///;s/-amd64$//' 
 }
 
 currently_installed() {
