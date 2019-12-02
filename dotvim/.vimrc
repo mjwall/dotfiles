@@ -15,8 +15,13 @@ set clipboard=unnamed
 " set paste "causes issues with vim-endwise in the terminal
 set ttymouse=xterm
 
+<<<<<<< Updated upstream
 "set background=dark
 "colors vividchalk
+=======
+" set background=dark
+" colors vividchalk
+>>>>>>> Stashed changes
 
 set tabstop=2
 set shiftwidth=2
@@ -33,7 +38,7 @@ set backspace=eol,start,indent
 set showmatch
 set nowrap
 
-set guifont=Monaco:h15
+" set guifont=Monaco:h15
 
 set textwidth=79
 
@@ -41,8 +46,8 @@ set incsearch
 
 set number
 
-set foldmethod=syntax
-set foldlevel=20
+" set foldmethod=syntax
+" set foldlevel=20
 
 filetype plugin on
 
