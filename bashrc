@@ -62,8 +62,11 @@ fi
 # # sbt is in dotfiles/bin and should be setup
 
 # editors
-alias e="${EMACS_HOME}/bin/emacs -nw"
-export GIT_EDITOR="${EMACS_HOME}/bin/emacs -nw"
+if [ ! -z ${EMACS_HOME} ]; then
+    alias e="${EMACS_HOME}/bin/emacs -nw"
+    export GIT_EDITOR="${EMACS_HOME}/bin/emacs -nw"
+    prepend_path ${EMACS_HOME}/bin
+fi
 
 _java_version() {
   echo $JAVA_VERSION
