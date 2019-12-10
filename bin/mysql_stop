@@ -1,1 +1,0 @@
-launchctl unload /usr/local/Cellar/mysql/5.1.55/com.mysql.mysqld.plist
