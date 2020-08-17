@@ -84,6 +84,13 @@ if [ "${GIT_COMPLETION_DIR}x" == "x" ]; then
     if [ -e /usr/share/bash-completion/completions/git ]; then
       source /usr/share/bash-completion/completions/git
     fi
+  elif [ `grep ^ID= /etc/os-release` == "ID=pop" ]; then
+    if [ -e /etc/bash_completion.d/git-prompt ]; then
+      source /etc/bash_completion.d/git-prompt
+    fi
+    if [ -e /usr/share/bash-completion/completions/git ]; then
+      source /usr/share/bash-completion/completions/git
+    fi
   else
     echo "No Git completion"
     GIT_COMPLETE=0
@@ -138,6 +145,12 @@ shopt -s cmdhist
 #else
 #  echo "Starting gpg-agent"
 #fi
+
+# ssh-agent
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+  echo Starting ssh-agent
+  eval `ssh-agent -s`
+fi
 
 # setup ~/bin
 prepend_path "${HOME}/bin"
