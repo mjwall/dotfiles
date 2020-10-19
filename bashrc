@@ -2,9 +2,9 @@
 
 # Here is my bashrc.
 
-export TERM=xterm-256color
-export CLICOLOR=1
-export LSCOLORS=GxFxCxDxBxegedabagacad
+#export TERM=xterm-256color
+#export CLICOLOR=1
+#export LSCOLORS=GxFxCxDxBxegedabagacad
 
 prepend_path() {
   export PATH="$1:${PATH}"
@@ -32,7 +32,7 @@ else
 fi
 
 # Java
-#set_if_exists "JAVA_HOME" "${JAVA_HOME}"
+set_if_exists "JAVA_HOME" "${JAVA_HOME}"
 
 # Maven
 #set_if_exists "M2_HOME" "${M2_HOME}"
@@ -64,7 +64,7 @@ fi
 # editors
 if [ ! -z ${EMACS_HOME} ]; then
     alias e="${EMACS_HOME}/bin/emacs -nw"
-    export GIT_EDITOR="${EMACS_HOME}/bin/emacs -nw"
+    #export GIT_EDITOR="${EMACS_HOME}/bin/emacs -nw"
     prepend_path ${EMACS_HOME}/bin
 fi
 
@@ -98,8 +98,8 @@ fi
 if [ $GIT_COMPLETE -eq 1 ]; then
   export GIT_PS1_SHOWDIRTYSTATE=true
   # if __git_ps1 is slow
-  #export GIT_PS1_SHOWDIRTYSTATE=
-  #export GIT_PS1_SHOWUNTRACKEDFILES=
+  export GIT_PS1_SHOWDIRTYSTATE=
+  export GIT_PS1_SHOWUNTRACKEDFILES=
   #export PS1='\[\e[1;32m\]\u@\h\[\e[1;34m\] [$(cat ~/.java_version)] \[\e[0m\]\[\e[1;36m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
   export PS1='\[\e[1;32m\]\u@\h\[\e[1;34m\] \[\e[0m\]\[\e[1;36m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
 else
@@ -116,10 +116,6 @@ if [ $(uname) == "Darwin" ]; then
   # see http://www.commandlinefu.com/commands/view/5965/create-.tar-file-on-mac-os-x-leopard-snow-leopard-without-._-files
   alias tar="COPYFILE_DISABLE=true tar"
 fi
-# magit alias uses the ec script, see ~/bin
-alias chrome_no_ocsp="google-chrome --ignore-certificate-errors"
-# tmux alias
-alias nw='tmux new-window'
 
 #history stuff
 shopt -s histappend
@@ -141,7 +137,6 @@ shopt -s cmdhist
 
 # setup ~/bin
 prepend_path "${HOME}/bin"
-
 
 # Below is for reference only on the color codes
 # original colors with ls -G or CLICOLORS = ExFxCxDxBxegedabagacad

@@ -27,23 +27,10 @@
   default = tracking
 [push]
   default = tracking
-#[credential]
-#  helper = osxkeychain
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	required = true
-	process = git-lfs filter-process
 [core]
 	excludesfile = /Users/mjwall/.gitignore_global
-  editor = emacs
-[difftool "diffpdf"]
-  cmd = diff-pdf --view \"$LOCAL\" \"$REMOTE\"
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  editor = subl -w
 [credential]
 	helper = cache --timeout=3600
+[merge]
+	tool = smerge
