@@ -110,8 +110,8 @@ fi
 if [ $GIT_COMPLETE -eq 1 ]; then
   export GIT_PS1_SHOWDIRTYSTATE=true
   # if __git_ps1 is slow
-  export GIT_PS1_SHOWDIRTYSTATE=
-  export GIT_PS1_SHOWUNTRACKEDFILES=
+  #export GIT_PS1_SHOWDIRTYSTATE=
+  #export GIT_PS1_SHOWUNTRACKEDFILES=
   export PS1='\[\e[1;32m\]\u@'"$PS1_HOST"'\[\e[1;34m\] \[\e[0m\]\[\e[1;36m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$> '
 else
   export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
