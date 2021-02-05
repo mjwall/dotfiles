@@ -35,14 +35,14 @@ fi
 set_if_exists "JAVA_HOME" "${JAVA_HOME}"
 
 # Maven
-#set_if_exists "M2_HOME" "${M2_HOME}"
-#if [ "${M2_HOME}x" != "x" ]; then
+set_if_exists "M2_HOME" "${M2_HOME}"
+if [ "${M2_HOME}x" != "x" ]; then
 #  export JAVA_OPTS="-Duser.timezone=GMT -Djava.awt.headless=true"
 #  #export MAVEN_OPTS="${JAVA_OPTS} -Xms512M -Xmx1024M -Xss1M -XX:MaxPermSize=128M"
 #  export MAVEN_OPTS="${JAVA_OPTS} -Xms512M -Xmx1024M"
 #  export MAVEN_OPTS_DEBUG="${MAVEN_OPTS} -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8781,server=y,suspend=n"
-#  export M2="$M2_HOME/bin"
-#fi
+  export M2="$M2_HOME/bin"
+fi
 
 # Ant
 #set_if_exists "ANT_HOME" "${ANT_HOME}"
