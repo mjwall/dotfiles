@@ -27,14 +27,17 @@
 HOMEFILE=${HOME}/.java_home
 VERFILE=${HOME}/.java_version
 UNAME=$(uname)
+ARCH=$(uname -p)
 
 currently_installed_mac() {
     /usr/libexec/java_home -V 2>&1 | grep \"Java | awk '{print $1}' | cut -c 1-3 | set 's/\.$//' | uniq
 }
 
 currently_installed_linux() {
-   # /usr/lib/jvm/openjdk-11 only has src.zip, so remove it
-   find /usr/lib/jvm/ -maxdepth 1 -type d | grep -v /usr/lib/jvm/$ | grep -v /usr/lib/jvm/openjdk-1[123]$ | sed 's/\/usr\/lib\/jvm\///;s/-amd64$//' | sort
+  find /usr/lib/jvm -maxdepth 1 -type l -regextype egrep -regex '.*java-.*-openjdk$' -printf '%f\n' | grep -v '^$'
+
+  # /usr/lib/jvm/openjdk-11 only has src.zip, so remove it
+  #find /usr/lib/jvm/ -maxdepth 1 -type d | grep -v /usr/lib/jvm/$ | grep -v /usr/lib/jvm/openjdk-1[123]$ | sed 's/\/usr\/lib\/jvm\///;s/-amd64$//' | sort
 }
 
 currently_installed() {
@@ -54,7 +57,8 @@ dir_for_version() {
     exit 1
   fi
   if [ "${UNAME}" == "Linux" ]; then
-    local dir=/usr/lib/jvm/${ver}-amd64
+    #local dir=/usr/lib/jvm/${ver}-${ARCH}
+    local dir=/usr/lib/jvm/${ver}
     if [ ! -e ${dir} ]; then
       echo $dir does not exist
       exit 1
