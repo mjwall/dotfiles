@@ -127,6 +127,9 @@ if [ $(uname) == "Darwin" ]; then
   # see http://www.commandlinefu.com/commands/view/5965/create-.tar-file-on-mac-os-x-leopard-snow-leopard-without-._-files
   alias tar="COPYFILE_DISABLE=true tar"
 fi
+alias ls='ls --color=auto'
+alias ll='ls -la'
+alias l.='ls -d .* --color=auto'
 
 #history stuff
 shopt -s histappend
@@ -190,3 +193,4 @@ prepend_path "${HOME}/bin"
 
 # accumulo ulimit
 #ulimit -S -n 65536
+
