@@ -6,12 +6,13 @@
 # get the directory
 test -d "$1" && cd "$1"
 working_dir=$(pwd)
+base_name=$(basename $PWD)
 
 if [ "$TERM" != "screen" ];
 then
   if type tmux >/dev/null 2>&1
   then
-    tmux new -A -s Mike -n shell -c ${working_dir} \; \
+    tmux new -A -s ${base_name} -n shell -c ${working_dir} \; \
     neww -n emacs -c ${working_dir} ${EMACS_HOME}/bin/emacs -nw .
   fi
 fi
