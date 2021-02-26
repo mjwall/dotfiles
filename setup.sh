@@ -56,3 +56,7 @@ echo "Read the bashrc file you are setting up on Mac to get Emacs running"
 
 # to remove everything, run the following.  Not going to automate this, because it is too destructive
 # rm "${HOME}/.bashrc" "${HOME}/.bash_profile" "${HOME}/.gitconfig" "${HOME}/.screenrc" "${HOME}/.vim" "${HOME}/.emacs.d" "${HOME}/bin" "${HOME}/.bash_completion.d" "${HOME}/.vimrc" "${HOME}/.tmux.conf"
+
+# see https://github.com/syl20bnr/spacemacs/wiki/Terminal for how to setup 24 bit colors,
+# /usr/bin/tic -x -o ~/.terminfo xterm-24bit.terminfo
+# export TERM=xterm-24bit into the ~/.bashrc-custom
