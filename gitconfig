@@ -30,8 +30,8 @@
   default = tracking
 [core]
 	excludesfile = /Users/mjwall/.gitignore_global
-  #editor = subl -w
-  editor = emacs -nw
+  editor = subl -w
+  #editor = emacs -nw
 [credential]
 	helper = cache --timeout=3600
 [merge]
@@ -41,3 +41,6 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[mergetool "smerge"]
+	cmd = smerge mergetool \"$BASE\" \"$LOCAL\" \"$REMOTE\" -o \"$MERGED\"
+	trustExitCode = true
