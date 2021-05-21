@@ -1,5 +1,8 @@
 # -*- mode: sh -*-
 
+# If not running interactively, don't do anything
+[[ $- == *i* ]] || return
+
 # Here is my bashrc.
 
 prepend_path() {
