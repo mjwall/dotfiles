@@ -7,13 +7,14 @@
   br = branch
   co = checkout
   di = diff
+  lol = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%aN>%Creset'
+  lola = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%aN>%Creset' --all
   # lg = log -p
-  lol = git log --graph --decorate --pretty='format:%C(auto)%h (%s) "%an" - %ai'
-  lola = git log --graph --decorate --pretty='format:%C(auto)%h (%s) "%an" - %ai' --all
+  # lol = log --graph --decorate --pretty='format:%C(auto)%h (%s) "%an" - %ai'
+  # lola = log --graph --decorate --pretty='format:%C(auto)%h (%s) "%an" - %ai' --all
   # lol = log --graph --decorate --pretty=oneline --abbrev-commit
   # lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
   # lc = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
-  # graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%aN>%Creset'
   ls = ls-files
   distclean = clean -dxf
   lf = log --follow
@@ -30,17 +31,17 @@
   default = tracking
 [core]
 	excludesfile = /Users/mjwall/.gitignore_global
-  editor = subl -w
-  #editor = emacs -nw
+  #editor = subl -w
+  editor = emacs -nw
 [credential]
 	helper = cache --timeout=3600
 [merge]
-	tool = smerge
+	#tool = smerge
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
 [mergetool "smerge"]
-	cmd = smerge mergetool \"$BASE\" \"$LOCAL\" \"$REMOTE\" -o \"$MERGED\"
-	trustExitCode = true
+	#cmd = smerge mergetool \"$BASE\" \"$LOCAL\" \"$REMOTE\" -o \"$MERGED\"
+	#trustExitCode = true
