@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Quick script to make a TAGS file for vista-sdk
+
+# approximation of file types
+# for f in `find external/install/*/*/RelWithDebInfo -type f`; do echo "${f##*[\.]}"; done | sort | uniq -c | sort -n
+
+PRJ_DIR="/home/mjwall/git/SOMEDIRHERE"
+CTAG_ARGS="--kinds-c++=+p --kinds-c=+p --fields=+iaS --extras=+q -a"
+
+if [ "$PWD" == "$PRJ_DIR" ]; then
+  echo "Removing TAGS file and recreating"
+  test -f TAGS && rm TAGS
+  # our source, without the public
+  git ls-files | grep -v ^public/* | xargs etags $CTAG_ARGS
+  # external deps
+  find external/install/*/*/RelWithDebInfo \( -name "*.c" -o -name "*.cpp" -o -name "*.hpp" -o -name "*.h" -o -name "*.cc" -o -name "*.cmake" \) | xargs etags $CTAG_ARGS
+  # gcc headers
+  etags -R $CTAG_ARGS /opt/rh/devtoolset-9/root/usr/include/c++/9
+else
+  echo "You must run this from $PRJ_DIR"
+  exit 1
+fi

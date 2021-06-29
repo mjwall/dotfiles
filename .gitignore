@@ -22,3 +22,4 @@ bin/grep-changelog
 bin/ctags
 bin/pomo
 bin/mg
+bin/*-make-tags.sh

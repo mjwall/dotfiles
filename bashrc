@@ -67,6 +67,13 @@ if [ ! -z ${EMACS_HOME} ]; then
     prepend_path ${EMACS_HOME}/bin
 fi
 
+# if ctags home, prepend path after emacs
+# build universal ctags git@github.com:universal-ctags/ctags.git
+# alias ctags to etags
+if [ ! -z ${CTAGS_HOME} ]; then
+  prepend_path ${CTAGS_HOME}/bin
+fi
+
 _java_version() {
   echo $JAVA_VERSION
 }
